@@ -1,0 +1,91 @@
+.dashboard {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+  padding: 36px clamp(20px, 4vw, 56px) 48px;
+  color: var(--color-text-default);
+}
+
+.page-header,
+.panel-heading,
+.metric-topline,
+.movement-cell,
+.service-item {
+  display: flex;
+  align-items: center;
+}
+
+.page-header,
+.panel-heading {
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.page-header { margin-bottom: 28px; }
+.header-actions { display: flex; gap: 10px; }
+.eyebrow { color: var(--color-text-link); font-size: 11px; font-weight: 700; letter-spacing: .12em; }
+
+h1, h2, p { margin: 0; }
+h1 { margin-top: 7px; font-size: clamp(25px, 3vw, 32px); font-weight: 650; letter-spacing: -.04em; }
+.page-header p, .panel-heading p { margin-top: 6px; color: var(--color-text-subtle); font-size: 13px; }
+.header-actions button { min-height: 44px; border-radius: 12px; font-weight: 600; }
+.primary-action { background: var(--color-brand-primary) !important; color: var(--color-brand-on-primary) !important; }
+
+.metric-card, .panel {
+  border-color: var(--color-border-subtle) !important;
+  border-radius: 16px !important;
+  background: var(--color-surface-default);
+  box-shadow: 0 4px 18px rgb(30 37 46 / 3%);
+}
+
+.metric-card mat-card-content { padding: 20px !important; }
+.metric-topline { justify-content: space-between; }
+.metric-icon, .movement-icon { display: inline-grid; flex: 0 0 auto; place-items: center; border-radius: 12px; font-weight: 700; }
+.metric-icon { width: 42px; height: 42px; font-size: 17px; }
+.lime { background: var(--color-brand-primary-subtle); color: var(--color-text-default); }
+.blue { background: var(--color-info-subtle); color: var(--color-info-strong); }
+.green { background: var(--color-success-subtlest); color: var(--color-success-strong); }
+.yellow { background: var(--color-warning-subtlest); color: var(--color-warning-strongest); }
+.metric-change { padding: 5px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.positive { background: var(--color-success-subtlest); color: var(--color-success-strongest); }
+.informative { background: var(--color-info-subtlest); color: var(--color-info-strong); }
+.warning { background: var(--color-warning-subtlest); color: var(--color-warning-strongest); }
+.metric-label { margin-top: 19px; color: var(--color-text-subtle); font-size: 13px; }
+.metric-value { margin-top: 5px; font-size: 28px; font-weight: 650; letter-spacing: -.04em; }
+.metric-caption { margin-top: 5px; color: var(--color-text-subtle); font-size: 12px; }
+
+.panel mat-card-content { padding: 24px !important; }
+.panel-heading { align-items: flex-start; }
+.panel-heading h2 { font-size: 17px; font-weight: 650; }
+.panel-heading p { font-size: 12px; }
+.text-action { color: var(--color-text-link) !important; font-weight: 600; white-space: nowrap; }
+.table-toolbar { display: flex; gap: 12px; margin-top: 24px; }
+.search-field { flex: 1; }
+.period-field { width: 175px; }
+.table-scroll { overflow-x: auto; }
+.transactions-table { width: 100%; min-width: 590px; }
+.status-dot { display: inline-block; width: 6px; height: 6px; margin-right: 5px; border-radius: 50%; background: currentColor; }
+.status-chip.success { color: var(--color-success-strongest); }
+
+.usage-summary { display: flex; align-items: baseline; gap: 8px; margin: 32px 0 14px; }
+.usage-value { font-size: 36px; font-weight: 650; letter-spacing: -.05em; }
+.usage-copy { color: var(--color-text-subtle); font-size: 12px; }
+.overview-panel mat-progress-bar { height: 8px; overflow: hidden; border-radius: 10px; --mdc-linear-progress-active-indicator-color: var(--color-brand-primary); --mdc-linear-progress-track-color: var(--color-surface-muted); }
+.service-list { display: grid; gap: 16px; margin-top: 24px; }
+.service-item { gap: 10px; font-size: 12px; }
+.service-marker { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+.service-marker.lime { background: var(--color-brand-primary); }
+.service-marker.blue { background: var(--color-info-default); }
+.service-marker.green { background: var(--color-success-default); }
+.service-name { flex: 1; color: var(--color-text-muted); }
+
+@media (max-width: 640px) {
+  .dashboard { padding: 26px 16px 36px; }
+  .page-header { align-items: flex-start; flex-direction: column; }
+  .header-actions, .header-actions button { width: 100%; }
+  .header-actions button { flex: 1; }
+  .metric-card mat-card-content { padding: 15px !important; }
+  .metric-value { font-size: 24px; }
+  .panel mat-card-content { padding: 18px !important; }
+  .table-toolbar { flex-direction: column; gap: 0; }
+  .period-field { width: 100%; }
+}

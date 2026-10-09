@@ -1,0 +1,138 @@
+<main class="dashboard">
+  <header class="page-header">
+    <div>
+      <span class="eyebrow">PORTAL DE CLIENTES</span>
+      <h1>Hola, María <span aria-hidden="true">👋</span></h1>
+      <p>Este es el resumen de tu actividad y tus servicios.</p>
+    </div>
+    <div class="header-actions">
+      <button mat-stroked-button type="button">Ver movimientos</button>
+      <button mat-flat-button type="button" class="primary-action">Nueva solicitud</button>
+    </div>
+  </header>
+
+  <section class="row g-3 mb-3 metrics-grid" aria-label="Resumen de cuenta">
+    @for (metric of metrics; track metric.label) {
+      <div class="col-12 col-sm-6 col-xl-3">
+        <mat-card class="metric-card h-100" appearance="outlined">
+          <mat-card-content>
+            <div class="metric-topline">
+              <span class="metric-icon" [class]="metric.tone" aria-hidden="true">{{ metric.symbol }}</span>
+              <span class="metric-change" [class]="metric.changeTone">{{ metric.change }}</span>
+            </div>
+            <p class="metric-label">{{ metric.label }}</p>
+            <p class="metric-value">{{ metric.value }}</p>
+            <p class="metric-caption">{{ metric.caption }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
+  </section>
+
+  <section class="row g-3 content-grid">
+    <div class="col-12 col-xl-8">
+      <mat-card class="panel h-100" appearance="outlined">
+        <mat-card-content>
+        <div class="panel-heading">
+          <div>
+            <h2>Actividad reciente</h2>
+            <p>Consulta el estado de tus últimos movimientos.</p>
+          </div>
+          <button mat-button type="button" class="text-action">Ver todos</button>
+        </div>
+
+        <div class="table-toolbar">
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Buscar movimiento</mat-label>
+            <input matInput placeholder="Nombre o referencia" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="period-field">
+            <mat-label>Periodo</mat-label>
+            <mat-select value="month">
+              <mat-option value="month">Este mes</mat-option>
+              <mat-option value="quarter">Últimos 3 meses</mat-option>
+              <mat-option value="year">Este año</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="table-scroll">
+          <table mat-table [dataSource]="transactions" class="transactions-table">
+            <ng-container matColumnDef="movement">
+              <th mat-header-cell *matHeaderCellDef>Movimiento</th>
+              <td mat-cell *matCellDef="let transaction">
+                <div class="movement-cell">
+                  <span class="movement-icon" [class]="transaction.tone" aria-hidden="true">{{ transaction.symbol }}</span>
+                  <span>
+                    <strong>{{ transaction.name }}</strong>
+                    <small>{{ transaction.reference }}</small>
+                  </span>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef>Fecha</th>
+              <td mat-cell *matCellDef="let transaction">{{ transaction.date }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef>Monto</th>
+              <td mat-cell *matCellDef="let transaction" class="amount-cell">{{ transaction.amount }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Estado</th>
+              <td mat-cell *matCellDef="let transaction">
+                <mat-chip class="status-chip" [class]="transaction.statusTone">
+                  <span class="status-dot" aria-hidden="true"></span>
+                  {{ transaction.status }}
+                </mat-chip>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-12 col-xl-4">
+      <mat-card class="panel h-100 overview-panel" appearance="outlined">
+        <mat-card-content>
+        <div class="panel-heading">
+          <div>
+            <h2>Uso de servicios</h2>
+            <p>Actividad de tu cuenta este mes</p>
+          </div>
+          <span class="period-badge">OCT 2026</span>
+        </div>
+
+        <div class="usage-summary">
+          <span class="usage-value">72%</span>
+          <span class="usage-copy">de tu actividad mensual</span>
+        </div>
+        <mat-progress-bar mode="determinate" value="72" aria-label="Uso de servicios: 72 por ciento"></mat-progress-bar>
+
+        <div class="service-list">
+          @for (service of services; track service.name) {
+            <div class="service-item">
+              <span class="service-marker" [class]="service.tone" aria-hidden="true"></span>
+              <span class="service-name">{{ service.name }}</span>
+              <strong>{{ service.value }}</strong>
+            </div>
+          }
+        </div>
+
+        <div class="help-callout">
+          <span class="help-symbol" aria-hidden="true">i</span>
+          <p>¿Necesitas ayuda con tus servicios?</p>
+          <button mat-button type="button" class="text-action">Visita el centro de ayuda</button>
+        </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+</main>

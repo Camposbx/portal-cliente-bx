@@ -1,16 +1,17 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  {
+    path: 'login',
+    loadComponent: () => import('./auth/login/login').then((page) => page.Login),
+    title: 'BX+ | Portal del Cliente',
+  },
   {
     path: '',
     loadComponent: () => import('./layout/layout/layout').then((page) => page.Layout),
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'inicio' },
-      {
-        path: 'inicio',
-        loadComponent: () => import('./pages/dashboard/dashboard-component').then((page) => page.Dashboard),
-        title: 'Inicio | Portal BX+',
-      },
+      { path: 'inicio', loadComponent: () => import('./pages/dashboard/dashboard-component').then((page) => page.Dashboard), title: 'Inicio | Portal BX+' },
       {
         path: 'analisis',
         loadComponent: () => import('./pages/analisis/analisis').then((page) => page.Analisis),
@@ -38,5 +39,5 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '**', redirectTo: 'inicio' },
+  { path: '**', redirectTo: 'login' },
 ];

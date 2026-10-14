@@ -1,1 +1,67 @@
-<p>login works!</p>
+<main class="login">
+  <aside class="login-visual" aria-label="Información de contacto">
+    <div class="login-brand" aria-label="BX+">
+      <img class="login-brand-logo" src="/logos_bx+/logo_BX+_color2.png" alt="BX+" />
+    </div>
+
+    <div class="login-contact">
+      <p class="login-contact-heading">¿Necesitas ayuda?<br />Estamos para servirte:</p>
+      <p>CDMX y Área Metropolitana: 55 11 02 19 19.<br />Interior de la República: 800 837 6762.</p>
+      <small
+        >Grupo Financiero Ve por Más. Paseo de la Reforma 243 piso 21,<br />Col. Cuauhtémoc, CP
+        06500, CDMX.</small
+      >
+    </div>
+  </aside>
+
+  <section class="login-panel" aria-label="Inicio de sesión">
+    <div class="login-content">
+      <h1>Bienvenido al Portal del Cliente</h1>
+      <p class="login-copy">Ingresa tus credenciales para acceder al portal.</p>
+
+      <form #loginForm="ngForm" class="login-form" (ngSubmit)="ingresar()">
+        <mat-form-field appearance="outline" class="login-field">
+          <mat-label>Usuario</mat-label>
+          <input
+            matInput
+            name="usuario"
+            ngModel
+            required
+            type="text"
+            autocomplete="username"
+            placeholder="Escribe tu usuario"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="login-field">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            name="contrasena"
+            ngModel
+            required
+            [type]="hidePassword ? 'password' : 'text'"
+            autocomplete="current-password"
+            placeholder="Escribe tu contraseña"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            [attr.aria-label]="hidePassword ? 'Mostrar contraseña' : 'Ocultar contraseña'"
+            (click)="hidePassword = !hidePassword"
+          >
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <div class="login-actions">
+          <a class="login-link" href="#">¿Olvidaste tu contraseña?</a>
+          <button mat-flat-button type="submit" class="login-submit" [disabled]="loginForm.invalid">
+            Ingresar
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>

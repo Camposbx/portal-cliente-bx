@@ -1,116 +1,68 @@
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTableModule } from '@angular/material/table';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [
-    MatButtonModule,
-    MatCardModule,
-    MatChipsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatProgressBarModule,
-    MatSelectModule,
-    MatTableModule,
-  ],
+  imports: [RouterLink],
   selector: 'app-dashboard',
   styleUrl: './dashboard-component.scss',
   templateUrl: './dashboard-component.html',
 })
 export class Dashboard {
-  protected readonly metrics = [
+  protected readonly modules = [
     {
-      label: 'Servicios activos',
-      value: '12',
-      caption: 'En 4 sucursales',
-      change: '+2 este mes',
-      changeTone: 'positive',
-      symbol: 'S',
-      tone: 'lime',
+      number: 1,
+      title: 'Análisis y autorización',
+      description:
+        'Aquí puedes integrar el expediente para el análisis y autorización del crédito.',
+      image: '/baners/card-analisis.png',
+      route: '/analisis',
+      disabled: false,
+      progress: 0,
     },
     {
-      label: 'Solicitudes abiertas',
-      value: '03',
-      caption: '1 requiere atención',
-      change: 'En seguimiento',
-      changeTone: 'informative',
-      symbol: '!',
-      tone: 'blue',
+      number: 2,
+      title: 'Contratación',
+      description:
+        'Aquí puedes integrar el expediente para la contratación del crédito.',
+      image: '/baners/card-contratacion.png',
+      route: '/contratacion',
+      disabled: true,
+      progress: 0,
     },
     {
-      label: 'Saldo disponible',
-      value: '$48,250',
-      caption: 'Actualizado hoy',
-      change: 'Al corriente',
-      changeTone: 'positive',
-      symbol: '$',
-      tone: 'green',
-    },
-    {
-      label: 'Próximo vencimiento',
-      value: '18 oct',
-      caption: 'Factura de servicios',
-      change: 'En 9 días',
-      changeTone: 'warning',
-      symbol: '◷',
-      tone: 'yellow',
+      number: 3,
+      title: 'Operación',
+      description: 'Aquí puedes solicitar tus documentos para operar.',
+      image: '/baners/card-operacion.png',
+      route: '/operacion',
+      disabled: false,
+      progress: 0,
     },
   ];
 
-  protected readonly displayedColumns = ['movement', 'date', 'amount', 'status'];
-
-  protected readonly transactions = [
+  protected readonly banners = [
     {
-      name: 'Pago de servicios',
-      reference: 'Referencia · BX-10482',
-      date: '09 oct 2026',
-      amount: '$12,450.00',
-      status: 'Completado',
-      statusTone: 'success',
-      symbol: '$',
-      tone: 'green',
-    },
-    {
-      name: 'Solicitud de instalación',
-      reference: 'Solicitud · SOL-2891',
-      date: '08 oct 2026',
-      amount: '—',
-      status: 'En proceso',
-      statusTone: 'info',
-      symbol: '+',
-      tone: 'blue',
-    },
-    {
-      name: 'Actualización de contrato',
-      reference: 'Contrato · CT-58302',
-      date: '06 oct 2026',
-      amount: '—',
-      status: 'Pendiente',
-      statusTone: 'warning',
-      symbol: '↻',
-      tone: 'yellow',
-    },
-    {
-      name: 'Pago de servicios',
-      reference: 'Referencia · BX-10376',
-      date: '02 oct 2026',
-      amount: '$8,900.00',
-      status: 'Completado',
-      statusTone: 'success',
-      symbol: '$',
-      tone: 'green',
+      src: '/baners/Banner.png',
+      alt: 'Oficina Digital de Crédito BX+. Consulta y da seguimiento a tu crédito empresarial desde un solo lugar.',
     },
   ];
 
-  protected readonly services = [
-    { name: 'Servicios contratados', value: '12', tone: 'lime' },
-    { name: 'Solicitudes en curso', value: '3', tone: 'blue' },
-    { name: 'Pagos realizados', value: '8', tone: 'green' },
-  ];
+  protected currentBannerIndex = 0;
+
+  protected get currentBanner() {
+    return this.banners[this.currentBannerIndex];
+  }
+
+  protected showBanner(index: number): void {
+    this.currentBannerIndex = index;
+  }
+
+  protected showPreviousBanner(): void {
+    this.currentBannerIndex =
+      (this.currentBannerIndex - 1 + this.banners.length) % this.banners.length;
+  }
+
+  protected showNextBanner(): void {
+    this.currentBannerIndex = (this.currentBannerIndex + 1) % this.banners.length;
+  }
 }

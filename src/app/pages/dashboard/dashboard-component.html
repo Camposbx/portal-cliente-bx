@@ -43,58 +43,57 @@
     </section>
 
     <section class="module-grid" aria-label="Módulos del portal">
-      <article class="module-card module-card--primary">
-        <img class="module-image" src="/baners/card-analisis.png" alt="" aria-hidden="true" />
+      @for (module of modules; track module.route) {
+        <article
+          class="module-card"
+          [class.module-card--muted]="module.disabled"
+        >
+          <img class="module-image" [src]="module.image" alt="" aria-hidden="true" />
 
-        <div class="module-body">
-          <span class="module-label">Módulo 1:</span>
-          <h3>Análisis y autorización</h3>
-          <p>
-            Aquí puedes integrar el expediente para el análisis y
-            autorización del crédito.
-          </p>
+          <div class="module-body">
+            <span class="module-label">Módulo {{ module.number }}:</span>
+            <h3>{{ module.title }}</h3>
+            <p>{{ module.description }}</p>
 
-          <div class="module-footer">
-            <span class="status-pill status-pill--available">Disponible</span>
-            <button type="button">Continuar</button>
+            <div class="module-footer">
+              @if (module.disabled) {
+                <span class="module-lock" aria-label="Módulo bloqueado" title="Módulo bloqueado">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="5" y="10" width="14" height="11" rx="2"></rect>
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                    <path d="M12 14v3"></path>
+                  </svg>
+                </span>
+              } @else {
+                <div
+                  class="module-progress"
+                  role="progressbar"
+                  [attr.aria-label]="'Progreso de ' + module.title"
+                  [attr.aria-valuenow]="module.progress"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  <div class="progress-copy">
+                    <strong>{{ module.progress }}%</strong>
+                    <span>Completada</span>
+                  </div>
+                  <div class="progress-track">
+                    <span class="progress-fill" [style.width.%]="module.progress"></span>
+                  </div>
+                </div>
+              }
+              <button
+                type="button"
+                [routerLink]="module.route"
+                [disabled]="module.disabled"
+                [class.is-disabled]="module.disabled"
+              >
+                Continuar
+              </button>
+            </div>
           </div>
-        </div>
-      </article>
-
-      <article class="module-card module-card--muted">
-        <img class="module-image" src="/baners/card-contratacion.png" alt="" aria-hidden="true" />
-
-        <div class="module-body">
-          <span class="module-label">Módulo 2:</span>
-          <h3>Contratación</h3>
-          <p>
-            Aquí puedes integrar el expediente para la contratación del
-            crédito.
-          </p>
-
-          <div class="module-footer">
-            <span class="status-pill status-pill--blocked">No disponible</span>
-            <button type="button" class="is-disabled" disabled>Continuar</button>
-          </div>
-        </div>
-      </article>
-
-      <article class="module-card module-card--muted">
-        <img class="module-image" src="/baners/card-operacion.png" alt="" aria-hidden="true" />
-
-        <div class="module-body">
-          <span class="module-label">Módulo 3:</span>
-          <h3>Operación</h3>
-          <p>
-            Aquí puedes solicitar tus documentos para operar.
-          </p>
-
-          <div class="module-footer">
-            <span class="status-pill status-pill--blocked">No disponible</span>
-            <button type="button" class="is-disabled" disabled>Continuar</button>
-          </div>
-        </div>
-      </article>
+        </article>
+      }
     </section>
 
     <section class="summary-grid" aria-label="Resumen de vencimientos">

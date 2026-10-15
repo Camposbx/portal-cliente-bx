@@ -113,6 +113,10 @@
   box-shadow: 0 8px 18px rgba(44, 46, 52, 0.08);
 }
 
+.module-card--muted {
+  filter: saturate(0.65);
+}
+
 .module-image {
   display: block;
   width: 100%;
@@ -164,26 +168,59 @@
   margin-top: 18px;
 }
 
-.status-pill {
+.module-progress {
+  flex: 1 1 auto;
+  max-width: 150px;
+  color: #dce2e5;
+  font-size: 0.68rem;
+}
+
+.progress-copy {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 5px;
+}
+
+.progress-copy strong {
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.progress-track {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #46545e;
+}
+
+.progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #d8e000;
+  transition: width 180ms ease;
+}
+
+.module-lock {
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  padding: 7px 12px;
-  border-radius: 999px;
-  font-size: 0.68rem;
-  line-height: 1;
-  font-weight: 600;
-  background: rgba(255, 255, 255, 0.08);
+  width: 20px;
+  height: 24px;
+  color: #c4cdd2;
 }
 
-.status-pill--available {
-  background: rgba(118, 205, 159, 0.16);
-  color: #b8f3d4;
-}
-
-.status-pill--blocked {
-  background: rgba(226, 234, 237, 0.09);
-  color: rgba(227, 232, 236, 0.8);
+.module-lock svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
 }
 
 .module-footer button {
@@ -191,14 +228,15 @@
   min-height: 38px;
   border: 0;
   border-radius: 999px;
-  background: #f4f5f6;
+  background: #d8e000;
   color: #1d242c;
   font-weight: 700;
   cursor: pointer;
 }
 
 .module-footer button.is-disabled {
-  opacity: 0.45;
+  background: #e1e5e7;
+  color: #77838a;
   cursor: not-allowed;
 }
 

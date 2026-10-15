@@ -14,7 +14,7 @@ export const routes: Routes = [
       { path: 'inicio', loadComponent: () => import('./pages/dashboard/dashboard-component').then((page) => page.Dashboard), title: 'Inicio | Portal BX+' },
       {
         path: 'analisis',
-        loadComponent: () => import('./pages/analisis/analisis').then((page) => page.Analisis),
+        loadChildren: () => import('./pages/analisis/analisis.routes').then((route) => route.ANALISIS_ROUTES),
         title: 'Análisis | Portal BX+',
       },
       {

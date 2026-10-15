@@ -186,4 +186,13 @@ body {
   margin: 0;
   height: 100%;
 }
+
+.modal-portal-uso-backdrop {
+  background: rgb(30 37 46 / 48%);
+  backdrop-filter: blur(6px);
+}
+
+.modal-portal-uso .mat-mdc-dialog-surface {
+  border-radius: 12px;
+}
 /* You can add global styles to this file, and also import other style files */

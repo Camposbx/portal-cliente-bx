@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { ModalPortalUso } from './modal/modal-portal-uso';
 
 @Component({
   imports: [FormsModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule],
@@ -15,9 +17,25 @@ import { MatInputModule } from '@angular/material/input';
 export class Login {
   hidePassword = true;
 
-  constructor(private readonly router: Router) {}
+  constructor(
+    private readonly dialog: MatDialog,
+    private readonly router: Router,
+  ) {}
 
   ingresar(): void {
-    this.router.navigate(['/inicio']);
+    this.dialog
+      .open(ModalPortalUso, {
+        ariaLabelledBy: 'modal-portal-uso-title',
+        backdropClass: 'modal-portal-uso-backdrop',
+        maxWidth: 'calc(100vw - 32px)',
+        panelClass: 'modal-portal-uso',
+        width: '520px',
+      })
+      .afterClosed()
+      .subscribe((accepted) => {
+        if (accepted) {
+          this.router.navigate(['/inicio']);
+        }
+      });
   }
 }

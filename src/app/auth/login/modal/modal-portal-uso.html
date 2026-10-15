@@ -1,0 +1,52 @@
+<h2 mat-dialog-title id="modal-portal-uso-title">Aceptación del uso del portal del cliente</h2>
+
+<mat-dialog-content class="acceptance-content">
+  <p class="acceptance-intro">
+    Antes de continuar, lee y acepta nuestros Términos y Condiciones y el Aviso de Privacidad.
+  </p>
+
+  <section class="acceptance-terms" aria-label="Términos de uso">
+    <h3>1. Objeto</h3>
+    <p>
+      El presente documento regula el acceso y uso del Portal del Cliente de Banco Ve por Más, S.A.,
+      así como los servicios disponibles dentro de la plataforma.
+    </p>
+
+    <h3>2. Uso de la plataforma</h3>
+    <p>
+      El usuario se compromete a proporcionar información veraz y a resguardar sus credenciales de
+      acceso. El uso de la cuenta es personal e intransferible.
+    </p>
+
+    <h3>3. Datos personales</h3>
+    <p>
+      El tratamiento de tus datos se rige por el Aviso de Privacidad. Al aceptar, consientes el uso
+      de tu información para fines de evaluación y originación de crédito.
+    </p>
+
+    <h3>4. Vigencia</h3>
+    <p>
+      Estos términos permanecen vigentes mientras mantengas una cuenta activa en el portal. Banco Ve
+      por Más podrá actualizarlos notificándote oportunamente.
+    </p>
+  </section>
+
+  <mat-checkbox [(ngModel)]="termsAccepted" class="acceptance-checkbox">
+    He leído y acepto los Términos y Condiciones y el Aviso de Privacidad.
+  </mat-checkbox>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center" class="acceptance-actions">
+  <button mat-stroked-button type="button" class="cancel-button" (click)="cancelar()">
+    Cancelar
+  </button>
+  <button
+    mat-flat-button
+    type="button"
+    class="accept-button"
+    [disabled]="!termsAccepted"
+    (click)="aceptar()"
+  >
+    Aceptar y continuar
+  </button>
+</mat-dialog-actions>

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
+import { Documentacion } from './documentacion/documentacion';
 
 @Component({
-  imports: [],
+  imports: [Documentacion],
   selector: 'app-analisis',
   styleUrl: './analisis.scss',
   templateUrl: './analisis.html',

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { AnalisisLayout } from './layouts/analisis-layout/analisis-layout';
+import { AnalisisLayout } from './analisis-layout/analisis-layout';
 
 describe('AnalisisLayout', () => {
   let component: AnalisisLayout;

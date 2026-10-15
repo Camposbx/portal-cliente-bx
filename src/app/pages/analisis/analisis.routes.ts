@@ -4,7 +4,7 @@ export const ANALISIS_ROUTES: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'documentos' },
   {
     path: '',
-    loadComponent: () => import('./layouts/analisis-layout/analisis-layout').then((page) => page.AnalisisLayout),
+    loadComponent: () => import('./analisis-layout/analisis-layout').then((page) => page.AnalisisLayout),
     children: [
       {
         path: 'documentos',

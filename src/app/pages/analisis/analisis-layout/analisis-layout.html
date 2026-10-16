@@ -1,0 +1,36 @@
+<div class="analysis-shell">
+  <aside class="analysis-panel">
+    <h1 class="analysis-title">Análisis y autorización</h1>
+
+    <section class="side-card applicant-card" aria-labelledby="applicant-title">
+      <h2 id="applicant-title" class="card-heading">Solicitante</h2>
+      <div class="applicant-details">
+        <span class="applicant-avatar" aria-hidden="true">
+          <mat-icon>person</mat-icon>
+        </span>
+        <a class="applicant-name" routerLink="/analisis/documentos">El Patito, S.A. de C.V.</a>
+      </div>
+    </section>
+
+    <section class="side-card people-card" aria-labelledby="people-title">
+      <h2 id="people-title" class="card-heading">Personas involucradas</h2>
+      <div class="people-avatars" aria-label="Tres personas involucradas">
+        <span class="person-avatar" aria-label="Persona involucrada">
+          <mat-icon aria-hidden="true">person</mat-icon>
+        </span>
+        <span class="person-avatar" aria-label="Persona involucrada">
+          <mat-icon aria-hidden="true">person</mat-icon>
+        </span>
+        <span class="person-avatar" aria-label="Persona involucrada">
+          <mat-icon aria-hidden="true">person</mat-icon>
+        </span>
+      </div>
+      <p class="people-prompt">Registra las personas involucradas</p>
+      <a class="register-button" routerLink="/analisis/registro-persona">Registrar persona</a>
+    </section>
+  </aside>
+
+  <main class="analysis-content">
+    <router-outlet />
+  </main>
+</div>

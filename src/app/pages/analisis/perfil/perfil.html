@@ -1,1 +1,154 @@
-<h1>Información del acreditado</h1>
+<section class="profile-page">
+  <header class="client-header">
+    <div class="client-identity">
+      <span class="client-avatar" aria-hidden="true">
+        <mat-icon>person</mat-icon>
+      </span>
+      <div class="client-details">
+        <h1 class="client-name">El Patito, S.A. de C.V.</h1>
+        <div class="client-meta">
+          <span class="client-type">Acreditado PM</span>
+          <span class="edit-button">Editar datos</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="profile-heading">
+    <h2 class="profile-title">Información general</h2>
+    <a class="close-button" routerLink="/analisis/documentos">Cerrar</a>
+  </div>
+
+  <form [formGroup]="profileForm" (ngSubmit)="guardar()">
+    <section class="profile-section" aria-labelledby="company-data-title">
+      <h3 id="company-data-title" class="section-title">Datos de la empresa</h3>
+      <div class="row profile-fields">
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="profile-field">
+            <mat-label>Razón Social</mat-label>
+            <input matInput formControlName="razonSocial" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="profile-field">
+            <mat-label>Tipo de Sociedad</mat-label>
+            <input matInput formControlName="tipoSociedad" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="profile-field">
+            <mat-label>Nacionalidad</mat-label>
+            <mat-select formControlName="nacionalidad">
+              <mat-option value="Mexicana">Mexicana</mat-option>
+              <mat-option value="Extranjera">Extranjera</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="profile-field">
+            <mat-label>Ingresa el RFC</mat-label>
+            <input matInput formControlName="rfc" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="profile-field">
+            <mat-label>Correo electrónico</mat-label>
+            <input matInput formControlName="correo" type="email" />
+          </mat-form-field>
+        </div>
+      </div>
+    </section>
+
+    <section class="profile-section address-section" aria-labelledby="address-title">
+      <h3 id="address-title" class="section-title">Dirección</h3>
+      <div class="row profile-fields">
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="profile-field">
+            <mat-label>Tipo de domicilio</mat-label>
+            <mat-select formControlName="tipoDomicilio" required>
+              <mat-option value="Fiscal">Fiscal</mat-option>
+              <mat-option value="Comercial">Comercial</mat-option>
+              <mat-option value="Particular">Particular</mat-option>
+            </mat-select>
+            @if (profileForm.controls.tipoDomicilio.hasError('required')) {
+              <mat-error>Este campo es requerido</mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="profile-field">
+            <mat-label>Ingresa el C.P.</mat-label>
+            <input matInput formControlName="codigoPostal" inputmode="numeric" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="profile-field">
+            <mat-label>Entidad Federativa</mat-label>
+            <mat-select formControlName="entidad">
+              <mat-option value="Ciudad de México (CDMX)">Ciudad de México (CDMX)</mat-option>
+              <mat-option value="Estado de México">Estado de México</mat-option>
+              <mat-option value="Jalisco">Jalisco</mat-option>
+              <mat-option value="Nuevo León">Nuevo León</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="profile-field">
+            <mat-label>Municipio o alcaldía</mat-label>
+            <mat-select formControlName="municipio">
+              <mat-option value="Coyoacán">Coyoacán</mat-option>
+              <mat-option value="Benito Juárez">Benito Juárez</mat-option>
+              <mat-option value="Cuauhtémoc">Cuauhtémoc</mat-option>
+              <mat-option value="Miguel Hidalgo">Miguel Hidalgo</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="profile-field">
+            <mat-label>Colonia</mat-label>
+            <mat-select formControlName="colonia">
+              <mat-option value="Copilco El Alto">Copilco El Alto</mat-option>
+              <mat-option value="Del Carmen">Del Carmen</mat-option>
+              <mat-option value="Copilco Universidad">Copilco Universidad</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="profile-field">
+            <mat-label>Calle</mat-label>
+            <input matInput formControlName="calle" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="profile-field">
+            <mat-label>Número exterior</mat-label>
+            <input matInput formControlName="numeroExterior" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="profile-field">
+            <mat-label>Número interior</mat-label>
+            <input matInput formControlName="numeroInterior" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <mat-checkbox class="principal-checkbox" formControlName="direccionPrincipal">
+        Dirección principal
+      </mat-checkbox>
+    </section>
+
+    <div class="profile-actions">
+      @if (editing) {
+        <button class="action-button secondary-button" type="button" (click)="cancelar()">
+          Cancelar
+        </button>
+        <button class="action-button primary-button" type="submit">Guardar</button>
+      } @else {
+        <button class="action-button secondary-button" type="button" (click)="editar()">
+          Editar información
+        </button>
+      }
+    </div>
+  </form>
+</section>

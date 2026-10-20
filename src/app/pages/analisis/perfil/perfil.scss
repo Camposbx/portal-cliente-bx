@@ -1,0 +1,217 @@
+:host {
+  display: block;
+}
+
+.profile-page {
+  min-height: 100%;
+}
+
+.client-header {
+  display: flex;
+  min-height: 68px;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.client-identity {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+}
+
+.client-avatar {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: #80d1de;
+  color: var(--color-info-strong);
+}
+
+.client-avatar mat-icon {
+  width: 25px;
+  height: 25px;
+  font-size: 25px;
+}
+
+.client-details {
+  min-width: 0;
+}
+
+.client-name {
+  margin: 0;
+  color: var(--color-neutral-strongest);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.client-meta {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 3px;
+}
+
+.client-type {
+  color: var(--color-neutral-strongest);
+  font-size: 9px;
+}
+
+.edit-button {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--color-info-subtlest);
+  color: var(--color-info-strong);
+  font-size: 9px;
+  line-height: 1.2;
+}
+
+.profile-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 22px 0 12px;
+}
+
+.profile-title {
+  margin: 0;
+  color: var(--color-neutral-strongest);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.close-button,
+.action-button {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-action-secondary-border);
+  border-radius: 999px;
+  background: var(--color-surface-default);
+  color: var(--color-action-secondary-text);
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color 150ms ease;
+}
+
+.close-button {
+  min-width: 80px;
+  padding: 0 18px;
+}
+
+.close-button:hover,
+.secondary-button:hover {
+  background: var(--color-action-secondary-hover);
+}
+
+.close-button:focus-visible,
+.action-button:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+.profile-section {
+  margin-top: 10px;
+}
+
+.section-title {
+  margin: 0 0 8px;
+  color: var(--color-neutral-strongest);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.profile-fields {
+  --bs-gutter-x: 16px;
+  --bs-gutter-y: 12px;
+}
+
+.profile-field {
+  width: 100%;
+  --mat-form-field-container-height: 48px;
+  --mat-form-field-container-vertical-padding: 8px;
+}
+
+.profile-field ::ng-deep .mat-mdc-text-field-wrapper {
+  background: var(--color-surface-default);
+}
+
+.profile-field ::ng-deep .mdc-text-field--disabled {
+  background: var(--color-surface-muted);
+}
+
+.profile-field ::ng-deep .mdc-text-field--disabled .mdc-notched-outline__leading,
+.profile-field ::ng-deep .mdc-text-field--disabled .mdc-notched-outline__notch,
+.profile-field ::ng-deep .mdc-text-field--disabled .mdc-notched-outline__trailing {
+  border-color: var(--color-border-subtle);
+}
+
+.profile-field ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  font-size: 9px;
+}
+
+.address-section {
+  margin-top: 8px;
+}
+
+.principal-checkbox {
+  margin-top: 4px;
+  color: var(--color-neutral-default);
+  font-size: 11px;
+}
+
+.profile-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.action-button {
+  min-width: 118px;
+  padding: 0 20px;
+  cursor: pointer;
+}
+
+.primary-button {
+  border-color: var(--color-action-primary-default);
+  background: var(--color-action-primary-default);
+  color: var(--color-action-on-primary);
+}
+
+.primary-button:hover {
+  border-color: var(--color-action-primary-hover);
+  background: var(--color-action-primary-hover);
+}
+
+@media (max-width: 700px) {
+  .client-header {
+    padding-bottom: 16px;
+  }
+
+  .client-name {
+    font-size: clamp(18px, 5vw, 24px);
+  }
+
+  .profile-heading {
+    margin-top: 18px;
+  }
+
+  .profile-actions {
+    flex-wrap: wrap;
+    padding-bottom: 16px;
+  }
+}

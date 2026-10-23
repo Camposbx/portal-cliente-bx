@@ -81,6 +81,12 @@
   margin: 22px 0 12px;
 }
 
+.profile-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .profile-title {
   margin: 0;
   color: var(--color-neutral-strongest);
@@ -90,7 +96,8 @@
 }
 
 .close-button,
-.action-button {
+.action-button,
+.type-toggle-button {
   display: inline-flex;
   min-height: 36px;
   align-items: center;
@@ -117,9 +124,19 @@
 }
 
 .close-button:focus-visible,
-.action-button:focus-visible {
+.action-button:focus-visible,
+.type-toggle-button:focus-visible {
   outline: 2px solid var(--color-border-focus);
   outline-offset: 2px;
+}
+
+.type-toggle-button {
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+.type-toggle-button:hover {
+  background: var(--color-action-secondary-hover);
 }
 
 .profile-section {
@@ -208,6 +225,11 @@
 
   .profile-heading {
     margin-top: 18px;
+  }
+
+  .profile-heading-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .profile-actions {

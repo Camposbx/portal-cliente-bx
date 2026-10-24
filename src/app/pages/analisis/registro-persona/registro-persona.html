@@ -87,7 +87,9 @@
 
         @if (selectedRoles.length > 0) {
           <section class="flow-section data-section" aria-labelledby="person-data-title">
-            <h2 id="person-data-title" class="section-title">Datos de la persona</h2>
+            <h2 id="person-data-title" class="section-title">
+              {{ personType === 'moral' ? 'Datos de la empresa' : 'Datos de la persona' }}
+            </h2>
             <div class="row form-fields">
               @if (personType === 'fisica') {
                 <div class="col-12 col-md-6">
@@ -130,9 +132,34 @@
                 <div class="col-12 col-md-6">
                   <mat-form-field appearance="outline" class="person-field">
                     <mat-label>Razón social</mat-label>
-                    <input matInput formControlName="nombre1" autocomplete="organization" />
-                    @if (personForm.controls.nombre1.hasError('required') && personForm.controls.nombre1.touched) {
+                    <input matInput formControlName="razonSocial" autocomplete="organization" />
+                    @if (
+                      personForm.controls.razonSocial.hasError('required') &&
+                      personForm.controls.razonSocial.touched
+                    ) {
                       <mat-error>Este campo es requerido</mat-error>
+                    }
+                  </mat-form-field>
+                </div>
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Tipo de sociedad</mat-label>
+                    <mat-select formControlName="tipoSociedad">
+                      <mat-option value="SA de CV">Sociedad Anónima de Capital Variable</mat-option>
+                      <mat-option value="S de RL de CV"
+                        >Sociedad de Responsabilidad Limitada de Capital Variable</mat-option
+                      >
+                      <mat-option value="SAPI de CV"
+                        >Sociedad Anónima Promotora de Inversión de Capital Variable</mat-option
+                      >
+                      <mat-option value="SC">Sociedad Civil</mat-option>
+                      <mat-option value="AC">Asociación Civil</mat-option>
+                    </mat-select>
+                    @if (
+                      personForm.controls.tipoSociedad.hasError('required') &&
+                      personForm.controls.tipoSociedad.touched
+                    ) {
+                      <mat-error>Selecciona un tipo de sociedad</mat-error>
                     }
                   </mat-form-field>
                 </div>
@@ -163,8 +190,39 @@
                   <input matInput formControlName="rfc" autocomplete="off" />
                 </mat-form-field>
               </div>
+              @if (personType === 'moral') {
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Correo electrónico</mat-label>
+                    <input matInput formControlName="correo" type="email" autocomplete="email" />
+                    @if (personForm.controls.correo.hasError('email') && personForm.controls.correo.touched) {
+                      <mat-error>Ingresa un correo electrónico válido</mat-error>
+                    }
+                  </mat-form-field>
+                </div>
+              }
             </div>
           </section>
+
+          @if (personType === 'moral' && selectedRoles.includes('accionista')) {
+            <section class="flow-section general-section" aria-labelledby="participation-title">
+              <h2 id="participation-title" class="section-title">Participación</h2>
+              <div class="row form-fields">
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Porcentaje de participación accionaria</mat-label>
+                    <input
+                      matInput
+                      formControlName="participacion"
+                      type="number"
+                      min="0"
+                      max="100"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+            </section>
+          }
 
           @if (personType === 'fisica') {
             <section class="flow-section general-section" aria-labelledby="general-info-title">
@@ -196,20 +254,22 @@
             </section>
           }
 
-          <section class="flow-section contact-section" aria-labelledby="contact-info-title">
-            <h2 id="contact-info-title" class="section-title">Datos de contacto</h2>
-            <div class="row form-fields">
-              <div class="col-12">
-                <mat-form-field appearance="outline" class="person-field">
-                  <mat-label>Correo electrónico</mat-label>
-                  <input matInput formControlName="correo" type="email" autocomplete="email" />
-                  @if (personForm.controls.correo.hasError('email') && personForm.controls.correo.touched) {
-                    <mat-error>Ingresa un correo electrónico válido</mat-error>
-                  }
-                </mat-form-field>
+          @if (personType === 'fisica') {
+            <section class="flow-section contact-section" aria-labelledby="contact-info-title">
+              <h2 id="contact-info-title" class="section-title">Datos de contacto</h2>
+              <div class="row form-fields">
+                <div class="col-12">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Correo electrónico</mat-label>
+                    <input matInput formControlName="correo" type="email" autocomplete="email" />
+                    @if (personForm.controls.correo.hasError('email') && personForm.controls.correo.touched) {
+                      <mat-error>Ingresa un correo electrónico válido</mat-error>
+                    }
+                  </mat-form-field>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          }
 
           <div class="form-actions">
             <button class="action-button secondary-button" type="button" (click)="cancelar()">

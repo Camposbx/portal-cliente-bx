@@ -30,17 +30,20 @@ export class RegistroPersona {
   private readonly formBuilder = inject(FormBuilder).nonNullable;
 
   readonly personForm = this.formBuilder.group({
-    nombre1: ['', Validators.required],
+    nombre1: [''],
     nombre2: [''],
     nombre3: [''],
-    primerApellido: ['', Validators.required],
+    primerApellido: [''],
     segundoApellido: [''],
+    razonSocial: [''],
+    tipoSociedad: [''],
     nacionalidad: ['', Validators.required],
     curp: [''],
     rfc: [''],
     estadoCivil: [''],
     regimenMatrimonial: [''],
     correo: ['', Validators.email],
+    participacion: [''],
   });
 
   personType: PersonType | null = null;
@@ -58,6 +61,22 @@ export class RegistroPersona {
     this.personType = personType;
     this.captureMethod = null;
     this.selectedRoles = [];
+    this.personForm.controls.nombre1.setValidators(
+      personType === 'fisica' ? Validators.required : [],
+    );
+    this.personForm.controls.primerApellido.setValidators(
+      personType === 'fisica' ? Validators.required : [],
+    );
+    this.personForm.controls.razonSocial.setValidators(
+      personType === 'moral' ? Validators.required : [],
+    );
+    this.personForm.controls.tipoSociedad.setValidators(
+      personType === 'moral' ? Validators.required : [],
+    );
+    this.personForm.controls.nombre1.updateValueAndValidity();
+    this.personForm.controls.primerApellido.updateValueAndValidity();
+    this.personForm.controls.razonSocial.updateValueAndValidity();
+    this.personForm.controls.tipoSociedad.updateValueAndValidity();
     this.personForm.reset();
   }
 

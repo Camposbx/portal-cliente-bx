@@ -196,6 +196,15 @@ body {
   border-radius: 12px;
 }
 
+.mi-cuenta-dialog-backdrop {
+  background: rgb(30 37 46 / 48%);
+  backdrop-filter: blur(6px);
+}
+
+.mi-cuenta-contact-dialog .mat-mdc-dialog-surface {
+  position: relative;
+  border-radius: 12px;
+}
 .modal-carga-docs .mat-mdc-dialog-surface {
   overflow: hidden;
   border-radius: 12px;

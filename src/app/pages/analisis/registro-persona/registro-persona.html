@@ -1,1 +1,290 @@
-<h1>Registro de personas</h1>
+<section class="registration-page">
+  <header class="registration-header">
+    @if (personType) {
+      <button class="back-button" type="button" aria-label="Regresar" (click)="volver()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+    } @else {
+      <a class="back-button" routerLink="/analisis/documentos" aria-label="Regresar a documentos">
+        <mat-icon>arrow_back</mat-icon>
+      </a>
+    }
+    <h1 class="page-title">Registro de persona</h1>
+  </header>
+
+  <div class="registration-content">
+    <section class="flow-section" aria-labelledby="person-type-title">
+      <h2 id="person-type-title" class="section-title">Elige el tipo de persona</h2>
+      <mat-radio-group
+        class="person-type-options"
+        aria-labelledby="person-type-title"
+        [value]="personType"
+        (change)="selectPersonType($event.value)"
+      >
+        <mat-radio-button value="fisica">Persona física</mat-radio-button>
+        <mat-radio-button value="moral">Persona moral</mat-radio-button>
+      </mat-radio-group>
+    </section>
+
+    @if (personType) {
+      <section class="flow-section capture-section" aria-labelledby="capture-method-title">
+        <h2 id="capture-method-title" class="section-title">¿Cómo quieres continuar?</h2>
+        <div class="row capture-options">
+          <div class="col-12 col-md-6">
+            <article class="capture-card">
+              <h3>Ingresar datos manualmente</h3>
+              <p>Captura la información de la persona de forma manual para continuar con el registro.</p>
+              <button
+                class="action-button primary-button"
+                type="button"
+                (click)="selectCaptureMethod('manual')"
+              >
+                Continuar
+              </button>
+            </article>
+          </div>
+          <div class="col-12 col-md-6">
+            <article class="capture-card">
+              <h3>Carga automática de datos</h3>
+              <p>Obtén los datos automáticamente al escanear la credencial INE y completa el registro más rápido.</p>
+              <button
+                class="action-button primary-button"
+                type="button"
+                (click)="selectCaptureMethod('automatic')"
+              >
+                Continuar
+              </button>
+            </article>
+          </div>
+        </div>
+      </section>
+    }
+
+    @if (captureMethod === 'automatic') {
+      <p class="method-notice" role="status">
+        La carga automática de datos no está disponible en este flujo. Selecciona “Ingresar datos
+        manualmente” para continuar.
+      </p>
+    }
+
+    @if (captureMethod === 'manual') {
+      <form [formGroup]="personForm" (ngSubmit)="finalizarRegistro()">
+        <section class="flow-section roles-section" aria-labelledby="roles-title">
+          <h2 id="roles-title" class="section-title">
+            ¿Qué roles ocupará esta persona? (elige todos los que apliquen)
+          </h2>
+          <div class="role-options">
+            @for (role of roles; track role.id) {
+              <mat-checkbox
+                [checked]="selectedRoles.includes(role.id)"
+                (change)="toggleRole(role.id, $event.checked)"
+              >
+                {{ role.label }}
+              </mat-checkbox>
+            }
+          </div>
+        </section>
+
+        @if (selectedRoles.length > 0) {
+          <section class="flow-section data-section" aria-labelledby="person-data-title">
+            <h2 id="person-data-title" class="section-title">
+              {{ personType === 'moral' ? 'Datos de la empresa' : 'Datos de la persona' }}
+            </h2>
+            <div class="row form-fields">
+              @if (personType === 'fisica') {
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Nombre 1</mat-label>
+                    <input matInput formControlName="nombre1" autocomplete="given-name" />
+                    @if (personForm.controls.nombre1.hasError('required') && personForm.controls.nombre1.touched) {
+                      <mat-error>Este campo es requerido</mat-error>
+                    }
+                  </mat-form-field>
+                </div>
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Nombre 2</mat-label>
+                    <input matInput formControlName="nombre2" />
+                  </mat-form-field>
+                </div>
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Nombre 3</mat-label>
+                    <input matInput formControlName="nombre3" />
+                  </mat-form-field>
+                </div>
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Primer apellido</mat-label>
+                    <input matInput formControlName="primerApellido" autocomplete="family-name" />
+                    @if (personForm.controls.primerApellido.hasError('required') && personForm.controls.primerApellido.touched) {
+                      <mat-error>Este campo es requerido</mat-error>
+                    }
+                  </mat-form-field>
+                </div>
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Segundo apellido</mat-label>
+                    <input matInput formControlName="segundoApellido" />
+                  </mat-form-field>
+                </div>
+              } @else {
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Razón social</mat-label>
+                    <input matInput formControlName="razonSocial" autocomplete="organization" />
+                    @if (
+                      personForm.controls.razonSocial.hasError('required') &&
+                      personForm.controls.razonSocial.touched
+                    ) {
+                      <mat-error>Este campo es requerido</mat-error>
+                    }
+                  </mat-form-field>
+                </div>
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Tipo de sociedad</mat-label>
+                    <mat-select formControlName="tipoSociedad">
+                      <mat-option value="SA de CV">Sociedad Anónima de Capital Variable</mat-option>
+                      <mat-option value="S de RL de CV"
+                        >Sociedad de Responsabilidad Limitada de Capital Variable</mat-option
+                      >
+                      <mat-option value="SAPI de CV"
+                        >Sociedad Anónima Promotora de Inversión de Capital Variable</mat-option
+                      >
+                      <mat-option value="SC">Sociedad Civil</mat-option>
+                      <mat-option value="AC">Asociación Civil</mat-option>
+                    </mat-select>
+                    @if (
+                      personForm.controls.tipoSociedad.hasError('required') &&
+                      personForm.controls.tipoSociedad.touched
+                    ) {
+                      <mat-error>Selecciona un tipo de sociedad</mat-error>
+                    }
+                  </mat-form-field>
+                </div>
+              }
+              <div class="col-12 col-md-6">
+                <mat-form-field appearance="outline" class="person-field">
+                  <mat-label>Nacionalidad</mat-label>
+                  <mat-select formControlName="nacionalidad">
+                    <mat-option value="Mexicana">Mexicana</mat-option>
+                    <mat-option value="Extranjera">Extranjera</mat-option>
+                  </mat-select>
+                  @if (personForm.controls.nacionalidad.hasError('required') && personForm.controls.nacionalidad.touched) {
+                    <mat-error>Selecciona una nacionalidad</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+              @if (personType === 'fisica') {
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Ingresa el CURP</mat-label>
+                    <input matInput formControlName="curp" autocomplete="off" />
+                  </mat-form-field>
+                </div>
+              }
+              <div class="col-12 col-md-6">
+                <mat-form-field appearance="outline" class="person-field">
+                  <mat-label>Ingresa el RFC</mat-label>
+                  <input matInput formControlName="rfc" autocomplete="off" />
+                </mat-form-field>
+              </div>
+              @if (personType === 'moral') {
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Correo electrónico</mat-label>
+                    <input matInput formControlName="correo" type="email" autocomplete="email" />
+                    @if (personForm.controls.correo.hasError('email') && personForm.controls.correo.touched) {
+                      <mat-error>Ingresa un correo electrónico válido</mat-error>
+                    }
+                  </mat-form-field>
+                </div>
+              }
+            </div>
+          </section>
+
+          @if (personType === 'moral' && selectedRoles.includes('accionista')) {
+            <section class="flow-section general-section" aria-labelledby="participation-title">
+              <h2 id="participation-title" class="section-title">Participación</h2>
+              <div class="row form-fields">
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Porcentaje de participación accionaria</mat-label>
+                    <input
+                      matInput
+                      formControlName="participacion"
+                      type="number"
+                      min="0"
+                      max="100"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+            </section>
+          }
+
+          @if (personType === 'fisica') {
+            <section class="flow-section general-section" aria-labelledby="general-info-title">
+              <h2 id="general-info-title" class="section-title">Información general</h2>
+              <div class="row form-fields">
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Estado civil</mat-label>
+                    <mat-select formControlName="estadoCivil">
+                      <mat-option value="Soltero">Soltero(a)</mat-option>
+                      <mat-option value="Casado">Casado(a)</mat-option>
+                      <mat-option value="Divorciado">Divorciado(a)</mat-option>
+                      <mat-option value="Viudo">Viudo(a)</mat-option>
+                      <mat-option value="UnionLibre">Unión libre</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Régimen matrimonial</mat-label>
+                    <mat-select formControlName="regimenMatrimonial">
+                      <mat-option value="SociedadConyugal">Sociedad conyugal</mat-option>
+                      <mat-option value="SeparacionBienes">Separación de bienes</mat-option>
+                      <mat-option value="NoAplica">No aplica</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </section>
+          }
+
+          @if (personType === 'fisica') {
+            <section class="flow-section contact-section" aria-labelledby="contact-info-title">
+              <h2 id="contact-info-title" class="section-title">Datos de contacto</h2>
+              <div class="row form-fields">
+                <div class="col-12">
+                  <mat-form-field appearance="outline" class="person-field">
+                    <mat-label>Correo electrónico</mat-label>
+                    <input matInput formControlName="correo" type="email" autocomplete="email" />
+                    @if (personForm.controls.correo.hasError('email') && personForm.controls.correo.touched) {
+                      <mat-error>Ingresa un correo electrónico válido</mat-error>
+                    }
+                  </mat-form-field>
+                </div>
+              </div>
+            </section>
+          }
+
+          <div class="form-actions">
+            <button class="action-button secondary-button" type="button" (click)="cancelar()">
+              Cancelar
+            </button>
+            <button
+              class="action-button primary-button"
+              type="submit"
+              [disabled]="personForm.invalid || selectedRoles.length === 0"
+            >
+              Finalizar registro
+            </button>
+          </div>
+        }
+      </form>
+    }
+  </div>
+</section>

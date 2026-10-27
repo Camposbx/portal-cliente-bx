@@ -1,0 +1,51 @@
+<div
+  class="notification"
+  [class.notification--error]="notification.type === 'error'"
+  [class.notification--warning]="notification.type === 'warning'"
+  [class.notification--success]="notification.type === 'success'"
+  [class.notification--info]="notification.type === 'info'"
+  [attr.role]="notification.type === 'error' ? 'alert' : 'status'"
+  aria-atomic="true"
+>
+  <span class="notification__icon" aria-hidden="true">
+    @switch (notification.type) {
+      @case ('error') {
+        <svg viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="7.25" />
+          <path d="M10 6.5v4.25m0 2.75h.01" />
+        </svg>
+      }
+      @case ('warning') {
+        <svg viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="7.25" />
+          <path d="M10 6.5v4.25m0 2.75h.01" />
+        </svg>
+      }
+      @case ('success') {
+        <svg viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="7.25" />
+          <path d="m6.75 10 2.1 2.1 4.4-4.45" />
+        </svg>
+      }
+      @case ('info') {
+        <svg viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="7.25" />
+          <path d="M10 9v4m0-6.5h.01" />
+        </svg>
+      }
+    }
+  </span>
+
+  <p class="notification__message">{{ notification.message }}</p>
+
+  <button
+    class="notification__close"
+    type="button"
+    aria-label="Cerrar notificación"
+    (click)="dismiss.emit(notification.id)"
+  >
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="m5 5 10 10M15 5 5 15" />
+    </svg>
+  </button>
+</div>

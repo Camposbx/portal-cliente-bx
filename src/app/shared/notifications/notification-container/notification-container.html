@@ -1,0 +1,8 @@
+<div class="notification-container" aria-label="Notificaciones">
+  @for (notification of notificationService.notifications(); track notification.id) {
+    <app-notification
+      [notification]="notification"
+      (dismiss)="notificationService.dismiss($event)"
+    />
+  }
+</div>

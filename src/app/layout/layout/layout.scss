@@ -98,8 +98,8 @@
 }
 
 .utility-button svg {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   stroke: currentColor;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -139,8 +139,8 @@
 
 .utility-button {
   display: grid;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   place-items: center;
   border: 0;
   border-radius: 50%;
@@ -153,8 +153,8 @@
 }
 
 .notification-button svg {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   stroke: currentColor;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -164,7 +164,7 @@
 .profile-button {
   background: #fff;
   color: var(--color-surface-inverse);
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 700;
 }
 

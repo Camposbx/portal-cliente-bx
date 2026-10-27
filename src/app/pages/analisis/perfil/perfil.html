@@ -52,8 +52,11 @@
           <div class="col-12 col-md-6">
             <mat-form-field appearance="outline" class="profile-field">
               <mat-label>Tipo de Sociedad</mat-label>
-              <input matInput formControlName="tipoSociedad" />
-            </mat-form-field>
+              <mat-select formControlName="tipoSociedad">
+                <mat-option value="Sociedad Anónima de Capital Variable">Sociedad Anónima de Capital Variable</mat-option>
+                <mat-option value="Sociedad de Responsabilidad Limitada">Sociedad de Responsabilidad Limitada </mat-option>
+              </mat-select>
+          </mat-form-field>
           </div>
         } @else {
           <div class="col-12 col-md-6">
@@ -106,7 +109,7 @@
         }
         <div class="col-12 col-md-6">
           <mat-form-field appearance="outline" class="profile-field">
-            <mat-label>RFC</mat-label>
+            <mat-label>Ingresa el RFC</mat-label>
             <input matInput formControlName="rfc" />
           </mat-form-field>
         </div>

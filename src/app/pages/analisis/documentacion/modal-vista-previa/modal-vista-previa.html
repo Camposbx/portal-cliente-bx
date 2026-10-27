@@ -1,0 +1,24 @@
+<section class="preview-dialog" aria-labelledby="preview-title">
+  <button class="close-button" type="button" aria-label="Cerrar vista previa" (click)="cerrar()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+  <header class="preview-header">
+    <h2 id="preview-title">Visualización de archivo cargado</h2>
+    <p [title]="data.fileName">{{ data.fileName }}</p>
+  </header>
+
+  <div class="preview-viewer">
+    @if (pdfUrl) {
+      <iframe class="pdf-preview" [src]="pdfUrl" [title]="'Vista previa de ' + data.fileName"></iframe>
+    } @else if (previewError) {
+      <p class="preview-message" role="alert">{{ previewError }}</p>
+    } @else if (!data.fileBase64) {
+      <p class="preview-message">
+        El archivo está registrado, pero todavía no se recibió su contenido PDF en Base64.
+      </p>
+    } @else {
+      <p class="preview-message">No fue posible generar la vista previa del archivo PDF.</p>
+    }
+  </div>
+</section>

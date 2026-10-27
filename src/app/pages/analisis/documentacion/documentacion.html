@@ -45,91 +45,146 @@
       <table class="documents-table">
         <thead>
           <tr>
-            <th>Documento <span class="sort-indicator">⤴</span></th>
-            <th>Formato</th>
-            <th>Fecha límite</th>
-            <th>Documento</th>
-            <th>Ver archivo</th>
-            <th>Estatus</th>
+            <th scope="col">
+              <span class="table-heading">Documento <span class="sort-indicator" aria-hidden="true">↓</span></span>
+            </th>
+            <th scope="col">
+              <span class="table-heading">Descargar<br />formato <span class="sort-indicator" aria-hidden="true">↓</span></span>
+            </th>
+            <th scope="col">
+              <span class="table-heading">Firma digital <span class="sort-indicator" aria-hidden="true">↓</span></span>
+            </th>
+            <th scope="col"><span class="table-heading">Cargar<br />documento</span></th>
+            <th scope="col">
+              <span class="table-heading">Ver archivo <span class="sort-indicator" aria-hidden="true">↓</span></span>
+            </th>
+            <th scope="col">
+              <span class="table-heading">Estatus <span class="sort-indicator" aria-hidden="true">↓</span></span>
+            </th>
           </tr>
         </thead>
 
         <tbody>
-          <tr>
-            <td><span class="doc-name">Estados financieros parciales</span> <span class="info-mark">?</span></td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td><span class="status-badge">Pendiente</span></td>
-          </tr>
-          <tr>
-            <td><span class="doc-name">Estados financieros anualito último cierre</span> <span class="info-mark">?</span></td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td><span class="status-badge">Pendiente</span></td>
-          </tr>
-          <tr>
-            <td><span class="doc-name">Estados financieros anualito penúltimo cierre</span> <span class="info-mark">?</span></td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td><span class="status-badge">Pendiente</span></td>
-          </tr>
-          <tr>
-            <td><span class="doc-name">Declaraciones de impuestos</span> <span class="info-mark">?</span></td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td><span class="status-badge">Pendiente</span></td>
-          </tr>
-          <tr>
-            <td><span class="doc-name">Relación analítica de las principales cuentas analíticas de las principales cuentas</span> <span class="info-mark">?</span></td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td><span class="status-badge">Pendiente</span></td>
-          </tr>
-          <tr>
-            <td><span class="doc-name">Estados financieros año de filiales</span> <span class="info-mark">?</span></td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td><span class="status-badge">Pendiente</span></td>
-          </tr>
-          <tr>
-            <td><span class="doc-name">Pasivos con costo financiero y cuentas de orden</span> <span class="info-mark">?</span></td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td><span class="status-badge">Pendiente</span></td>
-          </tr>
-          <tr>
-            <td><span class="doc-name">Detalle de pasivos</span> <span class="info-mark">?</span></td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td><span class="status-badge">Pendiente</span></td>
-          </tr>
-          <tr>
-            <td><span class="doc-name">Descripción de las políticas de otorgamiento de crédito</span> <span class="info-mark">?</span></td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td>—</td>
-            <td><span class="status-badge">Pendiente</span></td>
-          </tr>
+          @for (document of documents; track document.name) {
+            <tr>
+              <td>
+                <span class="doc-name">{{ document.name }}</span>
+                <span class="info-mark" [attr.aria-label]="'Información sobre ' + document.name">?</span>
+              </td>
+              <td>
+                <button
+                  class="download-format-button"
+                  type="button"
+                  [attr.aria-label]="'Formato de descarga no disponible para ' + document.name"
+                  title="Formato no disponible"
+                  disabled
+                >
+                  <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M10 3v9m0 0 3.5-3.5M10 12 6.5 8.5M4 13v3h12v-3" />
+                  </svg>
+                </button>
+              </td>
+              <td>
+                <button
+                  class="signature-button"
+                  [class.signature-button--requested]="document.signatureRequested"
+                  type="button"
+                  [disabled]="document.signatureRequested"
+                  (click)="solicitarFirmaDigital(document)"
+                >
+                  {{ document.signatureRequested ? 'Firma solicitada' : 'Req. firma digital' }}
+                </button>
+              </td>
+              @if (document.uploadState !== 'idle' && document.selectedFileName) {
+                <td class="upload-status-cell">
+                  <div
+                    class="upload-status-card"
+                    [class.upload-status-card--complete]="document.uploadState === 'uploaded'"
+                    [attr.aria-label]="
+                      document.uploadState === 'uploading'
+                        ? 'Subiendo ' + document.selectedFileName
+                        : 'Archivo subido: ' + document.selectedFileName
+                    "
+                    aria-live="polite"
+                  >
+                    @if (document.uploadState === 'uploading') {
+                      <span
+                        class="upload-progress-ring"
+                        role="progressbar"
+                        [style.--upload-progress]="document.uploadProgress + '%'"
+                        [attr.aria-valuenow]="document.uploadProgress"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        [attr.aria-label]="'Progreso de carga: ' + document.uploadProgress + '%'"
+                      ></span>
+                    } @else {
+                      <span class="upload-check" aria-hidden="true">
+                        <svg viewBox="0 0 20 20" fill="none">
+                          <path d="m5.5 10.25 3 3 6-6.5" />
+                        </svg>
+                      </span>
+                    }
+
+                    <span class="upload-status-copy">
+                      <strong [title]="document.selectedFileName">{{ document.selectedFileName }}</strong>
+                      @if (document.uploadState === 'uploading') {
+                        <span class="upload-detail">
+                          {{ getUploadedSize(document) }} de {{ formatFileSize(document.fileSize) }}
+                        </span>
+                      } @else {
+                        <span class="upload-detail upload-detail--complete">Su archivo ha sido subido</span>
+                      }
+                    </span>
+
+                    <button
+                      class="remove-file-button"
+                      type="button"
+                      [attr.aria-label]="'Quitar ' + document.selectedFileName"
+                      (click)="removeFile(document)"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </td>
+                <td>
+                  <button
+                    class="preview-file-button"
+                    type="button"
+                    [attr.aria-label]="'Ver archivo ' + document.selectedFileName"
+                    title="Ver archivo"
+                    (click)="verArchivo(document)"
+                  >
+                    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                      <path d="M1.75 10s3-5 8.25-5 8.25 5 8.25 5-3 5-8.25 5-8.25-5-8.25-5Z" />
+                      <circle cx="10" cy="10" r="2.25" />
+                    </svg>
+                  </button>
+                </td>
+                <td>
+                  <span class="status-badge">{{ document.status }}</span>
+                </td>
+              } @else {
+                <td>
+                  <button
+                    class="upload-document-button"
+                    type="button"
+                    [attr.aria-label]="'Cargar ' + document.name"
+                    (click)="abrirCarga(document)"
+                  >
+                    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                      <path d="M10 13V3m0 0L6.5 6.5M10 3l3.5 3.5M4 12v4h12v-4" />
+                    </svg>
+                  </button>
+                </td>
+                <td>—</td>
+                <td>
+                  <span class="status-badge">{{ document.status }}</span>
+                </td>
+              }
+            </tr>
+          }
         </tbody>
       </table>
     </div>
   </main>
 </section>
-

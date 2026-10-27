@@ -1,0 +1,66 @@
+<section class="upload-dialog" aria-labelledby="upload-title">
+  <button
+    class="close-button"
+    type="button"
+    aria-label="Cerrar"
+    (click)="cancelar()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+  <header class="upload-header">
+    <h2 id="upload-title">Cargar documento</h2>
+    <p>{{ documentName }}</p>
+  </header>
+
+  <div
+    class="drop-zone"
+    [class.is-dragging]="dragging"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+  >
+    <svg class="document-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M7 3.75h8.5l3.75 3.75v12.75H7a2 2 0 0 1-2-2V5.75a2 2 0 0 1 2-2Z"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linejoin="round"
+      />
+      <path d="M15.5 3.75V8h4.25M8.5 12h7m-7 3h7" stroke="currentColor" stroke-width="1.5" />
+    </svg>
+
+    @if (selectedFile) {
+      <p class="drop-copy selected-file" aria-live="polite">{{ selectedFile.name }}</p>
+    } @else {
+      <p class="drop-copy">Arrastra y suelta tu archivo<br />desde tu computadora o</p>
+    }
+
+    <input
+      id="document-file"
+      class="file-input"
+      type="file"
+      accept=".xls,.xlsx,.csv,.png,.jpg,.jpeg,.pdf"
+      (change)="onFileChange($event)"
+    />
+    <label class="choose-button" for="document-file">Seleccionar un archivo</label>
+
+    <p class="file-requirements">Formatos .XLS, .CSV, .PNG, .JPG, .PDF<br />20 MB máximo</p>
+  </div>
+
+  @if (errorMessage) {
+    <p class="file-error" role="alert">{{ errorMessage }}</p>
+  }
+
+  <footer class="upload-actions">
+    <button class="cancel-button" type="button" (click)="cancelar()">Cancelar</button>
+    <button
+      class="upload-button"
+      type="button"
+      [disabled]="!selectedFile"
+      (click)="cargar()"
+    >
+      Cargar
+    </button>
+  </footer>
+</section>

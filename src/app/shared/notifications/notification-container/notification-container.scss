@@ -1,0 +1,23 @@
+.notification-container {
+  position: fixed;
+  z-index: 1000;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  width: min(520px, calc(100vw - 36px));
+  gap: 16px;
+  pointer-events: none;
+}
+
+.notification-container app-notification {
+  pointer-events: auto;
+}
+
+@media (max-width: 640px) {
+  .notification-container {
+    top: 12px;
+    right: 12px;
+    width: calc(100vw - 24px);
+    gap: 10px;
+  }
+}

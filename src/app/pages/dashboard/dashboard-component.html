@@ -38,8 +38,8 @@
     </header>
 
     <section class="welcome-block">
-      <p>Te damos la bienvenida Juan Vázquez</p>
-      <h1>El Patito, S.A. de C.V.</h1>
+      <p class="text-heading-sm">Te damos la bienvenida Juan Vázquez</p>
+      <h1 class="display-lg">El Patito, S.A. de C.V.</h1>
     </section>
 
     <section class="module-grid" aria-label="Módulos del portal">
@@ -51,9 +51,9 @@
           <img class="module-image" [src]="module.image" alt="" aria-hidden="true" />
 
           <div class="module-body">
-            <span class="module-label">Módulo {{ module.number }}:</span>
-            <h3>{{ module.title }}</h3>
-            <p>{{ module.description }}</p>
+            <span class="module-label text-body-sm-medium">Módulo {{ module.number }}:</span>
+            <h3 class="text-display-xs">{{ module.title }}</h3>
+            <p class="text-body-md-regular">{{ module.description }}</p>
 
             <div class="module-footer">
               @if (module.disabled) {
@@ -74,8 +74,8 @@
                   aria-valuemax="100"
                 >
                   <div class="progress-copy">
-                    <strong>{{ module.progress }}%</strong>
-                    <span>Completada</span>
+                    <strong class="text-caption-medium">{{ module.progress }}%</strong>
+                    <span class="text-caption-regular">Completada</span>
                   </div>
                   <div class="progress-track">
                     <span class="progress-fill" [style.width.%]="module.progress"></span>
@@ -83,6 +83,7 @@
                 </div>
               }
               <button
+                class="text-label-sm"
                 type="button"
                 [routerLink]="module.route"
                 [disabled]="module.disabled"
@@ -98,22 +99,22 @@
 
     <section class="summary-grid" aria-label="Resumen de vencimientos">
       <article class="summary-card">
-        <div class="summary-value">89</div>
+        <div class="summary-value text-display-lg">89</div>
 
         <div class="summary-content">
-          <span class="summary-caption">Para el vencimiento de tu LÍNEA</span>
-          <h4>Crédito Cuenta Corriente Tradicional</h4>
-          <p>Habla con tu ejecutivo para recalificar</p>
+          <span class="summary-caption text-body-sm-regular">Para el vencimiento de tu LÍNEA</span>
+          <h4 class="text-body-md-medium">Crédito Cuenta Corriente Tradicional</h4>
+          <p class="text-body-sm-regular">Habla con tu ejecutivo para recalificar</p>
         </div>
       </article>
 
       <article class="summary-card">
-        <div class="summary-value">65</div>
+        <div class="summary-value text-display-lg">65</div>
 
         <div class="summary-content">
-          <span class="summary-caption">Para el vencimiento de tu CONTRATO</span>
-          <h4>Crédito Cuenta Corriente Tradicional</h4>
-          <p>Habla con tu ejecutivo para recalificar</p>
+          <span class="summary-caption text-body-sm-regular">Para el vencimiento de tu CONTRATO</span>
+          <h4 class="text-body-md-medium">Crédito Cuenta Corriente Tradicional</h4>
+          <p class="text-body-sm-regular">Habla con tu ejecutivo para recalificar</p>
         </div>
       </article>
     </section>

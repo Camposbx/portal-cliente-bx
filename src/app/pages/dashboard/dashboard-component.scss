@@ -7,7 +7,6 @@
   min-height: calc(100dvh - 70px);
   background: #dfe3e6;
   color: #1e232b;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .dashboard-shell {
@@ -89,16 +88,11 @@ height: 164px;
 .welcome-block p {
   margin: 0;
   color: #5d6870;
-  font-size: 0.9rem;
-  font-weight: 500;
 }
 
 .welcome-block h1 {
   margin: 6px 0 0;
   color: #2e363c;
-  font-size: clamp(2rem, 2.7vw, 3rem);
-  letter-spacing: -0.06em;
-  font-weight: 700;
 }
 
 .module-grid {
@@ -141,24 +135,16 @@ height: 164px;
   display: inline-block;
   margin-bottom: 8px;
   color: rgba(229, 234, 236, 0.7);
-  font-size: 0.7rem;
-  letter-spacing: 0.01em;
 }
 
 .module-body h3 {
   margin: 0 0 10px;
   color: #fff;
-  font-size: clamp(1.4rem, 1.7vw, 1.9rem);
-  line-height: 1.2;
-  letter-spacing: -0.05em;
-  font-weight: 700;
 }
 
 .module-body p {
   margin: 0;
   color: rgba(228, 233, 236, 0.8);
-  font-size: 0.8rem;
-  line-height: 1.55;
   min-height: 54px;
 }
 
@@ -174,7 +160,6 @@ height: 164px;
   flex: 1 1 auto;
   max-width: 150px;
   color: #dce2e5;
-  font-size: 0.68rem;
 }
 
 .progress-copy {
@@ -186,8 +171,6 @@ height: 164px;
 
 .progress-copy strong {
   color: #fff;
-  font-size: 0.78rem;
-  font-weight: 700;
 }
 
 .progress-track {
@@ -232,7 +215,6 @@ height: 164px;
   border-radius: 999px;
   background: #d8e000;
   color: #1d242c;
-  font-weight: 700;
   cursor: pointer;
 }
 
@@ -267,10 +249,6 @@ height: 164px;
   justify-content: center;
   min-width: 96px;
   color: #0d9ec8;
-  font-size: clamp(2.4rem, 2.5vw, 3.25rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.06em;
 }
 
 .summary-value::after {
@@ -278,9 +256,11 @@ height: 164px;
   display: block;
   margin-left: 10px;
   color: #4f5c64;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-family: var(--font-body-md-medium-family);
+  font-size: var(--font-body-md-medium-size);
+  font-weight: var(--font-body-md-medium-weight);
+  line-height: var(--font-body-md-medium-line-height);
+  letter-spacing: var(--font-body-md-medium-letter-spacing);
   text-transform: lowercase;
 }
 
@@ -293,23 +273,16 @@ height: 164px;
 
 .summary-caption {
   color: #5d6870;
-  font-size: 0.72rem;
-  font-weight: 600;
 }
 
 .summary-content h4 {
   margin: 0;
   color: #1d262d;
-  font-size: clamp(1.05rem, 1.3vw, 1.35rem);
-  line-height: 1.35;
-  letter-spacing: -0.03em;
-  font-weight: 700;
 }
 
 .summary-content p {
   margin: 0;
   color: #5f6c74;
-  font-size: 0.82rem;
 }
 
 .site-footer {

@@ -4,6 +4,10 @@
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
+@use './styles/fonts';
+@use './styles/typography-tokens';
+@use './styles/typography';
+
 @import 'bootstrap/scss/bootstrap';
 
 html {
@@ -14,7 +18,7 @@ html {
         primary: mat.$chartreuse-palette,
         tertiary: mat.$cyan-palette,
       ),
-      typography: Roboto,
+      typography: 'Balto',
       density: 0,
     )
   );

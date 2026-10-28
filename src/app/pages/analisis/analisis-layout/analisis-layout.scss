@@ -7,7 +7,7 @@
 .analysis-shell {
   display: grid;
   min-height: 100dvh;
-  grid-template-columns: 178px minmax(0, 1fr);
+  grid-template-columns: 252px minmax(0, 1fr);
   overflow: hidden;
   background: var(--color-surface-default);
 }
@@ -19,11 +19,12 @@
 
 .analysis-title {
   margin: 0 0 17px 6px;
-  color: var(--color-neutral-strong);
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.35;
+  font-family: Roboto, sans-serif;
+  font-size: 28px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 36px;
+  letter-spacing: 0;
 }
 
 .side-card {
@@ -42,7 +43,7 @@
   padding: 11px 12px;
   border-bottom: 1px solid var(--color-border-subtle);
   color: var(--color-neutral-strongest);
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 1.3;
 }
@@ -69,8 +70,8 @@
 }
 
 .applicant-avatar {
-  width: 25px;
-  height: 25px;
+  width: 32px;
+  height: 32px;
 }
 
 .applicant-avatar mat-icon {
@@ -81,9 +82,11 @@
 
 .applicant-name {
   color: var(--color-neutral-strongest);
-  font-size: 9px;
+  font-size: 14px;
   line-height: 1.25;
   text-decoration: none;
+  font-style: normal ;
+  font-weight: 500;
 }
 
 .applicant-name:hover {
@@ -97,7 +100,7 @@
 }
 
 .people-card {
-  padding-bottom: 11px;
+  padding-bottom: 4px;
 }
 
 .people-avatars {
@@ -106,64 +109,86 @@
   margin: 12px 0 8px;
 }
 
-.person-avatar {
-  width: 24px;
-  height: 24px;
+.people-avatars .person-avatar {
   margin-left: -4px;
   border: 2px solid var(--color-surface-default);
-  background: #80d1de;
-  color: var(--color-info-strong);
 }
 
-.person-avatar:first-child {
+.people-avatars .person-avatar:first-child {
   margin-left: 0;
 }
 
-.person-avatar:nth-child(2) {
+.people-avatars .person-avatar:nth-child(2) {
   background: #a6e5eb;
 }
 
-.person-avatar:nth-child(3) {
+.people-avatars .person-avatar:nth-child(3) {
   background: #f3c18c;
 }
 
+.person-avatar {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-info-subtle);
+  color: var(--color-info-default);
+}
+
 .person-avatar mat-icon {
-  width: 15px;
-  height: 15px;
-  font-size: 15px;
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
 }
 
 .people-prompt {
-  max-width: 130px;
-  margin: 0 auto 11px;
+  max-width: 204px;
+  margin: 0 auto 6px;
   color: var(--color-neutral-strongest);
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.35;
   text-align: center;
 }
 
-.register-button {
-  display: block;
-  width: fit-content;
-  margin: 0 auto;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: var(--color-action-primary-default);
-  color: var(--color-action-on-primary);
+.involved-person {
+  display: flex;
+  min-height: 36px;
+  align-items: center;
+  gap: 6px;
+  margin: 6px;
+  padding: 5px;
+  border-radius: 8px;
+  background: #80d1de;
+}
+
+.people-list {
+  padding-top: 1px;
+}
+
+.person-name {
+  overflow: hidden;
+  color: var(--color-neutral-strongest);
   font-size: 10px;
-  line-height: 1.2;
-  text-decoration: none;
-  transition: background-color 150ms ease;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.register-button:hover {
-  background: var(--color-action-primary-hover);
+.register-button {
+  display: flex;
+  width: fit-content;
+  min-height: 32px;
+  margin: 0 auto 2px;
+  color: var(--color-neutral-strongest);
+  font-size: 10px;
 }
 
-.register-button:focus-visible {
-  outline: 2px solid var(--color-border-focus);
-  outline-offset: 2px;
+.register-button mat-icon {
+  margin-right: 4px;
+  font-size: 16px;
 }
 
 .analysis-content {

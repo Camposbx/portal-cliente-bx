@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { PersonasInvolucradasService } from '../personas-involucradas.service';
 
 type PersonType = 'fisica' | 'moral';
 type CaptureMethod = 'manual' | 'automatic';
@@ -28,6 +29,8 @@ type CaptureMethod = 'manual' | 'automatic';
 })
 export class RegistroPersona {
   private readonly formBuilder = inject(FormBuilder).nonNullable;
+  private readonly router = inject(Router);
+  private readonly personasInvolucradas = inject(PersonasInvolucradasService);
 
   readonly personForm = this.formBuilder.group({
     nombre1: [''],
@@ -112,6 +115,18 @@ export class RegistroPersona {
   finalizarRegistro(): void {
     if (this.selectedRoles.length === 0 || this.personForm.invalid) {
       this.personForm.markAllAsTouched();
+      return;
     }
+
+    const datos = this.personForm.getRawValue();
+    const nombre =
+      this.personType === 'fisica'
+        ? [datos.nombre1, datos.nombre2, datos.nombre3, datos.primerApellido, datos.segundoApellido]
+            .filter((parte) => parte.trim())
+            .join(' ')
+        : datos.razonSocial;
+
+    this.personasInvolucradas.agregar(nombre);
+    void this.router.navigateByUrl('/analisis/documentos');
   }
 }

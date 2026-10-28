@@ -1,0 +1,200 @@
+<div class="container-fluid account-page">
+  <div class="account-content">
+    <header class="account-header row align-items-center g-3">
+      <div class="col-auto">
+        <div class="account-avatar" aria-hidden="true">
+          <mat-icon fontSet="material-symbols-outlined">person</mat-icon>
+        </div>
+      </div>
+      <div class="col">
+        <p class="account-owner">Titular de la cuenta · El Patito, S.A. de C.V.</p>
+        <h1>Hola, Juan</h1>
+      </div>
+      <!-- <div class="col-12 col-md-auto">
+        <span class="status-pill status-success"><span></span>Cuenta verificada</span>
+      </div> -->
+    </header>
+
+    <!-- <section
+      class="invite-banner row align-items-center g-3"
+      aria-labelledby="secondary-capacity-title"
+    >
+      <div class="col">
+        <h2 id="secondary-capacity-title">Usuarios secundarios · 2 de 3</h2>
+        <p>
+          Te queda uno por invitar. Puede cargar documentación por ti, pero no dar de alta a nadie
+          más.
+        </p>
+      </div>
+      <div class="col-12 col-sm-auto">
+        <button class="btn btn-primary-brand" type="button">Invitar</button>
+      </div>
+    </section> -->
+
+    <section class="account-card" aria-labelledby="personal-data-title">
+      <div class="section-heading">
+        <h2 id="personal-data-title">Mis datos</h2>
+        <p>Como te registró el banco. Para cambiarlos, escríbele a tu ejecutivo.</p>
+      </div>
+      <div class="personal-data">
+        <div class="data-field">
+          <span>Nombre completo</span>
+          <strong>Juan Vásquez Ramírez</strong>
+        </div>
+        <div class="data-field">
+          <span>Puesto</span>
+          <strong>Director General</strong>
+        </div>
+        <div class="data-field">
+          <span>Perfil</span>
+          <strong>Titular de la cuenta</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="account-card" aria-labelledby="contact-data-title">
+      <div class="section-heading section-heading-actions">
+        <div>
+          <h2 id="contact-data-title">Datos de contacto</h2>
+          <p>Cómo te localizamos. Estos sí los editas tú.</p>
+        </div>
+        <div class="contact-add-actions">
+          <button class="btn btn-outline-brand" type="button" (click)="abrirContacto('phone')">
+            Agregar teléfono
+          </button>
+          <button class="btn btn-outline-brand" type="button" (click)="abrirContacto('email')">
+            Agregar correo
+          </button>
+        </div>
+      </div>
+      <div class="contact-list">
+        @for (contact of contacts; track contact.label + contact.value) {
+          <div class="contact-row row align-items-center g-2">
+            <div class="col">
+              <span class="field-label">{{ contact.label }}</span>
+              <strong>{{ contact.value }}</strong>
+            </div>
+            <div class="col-auto contact-actions">
+              <button
+                class="text-action"
+                type="button"
+                (click)="abrirContacto(contact.type, contact)"
+              >
+                Editar
+              </button>
+              @if (contact.label !== 'Correo principal') {
+                <button class="text-action" type="button" (click)="eliminarContacto(contact)">
+                  Eliminar
+                </button>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="account-card" aria-labelledby="company-data-title">
+      <div class="section-heading">
+        <h2 id="company-data-title">Datos de la empresa</h2>
+        <p>Como los tiene el banco. Para cambiarlos, escríbele a tu ejecutivo.</p>
+      </div>
+      <div class="company-data row g-4">
+        <div class="col-12 col-md-4 company-field">
+          <span>Razón Social</span>
+          <strong>El Patito, S.A. de C.V.</strong>
+        </div>
+        <div class="col-12 col-md-4 company-field">
+          <span>Tipo de Sociedad</span>
+          <strong>Sociedad Anónima de Capital Variable</strong>
+        </div>
+        <div class="col-12 col-md-4 company-field">
+          <span>Nacionalidad</span>
+          <strong>Mexicana</strong>
+        </div>
+        <div class="col-12 col-md-4 company-field">
+          <span>RFC</span>
+          <strong>PAEL870344PQ3</strong>
+        </div>
+        <div class="col-12 col-md-4 company-field">
+          <span>Sector</span>
+          <strong>Comercio</strong>
+        </div>
+        <div class="col-12 col-md-4 company-field">
+          <span>Giro</span>
+          <strong>Comercio al por mayor</strong>
+        </div>
+        <div class="col-12 col-md-4 company-field">
+          <span>Actividad Preponderante</span>
+          <strong>Comercio al por mayor de abarrotes, alimentos y bebidas</strong>
+        </div>
+        <div class="col-12 col-md-4 company-field">
+          <span>Correo electrónico</span>
+          <strong>contacto&#64;elpatito.com.mx</strong>
+        </div>
+        <div class="col-12 col-md-4 company-field">
+          <span>Domicilio fiscal</span>
+          <strong>Allende 24, Copilco El Alto, Coyoacán, 04100, Ciudad de México (CDMX)</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- <section class="account-card" aria-labelledby="users-title">
+      <div class="section-heading section-heading-actions">
+        <div>
+          <h2 id="users-title">Usuarios secundarios</h2>
+          <p>Solo tú puedes darlos de alta o de baja.</p>
+        </div>
+        <button class="btn btn-outline-brand" type="button">Agregar usuario</button>
+      </div>
+      <div class="secondary-user-list">
+        @for (user of secondaryUsers; track user.email) {
+          <div class="secondary-user row align-items-center g-3">
+            <div class="col-auto">
+              <span class="user-initials">{{ user.initials }}</span>
+            </div>
+            <div class="col-md-3 user-name">{{ user.name }}</div>
+            <div class="col-md user-email">{{ user.email }}</div>
+            <div class="col-auto">
+              <span
+                class="status-pill"
+                [class.status-success]="user.status === 'Activo'"
+                [class.status-warning]="user.status !== 'Activo'"
+              >
+                <span></span>{{ user.status }}
+              </span>
+            </div>
+            <div class="col-auto">
+              <button class="text-action" type="button">Quitar acceso</button>
+            </div>
+          </div>
+        }
+      </div>
+    </section> -->
+
+    <section
+      class="account-card compact-card row align-items-center g-3"
+      aria-labelledby="password-title"
+    >
+      <div class="col">
+        <h2 id="password-title">Contraseña</h2>
+        <p>La cambiaste hace 4 meses. Puedes cambiarla cuando quieras.</p>
+      </div>
+      <div class="col-12 col-sm-auto">
+        <button class="btn btn-outline-brand" type="button">Cambiar contraseña</button>
+      </div>
+    </section>
+
+    <section
+      class="account-card compact-card row align-items-center g-3"
+      aria-labelledby="session-title"
+    >
+      <div class="col">
+        <h2 id="session-title">Sesión</h2>
+        <p>Cierras la sesión en este navegador. Tus usuarios secundarios no se ven afectados.</p>
+      </div>
+      <div class="col-12 col-sm-auto">
+        <button class="btn btn-outline-brand" type="button">Cerrar sesión</button>
+      </div>
+    </section>
+  </div>
+</div>

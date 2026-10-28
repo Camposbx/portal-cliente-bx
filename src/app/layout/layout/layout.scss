@@ -166,6 +166,12 @@
   color: var(--color-surface-inverse);
   font-size: 14px;
   font-weight: 700;
+  text-decoration: none;
+}
+
+.profile-button.active {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
 }
 
 .page-content {

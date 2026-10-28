@@ -5,9 +5,16 @@
         <mat-icon>person</mat-icon>
       </span>
       <div class="client-details">
-        <h1 class="client-name">El Patito, S.A. de C.V.</h1>
+        <h1 class="client-name">
+          @if (personaMoral) {
+            El Patito, S.A. de C.V.
+          } @else {
+            {{ profileForm.controls.nombre1.value }} {{ profileForm.controls.primerApellido.value }}
+            {{ profileForm.controls.segundoApellido.value }}
+          }
+        </h1>
         <div class="client-meta">
-          <span class="client-type">Acreditado PM</span>
+          <span class="client-type">Acreditado {{ personaMoral ? 'PM' : 'PFAE' }}</span>
           <span class="edit-button">Editar datos</span>
         </div>
       </div>
@@ -16,25 +23,73 @@
 
   <div class="profile-heading">
     <h2 class="profile-title">Información general</h2>
-    <a class="close-button" routerLink="/analisis/documentos">Cerrar</a>
+    <div class="profile-heading-actions">
+      <button
+        class="type-toggle-button"
+        type="button"
+        [attr.aria-pressed]="personaMoral"
+        (click)="alternarTipoPersona()"
+      >
+        Persona {{ personaMoral ? 'física' : 'moral' }}
+      </button>
+      <a class="close-button" routerLink="/analisis/documentos">Cerrar</a>
+    </div>
   </div>
 
   <form [formGroup]="profileForm" (ngSubmit)="guardar()">
     <section class="profile-section" aria-labelledby="company-data-title">
-      <h3 id="company-data-title" class="section-title">Datos de la empresa</h3>
+      <h3 id="company-data-title" class="section-title">
+        {{ personaMoral ? 'Datos de la empresa' : 'Datos de la persona' }}
+      </h3>
       <div class="row profile-fields">
-        <div class="col-12 col-md-6">
-          <mat-form-field appearance="outline" class="profile-field">
-            <mat-label>Razón Social</mat-label>
-            <input matInput formControlName="razonSocial" />
+        @if (personaMoral) {
+          <div class="col-12 col-md-6">
+            <mat-form-field appearance="outline" class="profile-field">
+              <mat-label>Razón Social</mat-label>
+              <input matInput formControlName="razonSocial" />
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-6">
+            <mat-form-field appearance="outline" class="profile-field">
+              <mat-label>Tipo de Sociedad</mat-label>
+              <mat-select formControlName="tipoSociedad">
+                <mat-option value="Sociedad Anónima de Capital Variable">Sociedad Anónima de Capital Variable</mat-option>
+                <mat-option value="Sociedad de Responsabilidad Limitada">Sociedad de Responsabilidad Limitada </mat-option>
+              </mat-select>
           </mat-form-field>
-        </div>
-        <div class="col-12 col-md-6">
-          <mat-form-field appearance="outline" class="profile-field">
-            <mat-label>Tipo de Sociedad</mat-label>
-            <input matInput formControlName="tipoSociedad" />
-          </mat-form-field>
-        </div>
+          </div>
+        } @else {
+          <div class="col-12 col-md-6">
+            <mat-form-field appearance="outline" class="profile-field">
+              <mat-label>Nombre 1</mat-label>
+              <input matInput formControlName="nombre1" autocomplete="given-name" />
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-6">
+            <mat-form-field appearance="outline" class="profile-field">
+              <mat-label>Nombre 2</mat-label>
+              <input matInput formControlName="nombre2" />
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-6">
+            <mat-form-field appearance="outline" class="profile-field">
+              <mat-label>Nombre 3</mat-label>
+              <input matInput formControlName="nombre3" />
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-6">
+            <mat-form-field appearance="outline" class="profile-field">
+              <mat-label>Primer apellido</mat-label>
+              <input matInput formControlName="primerApellido" autocomplete="family-name" />
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-6">
+            <mat-form-field appearance="outline" class="profile-field">
+              <mat-label>Segundo apellido</mat-label>
+              <input matInput formControlName="segundoApellido" />
+            </mat-form-field>
+          </div>
+        }
         <div class="col-12 col-md-6">
           <mat-form-field appearance="outline" class="profile-field">
             <mat-label>Nacionalidad</mat-label>
@@ -44,12 +99,50 @@
             </mat-select>
           </mat-form-field>
         </div>
+        @if (!personaMoral) {
+          <div class="col-12 col-md-6">
+            <mat-form-field appearance="outline" class="profile-field">
+              <mat-label>CURP</mat-label>
+              <input matInput formControlName="curp" />
+            </mat-form-field>
+          </div>
+        }
         <div class="col-12 col-md-6">
           <mat-form-field appearance="outline" class="profile-field">
             <mat-label>Ingresa el RFC</mat-label>
             <input matInput formControlName="rfc" />
           </mat-form-field>
         </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="profile-field">
+            <mat-label>TIN</mat-label>
+            <input matInput formControlName="tin" />
+          </mat-form-field>
+        </div>
+        @if (!personaMoral) {
+          <div class="col-12 col-md-6">
+            <mat-form-field appearance="outline" class="profile-field">
+              <mat-label>Estado civil</mat-label>
+              <mat-select formControlName="estadoCivil">
+                <mat-option value="Soltero">Soltero(a)</mat-option>
+                <mat-option value="Casado">Casado(a)</mat-option>
+                <mat-option value="Divorciado">Divorciado(a)</mat-option>
+                <mat-option value="Viudo">Viudo(a)</mat-option>
+                <mat-option value="UnionLibre">Unión libre</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-6">
+            <mat-form-field appearance="outline" class="profile-field">
+              <mat-label>Sociedad conyugal</mat-label>
+              <mat-select formControlName="sociedadConyugal">
+                <mat-option value="SociedadConyugal">Sociedad conyugal</mat-option>
+                <mat-option value="SeparacionBienes">Separación de bienes</mat-option>
+                <mat-option value="NoAplica">No aplica</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        }
         <div class="col-12 col-md-6">
           <mat-form-field appearance="outline" class="profile-field">
             <mat-label>Correo electrónico</mat-label>

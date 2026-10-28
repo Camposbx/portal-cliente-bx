@@ -81,6 +81,12 @@
   margin: 22px 0 12px;
 }
 
+.profile-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .profile-title {
   margin: 0;
   color: var(--color-neutral-strongest);
@@ -90,7 +96,8 @@
 }
 
 .close-button,
-.action-button {
+.action-button,
+.type-toggle-button {
   display: inline-flex;
   min-height: 36px;
   align-items: center;
@@ -117,9 +124,19 @@
 }
 
 .close-button:focus-visible,
-.action-button:focus-visible {
+.action-button:focus-visible,
+.type-toggle-button:focus-visible {
   outline: 2px solid var(--color-border-focus);
   outline-offset: 2px;
+}
+
+.type-toggle-button {
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+.type-toggle-button:hover {
+  background: var(--color-action-secondary-hover);
 }
 
 .profile-section {
@@ -143,20 +160,33 @@
   width: 100%;
   --mat-form-field-container-height: 48px;
   --mat-form-field-container-vertical-padding: 8px;
+  --mat-form-field-outlined-container-shape: 4px;
+  --mat-form-field-outlined-outline-color: var(--color-neutral-strong);
+  --mat-form-field-outlined-hover-outline-color: var(--color-info-default);
+  --mat-form-field-outlined-focus-outline-color: var(--color-brand-primary);
+  --mat-form-field-outlined-label-text-color: var(--color-neutral-default);
+  --mat-form-field-outlined-hover-label-text-color: var(--color-info-strong);
+  --mat-form-field-outlined-focus-label-text-color: var(--color-text-default);
+  --mat-form-field-outlined-input-text-color: var(--color-text-default);
+  --mat-form-field-outlined-input-text-placeholder-color: var(--color-text-subtle);
+  --mat-form-field-outlined-disabled-outline-color: var(--color-border-subtle);
+  --mat-form-field-outlined-disabled-label-text-color: var(--color-neutral-default);
+  --mat-form-field-outlined-disabled-input-text-color: var(--color-neutral-default);
+  --mat-form-field-outlined-error-outline-color: var(--color-error-default);
+  --mat-form-field-outlined-error-hover-outline-color: var(--color-error-default);
+  --mat-form-field-outlined-error-focus-outline-color: var(--color-error-default);
+  --mat-form-field-outlined-error-label-text-color: var(--color-error-default);
+  --mat-form-field-outlined-error-hover-label-text-color: var(--color-error-default);
+  --mat-form-field-outlined-error-focus-label-text-color: var(--color-error-default);
+  --mat-form-field-error-text-color: var(--color-error-default);
 }
 
 .profile-field ::ng-deep .mat-mdc-text-field-wrapper {
   background: var(--color-surface-default);
 }
 
-.profile-field ::ng-deep .mdc-text-field--disabled {
+.profile-field ::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field--disabled {
   background: var(--color-surface-muted);
-}
-
-.profile-field ::ng-deep .mdc-text-field--disabled .mdc-notched-outline__leading,
-.profile-field ::ng-deep .mdc-text-field--disabled .mdc-notched-outline__notch,
-.profile-field ::ng-deep .mdc-text-field--disabled .mdc-notched-outline__trailing {
-  border-color: var(--color-border-subtle);
 }
 
 .profile-field ::ng-deep .mat-mdc-form-field-subscript-wrapper {
@@ -208,6 +238,11 @@
 
   .profile-heading {
     margin-top: 18px;
+  }
+
+  .profile-heading-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .profile-actions {

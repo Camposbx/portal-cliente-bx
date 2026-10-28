@@ -8,25 +8,37 @@
         <span class="applicant-avatar" aria-hidden="true">
           <mat-icon>person</mat-icon>
         </span>
-        <a class="applicant-name" routerLink="/analisis/documentos">El Patito, S.A. de C.V.</a>
+        <a class="applicant-name" routerLink="/analisis/documentos">ASOCIACION MEXICANA PARA LAS NACIONES UNIDAS DE JOVENES AMNU JOVENES</a>
       </div>
     </section>
 
     <section class="side-card people-card" aria-labelledby="people-title">
       <h2 id="people-title" class="card-heading">Personas involucradas</h2>
-      <div class="people-avatars" aria-label="Tres personas involucradas">
-        <span class="person-avatar" aria-label="Persona involucrada">
-          <mat-icon aria-hidden="true">person</mat-icon>
-        </span>
-        <span class="person-avatar" aria-label="Persona involucrada">
-          <mat-icon aria-hidden="true">person</mat-icon>
-        </span>
-        <span class="person-avatar" aria-label="Persona involucrada">
-          <mat-icon aria-hidden="true">person</mat-icon>
-        </span>
-      </div>
-      <p class="people-prompt">Registra las personas involucradas</p>
-      <a class="register-button" routerLink="/analisis/registro-persona">Registrar persona</a>
+      @if (personas().length > 0) {
+        <div class="people-list" aria-label="Personas registradas">
+          @for (persona of personas(); track $index) {
+            <div class="involved-person">
+              <span class="person-avatar" aria-hidden="true">
+                <mat-icon>person</mat-icon>
+              </span>
+              <span class="person-name">{{ persona }}</span>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="people-empty-state">
+          <div class="people-avatars" aria-hidden="true">
+            <span class="person-avatar"><mat-icon>person</mat-icon></span>
+            <span class="person-avatar"><mat-icon>person</mat-icon></span>
+            <span class="person-avatar"><mat-icon>person</mat-icon></span>
+          </div>
+          <p class="people-prompt">Registra las personas involucradas</p>
+        </div>
+      }
+      <a mat-button class="register-button" routerLink="/analisis/registro-persona">
+        <mat-icon aria-hidden="true">add_circle</mat-icon>
+        Registrar persona
+      </a>
     </section>
   </aside>
 

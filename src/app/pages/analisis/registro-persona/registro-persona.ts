@@ -126,7 +126,7 @@ export class RegistroPersona {
             .join(' ')
         : datos.razonSocial;
 
-    this.personasInvolucradas.agregar(nombre);
+    this.personasInvolucradas.agregar(nombre, datos.correo, this.selectedRoles);
     void this.router.navigateByUrl('/analisis/documentos');
   }
 }

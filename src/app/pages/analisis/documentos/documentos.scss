@@ -10,6 +10,8 @@
   display: flex;
   min-height: 68px;
   align-items: center;
+  justify-content: space-between;
+  gap: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid var(--color-border-default);
 }
@@ -19,6 +21,31 @@
   min-width: 0;
   align-items: center;
   gap: 10px;
+}
+
+.progress-area {
+  display: flex;
+  width: min(280px, 100%);
+  min-width: 220px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.progress-label {
+  color: var(--color-neutral-strong);
+  font-size: 14px;
+  text-align: center;
+}
+
+.documentation-progress {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  --mat-progress-bar-track-height: 10px;
+  --mat-progress-bar-active-indicator-height: 10px;
+  --mat-progress-bar-track-color: #e3e6e8;
+  --mat-progress-bar-active-indicator-color: var(--color-info-default);
 }
 
 .client-avatar {
@@ -46,8 +73,8 @@
   margin: 0;
   color: var(--color-neutral-strongest);
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: 25px;
-  font-weight: 700;
+  font-size: 40px;
+  font-weight: 500;
   line-height: 1.15;
 }
 
@@ -60,7 +87,7 @@
 
 .client-type {
   color: var(--color-neutral-strongest);
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .edit-button {
@@ -70,9 +97,10 @@
   border-radius: 999px;
   background: var(--color-info-subtlest);
   color: var(--color-info-strong);
-  font-size: 9px;
+  font-size: 12px;
   line-height: 1.2;
   text-decoration: none;
+  font-weight: 500;
 }
 
 .edit-button:hover {
@@ -94,7 +122,14 @@
 
 @media (max-width: 700px) {
   .client-header {
+    align-items: flex-start;
+    flex-direction: column;
     padding-bottom: 16px;
+  }
+
+  .progress-area {
+    width: 100%;
+    min-width: 0;
   }
 
   .client-name {

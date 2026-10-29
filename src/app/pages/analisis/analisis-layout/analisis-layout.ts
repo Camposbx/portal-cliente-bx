@@ -11,5 +11,16 @@ import { PersonasInvolucradasService } from '../personas-involucradas.service';
   templateUrl: './analisis-layout.html',
 })
 export class AnalisisLayout {
-  readonly personas = inject(PersonasInvolucradasService).personas;
+  private readonly personasService = inject(PersonasInvolucradasService);
+
+  readonly personas = this.personasService.personas;
+  readonly selectedName = this.personasService.selectedName;
+
+  seleccionarSolicitante(): void {
+    this.personasService.seleccionarSolicitante();
+  }
+
+  seleccionarPersona(nombre: string): void {
+    this.personasService.seleccionarPersona(nombre);
+  }
 }

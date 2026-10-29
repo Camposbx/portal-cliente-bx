@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, output } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ModalCargaDocs } from './modal-carga-docs/modal-carga-docs';
 import { ModalVistaPrevia } from './modal-vista-previa/modal-vista-previa';
@@ -22,7 +22,9 @@ interface DocumentItem {
   styleUrl: './documentacion.scss',
   templateUrl: './documentacion.html',
 })
-export class Documentacion implements OnDestroy {
+export class Documentacion implements OnDestroy, OnInit {
+  readonly completionPercentageChange = output<number>();
+
   readonly documents: DocumentItem[] = [
     {
       name: 'Estados financieros parciales',
@@ -120,6 +122,18 @@ export class Documentacion implements OnDestroy {
 
   constructor(private readonly dialog: MatDialog) {}
 
+  get completionPercentage(): number {
+    const completedDocuments = this.documents.filter(
+      (document) => document.uploadState === 'uploaded',
+    ).length;
+
+    return Math.round((completedDocuments / this.documents.length) * 100);
+  }
+
+  ngOnInit(): void {
+    this.emitCompletionPercentage();
+  }
+
   ngOnDestroy(): void {
     this.uploadTimers.forEach((timer) => clearInterval(timer));
     this.uploadTimers.clear();
@@ -177,6 +191,7 @@ export class Documentacion implements OnDestroy {
     document.uploadProgress = 0;
     document.uploadState = 'idle';
     document.status = 'Pendiente';
+    this.emitCompletionPercentage();
   }
 
   solicitarFirmaDigital(document: DocumentItem): void {
@@ -253,9 +268,14 @@ export class Documentacion implements OnDestroy {
         this.uploadTimers.delete(document);
         document.uploadState = 'uploaded';
         document.status = 'En revisión';
+        this.emitCompletionPercentage();
       }
     }, 100);
 
     this.uploadTimers.set(document, timer);
+  }
+
+  private emitCompletionPercentage(): void {
+    this.completionPercentageChange.emit(this.completionPercentage);
   }
 }

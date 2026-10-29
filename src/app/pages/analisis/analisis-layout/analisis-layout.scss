@@ -8,11 +8,16 @@
   display: grid;
   min-height: 100dvh;
   grid-template-columns: 252px minmax(0, 1fr);
-  overflow: hidden;
   background: var(--color-surface-default);
 }
 
 .analysis-panel {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  box-sizing: border-box;
+  height: 100dvh;
+  overflow-y: auto;
   padding: 18px 12px;
   background: var(--color-surface-sunken);
 }
@@ -128,8 +133,8 @@
 
 .person-avatar {
   display: grid;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   flex: 0 0 auto;
   place-items: center;
   border-radius: 50%;
@@ -147,7 +152,7 @@
   max-width: 204px;
   margin: 0 auto 6px;
   color: var(--color-neutral-strongest);
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 1.35;
   text-align: center;
@@ -155,13 +160,32 @@
 
 .involved-person {
   display: flex;
+  width: calc(100% - 12px);
   min-height: 36px;
   align-items: center;
   gap: 6px;
   margin: 6px;
   padding: 5px;
+  border: 0;
   border-radius: 8px;
   background: #80d1de;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.involved-person:hover {
+  background: #a6e5eb;
+}
+
+.involved-person:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 1px;
+}
+
+.involved-person[aria-pressed='true'] {
+  box-shadow: inset 0 0 0 1px var(--color-info-strong);
 }
 
 .people-list {
@@ -171,7 +195,7 @@
 .person-name {
   overflow: hidden;
   color: var(--color-neutral-strongest);
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 500;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -180,15 +204,15 @@
 .register-button {
   display: flex;
   width: fit-content;
-  min-height: 32px;
+  min-height: 48px;
   margin: 0 auto 2px;
-  color: var(--color-neutral-strongest);
-  font-size: 10px;
-}
-
-.register-button mat-icon {
-  margin-right: 4px;
-  font-size: 16px;
+  padding: 0 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  --mat-button-filled-container-color: var(--color-action-primary-default);
+  --mat-button-filled-label-text-color: var(--color-action-on-primary);
+  --mat-button-filled-container-shape: 999px;
 }
 
 .analysis-content {
@@ -214,6 +238,9 @@
   }
 
   .analysis-panel {
+    position: static;
+    height: auto;
+    overflow: visible;
     padding: 20px;
   }
 
@@ -222,7 +249,8 @@
   }
 
   .side-card {
-    max-width: 320px;
+    width: 100%;
+    max-width: none;
   }
 
   .analysis-content {

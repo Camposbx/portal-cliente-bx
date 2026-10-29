@@ -1,7 +1,7 @@
 :host {
   display: block;
   min-height: 100dvh;
-  margin-top: -18px;
+  margin-left: 20px;
 }
 
 .analysis-shell {
@@ -18,18 +18,12 @@
   box-sizing: border-box;
   height: 100dvh;
   overflow-y: auto;
-  padding: 18px 12px;
+  padding: 24px 16px;
   background: var(--color-surface-sunken);
 }
 
 .analysis-title {
   margin: 0 0 17px 6px;
-  font-family: Roboto, sans-serif;
-  font-size: 28px;
-  font-weight: 500;
-  font-style: normal;
-  line-height: 36px;
-  letter-spacing: 0;
 }
 
 .side-card {
@@ -48,9 +42,6 @@
   padding: 11px 12px;
   border-bottom: 1px solid var(--color-border-subtle);
   color: var(--color-neutral-strongest);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.3;
 }
 
 .applicant-details {
@@ -59,13 +50,14 @@
   align-items: center;
   gap: 7px;
   margin: 6px;
-  padding: 5px;
+  padding: 8px;
   border-radius: 8px;
   background: #80d1de;
 }
 
 .applicant-avatar,
 .person-avatar {
+  position: relative;
   display: grid;
   flex: 0 0 auto;
   place-items: center;
@@ -85,13 +77,33 @@
   font-size: 17px;
 }
 
+.document-status {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  z-index: 1;
+  width: 10px;
+  height: 10px;
+  box-sizing: border-box;
+  border: 2px solid var(--color-surface-default);
+  border-radius: 50%;
+}
+
+.document-status--none {
+  background: #d32f2f;
+}
+
+.document-status--partial {
+  background: #fbc02d;
+}
+
+.document-status--complete {
+  background: #2e7d32;
+}
+
 .applicant-name {
   color: var(--color-neutral-strongest);
-  font-size: 14px;
-  line-height: 1.25;
   text-decoration: none;
-  font-style: normal ;
-  font-weight: 500;
 }
 
 .applicant-name:hover {
@@ -152,9 +164,6 @@
   max-width: 204px;
   margin: 0 auto 6px;
   color: var(--color-neutral-strongest);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.35;
   text-align: center;
 }
 
@@ -165,7 +174,7 @@
   align-items: center;
   gap: 6px;
   margin: 6px;
-  padding: 5px;
+  padding: 8px;
   border: 0;
   border-radius: 8px;
   background: #80d1de;
@@ -195,8 +204,6 @@
 .person-name {
   overflow: hidden;
   color: var(--color-neutral-strongest);
-  font-size: 14px;
-  font-weight: 500;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -208,8 +215,6 @@
   margin: 0 auto 2px;
   padding: 0 24px;
   border-radius: 999px;
-  font-size: 14px;
-  font-weight: 500;
   --mat-button-filled-container-color: var(--color-action-primary-default);
   --mat-button-filled-label-text-color: var(--color-action-on-primary);
   --mat-button-filled-container-shape: 999px;
@@ -217,7 +222,7 @@
 
 .analysis-content {
   min-width: 0;
-  padding: 30px 28px;
+  padding: 24px 16px;
   background: var(--color-surface-default);
 }
 
@@ -228,7 +233,7 @@
   }
 
   :host {
-    margin: 0;
+    margin: 0 0 0 20px;
   }
 
   .analysis-shell {
@@ -241,7 +246,7 @@
     position: static;
     height: auto;
     overflow: visible;
-    padding: 20px;
+    padding: 24px 16px;
   }
 
   .analysis-title {
@@ -254,6 +259,12 @@
   }
 
   .analysis-content {
-    padding: 24px 20px;
+    padding: 24px 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  :host {
+    margin: 0;
   }
 }

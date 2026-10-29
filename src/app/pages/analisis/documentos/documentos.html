@@ -5,15 +5,18 @@
         <mat-icon>person</mat-icon>
       </span>
       <div class="client-details">
-        <h1 class="client-name">{{ selectedName() }}</h1>
+        <h1 class="client-name text-display-lg">{{ selectedName() }}</h1>
         <div class="client-meta">
-          <span class="client-type">Acreditado PM</span>
-          <a class="edit-button" routerLink="/analisis/perfil">Editar datos</a>
+          <span class="client-type text-label-xs">Acreditado PM</span>
+          <a class="edit-button text-label-xs" routerLink="/analisis/perfil">Editar datos</a>
         </div>
       </div>
     </div>
     <div class="progress-area">
-      <span class="progress-label">{{ completionPercentage }}% de documentación completada</span>
+      <span class="progress-label">
+        <span class="text-body-sm-medium">{{ completionPercentage }}%</span>
+        <span class="text-body-sm-regular">de documentación completada</span>
+      </span>
       <mat-progress-bar
         class="documentation-progress"
         mode="determinate"

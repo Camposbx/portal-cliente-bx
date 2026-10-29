@@ -40,8 +40,19 @@
       error-text-color: var(--color-error-default),
     )
   );
+
+  @include mat.select-overrides(
+    (
+      disabled-trigger-text-color: var(--color-neutral-default),
+    )
+  );
 }
 
 .app-form-field:has(input:disabled, textarea:disabled, mat-select[aria-disabled='true']) {
   --app-form-field-surface: var(--color-surface-sunken);
+}
+
+.app-form-field:has(textarea:disabled) {
+  background-size: 100%
+    calc(100% - var(--mat-form-field-subscript-text-line-height, 16px));
 }

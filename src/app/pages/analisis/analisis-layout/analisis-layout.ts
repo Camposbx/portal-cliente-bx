@@ -20,7 +20,7 @@ export class AnalisisLayout {
     this.personasService.seleccionarSolicitante();
   }
 
-  seleccionarPersona(nombre: string): void {
-    this.personasService.seleccionarPersona(nombre);
+  seleccionarPersona(persona: string): void {
+    this.personasService.seleccionarPersona(persona);
   }
 }

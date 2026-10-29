@@ -1,0 +1,184 @@
+:host {
+  display: block;
+  height: 100%;
+  color: var(--color-text-default);
+}
+
+.signers-dialog {
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  padding: 18px 24px 12px;
+}
+
+.empty-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  margin: 0 auto 18px;
+  border: 1px solid var(--color-info-default);
+  border-radius: 50%;
+  background: var(--color-info-subtlest);
+  color: var(--color-info-strong);
+}
+
+.empty-icon mat-icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+}
+
+h2[mat-dialog-title] {
+  margin: 0;
+  padding: 0 0 8px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.signers-intro {
+  max-width: 380px;
+  margin: 0 auto 22px;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.signers-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: min(45vh, 300px);
+  margin: 0;
+  padding: 0 4px;
+}
+
+.signer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.signer-row {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 10px;
+}
+
+.signer-avatar {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: #80d1de;
+  color: var(--color-info-strong);
+}
+
+.signer-avatar mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+}
+
+.signer-details {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--color-text-default);
+  font-size: 12px;
+}
+
+.signer-details strong,
+.signer-details span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.signer-details strong {
+  font-weight: 600;
+}
+
+.signers-empty {
+  max-width: 410px;
+  margin: 0 auto;
+  color: var(--color-text-muted);
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.signers-empty-content {
+  display: flex;
+  min-height: 92px;
+  align-items: center;
+}
+
+.signers-actions {
+  flex: 0 0 auto;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 12px;
+  margin: auto 0 0;
+  padding: 16px 0 4px;
+}
+
+.signers-actions button {
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.cancel-button {
+  min-width: 100px;
+  border-color: var(--color-neutral-strong);
+}
+
+.send-button {
+  min-width: 132px;
+  --mat-button-filled-container-color: var(--color-action-primary-default);
+  --mat-button-filled-label-text-color: var(--color-action-on-primary);
+}
+
+.empty-actions {
+  padding-top: 16px;
+}
+
+.empty-actions .cancel-button,
+.empty-actions .send-button {
+  min-height: 54px;
+  padding: 0 24px;
+  font-size: 15px;
+}
+
+.empty-actions .cancel-button {
+  min-width: 190px;
+}
+
+.empty-actions .send-button {
+  min-width: 176px;
+}
+
+@media (max-width: 480px) {
+  .signers-dialog {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .empty-actions .cancel-button,
+  .empty-actions .send-button {
+    min-width: 0;
+    flex: 1 1 0;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+}

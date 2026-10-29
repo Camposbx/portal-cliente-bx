@@ -224,4 +224,14 @@ body {
   background: rgb(30 37 46 / 48%);
   backdrop-filter: blur(6px);
 }
+
+.modal-firmantes .mat-mdc-dialog-surface {
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.modal-firmantes-backdrop {
+  background: rgb(30 37 46 / 48%);
+  backdrop-filter: blur(6px);
+}
 /* You can add global styles to this file, and also import other style files */

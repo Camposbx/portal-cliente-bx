@@ -1,0 +1,47 @@
+@use '@angular/material' as mat;
+
+.app-form-field {
+  --app-form-field-surface: var(--color-surface-default);
+
+  width: 100%;
+  border-radius: 4px;
+  background-color: transparent;
+  background-image: linear-gradient(
+    var(--app-form-field-surface),
+    var(--app-form-field-surface)
+  );
+  background-repeat: no-repeat;
+  background-size: 100% var(--mat-form-field-container-height, 56px);
+
+  @include mat.form-field-overrides(
+    (
+      container-height: 56px,
+      container-vertical-padding: 16px,
+      container-text-size: 16px,
+      outlined-container-shape: 4px,
+      outlined-label-text-size: 16px,
+      outlined-outline-color: var(--color-neutral-strong),
+      outlined-hover-outline-color: var(--color-info-default),
+      outlined-focus-outline-color: var(--color-brand-primary),
+      outlined-label-text-color: var(--color-text-muted),
+      outlined-hover-label-text-color: var(--color-info-strong),
+      outlined-focus-label-text-color: var(--color-text-default),
+      outlined-input-text-color: var(--color-text-default),
+      outlined-input-text-placeholder-color: var(--color-text-muted),
+      outlined-disabled-outline-color: var(--color-border-disabled),
+      outlined-disabled-label-text-color: var(--color-neutral-default),
+      outlined-disabled-input-text-color: var(--color-neutral-default),
+      outlined-error-outline-color: var(--color-error-default),
+      outlined-error-hover-outline-color: var(--color-error-default),
+      outlined-error-focus-outline-color: var(--color-error-default),
+      outlined-error-label-text-color: var(--color-error-default),
+      outlined-error-hover-label-text-color: var(--color-error-default),
+      outlined-error-focus-label-text-color: var(--color-error-default),
+      error-text-color: var(--color-error-default),
+    )
+  );
+}
+
+.app-form-field:has(input:disabled, textarea:disabled, mat-select[aria-disabled='true']) {
+  --app-form-field-surface: var(--color-surface-sunken);
+}

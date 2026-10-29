@@ -234,32 +234,38 @@ height: 164px;
 .summary-card {
   display: flex;
   align-items: center;
-  gap: 18px;
-  min-height: 122px;
-  padding: 18px 18px 18px 16px;
-  border: 1px solid rgba(102, 112, 118, 0.12);
+  gap: 24px;
+  min-height: 120px;
+  padding: 16px;
+  border: 0;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.74);
-  box-shadow: 0 8px 20px rgba(19, 24, 29, 0.04);
+  background: #f9fafa;
+  box-shadow: none;
 }
 
 .summary-value {
   display: flex;
+  flex: 0 0 84px;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 96px;
-  color: #0d9ec8;
+  width: 84px;
+  height: 72px;
+  border-right: 1px solid #cbd3d8;
+  color: #287f9b;
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1;
 }
 
-.summary-value::after {
-  content: 'días';
+.summary-unit {
   display: block;
-  margin-left: 10px;
-  color: #4f5c64;
+  margin: 4px 0 0;
+  color: #287f9b;
   font-family: var(--font-body-md-medium-family);
-  font-size: var(--font-body-md-medium-size);
-  font-weight: var(--font-body-md-medium-weight);
-  line-height: var(--font-body-md-medium-line-height);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
   letter-spacing: var(--font-body-md-medium-letter-spacing);
   text-transform: lowercase;
 }
@@ -267,22 +273,29 @@ height: 164px;
 .summary-content {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
+  min-width: 0;
   color: #27333a;
 }
 
 .summary-caption {
-  color: #5d6870;
+  color: #46535d;
+  font-size: 0.875rem;
+  line-height: 1.2;
 }
 
 .summary-content h4 {
   margin: 0;
   color: #1d262d;
+  font-size: 1rem;
+  line-height: 1.2;
 }
 
 .summary-content p {
   margin: 0;
-  color: #5f6c74;
+  color: #46535d;
+  font-size: 0.875rem;
+  line-height: 1.2;
 }
 
 .site-footer {
@@ -377,16 +390,12 @@ height: 164px;
   }
 
   .summary-card {
-    flex-direction: column;
-    align-items: flex-start;
+    gap: 16px;
   }
 
   .summary-value {
-    min-width: 0;
-  }
-
-  .summary-value::after {
-    margin-left: 6px;
+    flex-basis: 72px;
+    width: 72px;
   }
 }
 

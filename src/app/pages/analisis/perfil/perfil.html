@@ -22,7 +22,7 @@
   </header>
 
   <div class="profile-heading">
-    <h2 class="profile-title">Información general</h2>
+    <h2 class="profile-title text-heading-lg">Información general</h2>
     <div class="profile-heading-actions">
       <button
         class="type-toggle-button"
@@ -38,19 +38,19 @@
 
   <form [formGroup]="profileForm" (ngSubmit)="guardar()">
     <section class="profile-section" aria-labelledby="company-data-title">
-      <h3 id="company-data-title" class="section-title">
+      <h3 id="company-data-title" class="section-title text-label-md">
         {{ personaMoral ? 'Datos de la empresa' : 'Datos de la persona' }}
       </h3>
-      <div class="row profile-fields">
+      <div class="row profile-fields mt-2">
         @if (personaMoral) {
           <div class="col-12 col-md-6">
-            <mat-form-field appearance="outline" class="profile-field">
+            <mat-form-field appearance="outline" class="app-form-field">
               <mat-label>Razón Social</mat-label>
               <input matInput formControlName="razonSocial" />
             </mat-form-field>
           </div>
           <div class="col-12 col-md-6">
-            <mat-form-field appearance="outline" class="profile-field">
+            <mat-form-field appearance="outline" class="app-form-field">
               <mat-label>Tipo de Sociedad</mat-label>
               <mat-select formControlName="tipoSociedad">
                 <mat-option value="Sociedad Anónima de Capital Variable">Sociedad Anónima de Capital Variable</mat-option>
@@ -60,38 +60,38 @@
           </div>
         } @else {
           <div class="col-12 col-md-6">
-            <mat-form-field appearance="outline" class="profile-field">
+            <mat-form-field appearance="outline" class="app-form-field">
               <mat-label>Nombre 1</mat-label>
               <input matInput formControlName="nombre1" autocomplete="given-name" />
             </mat-form-field>
           </div>
           <div class="col-12 col-md-6">
-            <mat-form-field appearance="outline" class="profile-field">
+            <mat-form-field appearance="outline" class="app-form-field">
               <mat-label>Nombre 2</mat-label>
               <input matInput formControlName="nombre2" />
             </mat-form-field>
           </div>
           <div class="col-12 col-md-6">
-            <mat-form-field appearance="outline" class="profile-field">
+            <mat-form-field appearance="outline" class="app-form-field">
               <mat-label>Nombre 3</mat-label>
               <input matInput formControlName="nombre3" />
             </mat-form-field>
           </div>
           <div class="col-12 col-md-6">
-            <mat-form-field appearance="outline" class="profile-field">
+            <mat-form-field appearance="outline" class="app-form-field">
               <mat-label>Primer apellido</mat-label>
               <input matInput formControlName="primerApellido" autocomplete="family-name" />
             </mat-form-field>
           </div>
           <div class="col-12 col-md-6">
-            <mat-form-field appearance="outline" class="profile-field">
+            <mat-form-field appearance="outline" class="app-form-field">
               <mat-label>Segundo apellido</mat-label>
               <input matInput formControlName="segundoApellido" />
             </mat-form-field>
           </div>
         }
         <div class="col-12 col-md-6">
-          <mat-form-field appearance="outline" class="profile-field">
+          <mat-form-field appearance="outline" class="app-form-field">
             <mat-label>Nacionalidad</mat-label>
             <mat-select formControlName="nacionalidad">
               <mat-option value="Mexicana">Mexicana</mat-option>
@@ -101,27 +101,27 @@
         </div>
         @if (!personaMoral) {
           <div class="col-12 col-md-6">
-            <mat-form-field appearance="outline" class="profile-field">
+            <mat-form-field appearance="outline" class="app-form-field">
               <mat-label>CURP</mat-label>
               <input matInput formControlName="curp" />
             </mat-form-field>
           </div>
         }
         <div class="col-12 col-md-6">
-          <mat-form-field appearance="outline" class="profile-field">
+          <mat-form-field appearance="outline" class="app-form-field">
             <mat-label>Ingresa el RFC</mat-label>
             <input matInput formControlName="rfc" />
           </mat-form-field>
         </div>
         <div class="col-12 col-md-6">
-          <mat-form-field appearance="outline" class="profile-field">
+          <mat-form-field appearance="outline" class="app-form-field">
             <mat-label>TIN</mat-label>
             <input matInput formControlName="tin" />
           </mat-form-field>
         </div>
         @if (!personaMoral) {
           <div class="col-12 col-md-6">
-            <mat-form-field appearance="outline" class="profile-field">
+            <mat-form-field appearance="outline" class="app-form-field">
               <mat-label>Estado civil</mat-label>
               <mat-select formControlName="estadoCivil">
                 <mat-option value="Soltero">Soltero(a)</mat-option>
@@ -133,7 +133,7 @@
             </mat-form-field>
           </div>
           <div class="col-12 col-md-6">
-            <mat-form-field appearance="outline" class="profile-field">
+            <mat-form-field appearance="outline" class="app-form-field">
               <mat-label>Sociedad conyugal</mat-label>
               <mat-select formControlName="sociedadConyugal">
                 <mat-option value="SociedadConyugal">Sociedad conyugal</mat-option>
@@ -144,7 +144,7 @@
           </div>
         }
         <div class="col-12 col-md-6">
-          <mat-form-field appearance="outline" class="profile-field">
+          <mat-form-field appearance="outline" class="app-form-field">
             <mat-label>Correo electrónico</mat-label>
             <input matInput formControlName="correo" type="email" />
           </mat-form-field>
@@ -153,10 +153,10 @@
     </section>
 
     <section class="profile-section address-section" aria-labelledby="address-title">
-      <h3 id="address-title" class="section-title">Dirección</h3>
-      <div class="row profile-fields">
+      <h3 id="address-title" class="section-title text-label-md">Dirección</h3>
+      <div class="row profile-fields mt-2">
         <div class="col-12 col-md-6">
-          <mat-form-field appearance="outline" class="profile-field">
+          <mat-form-field appearance="outline" class="app-form-field">
             <mat-label>Tipo de domicilio</mat-label>
             <mat-select formControlName="tipoDomicilio" required>
               <mat-option value="Fiscal">Fiscal</mat-option>
@@ -169,13 +169,13 @@
           </mat-form-field>
         </div>
         <div class="col-12 col-md-6">
-          <mat-form-field appearance="outline" class="profile-field">
+          <mat-form-field appearance="outline" class="app-form-field">
             <mat-label>Ingresa el C.P.</mat-label>
             <input matInput formControlName="codigoPostal" inputmode="numeric" />
           </mat-form-field>
         </div>
         <div class="col-12 col-md-6">
-          <mat-form-field appearance="outline" class="profile-field">
+          <mat-form-field appearance="outline" class="app-form-field">
             <mat-label>Entidad Federativa</mat-label>
             <mat-select formControlName="entidad">
               <mat-option value="Ciudad de México (CDMX)">Ciudad de México (CDMX)</mat-option>
@@ -186,7 +186,7 @@
           </mat-form-field>
         </div>
         <div class="col-12 col-md-6">
-          <mat-form-field appearance="outline" class="profile-field">
+          <mat-form-field appearance="outline" class="app-form-field">
             <mat-label>Municipio o alcaldía</mat-label>
             <mat-select formControlName="municipio">
               <mat-option value="Coyoacán">Coyoacán</mat-option>
@@ -197,7 +197,7 @@
           </mat-form-field>
         </div>
         <div class="col-12 col-md-6">
-          <mat-form-field appearance="outline" class="profile-field">
+          <mat-form-field appearance="outline" class="app-form-field">
             <mat-label>Colonia</mat-label>
             <mat-select formControlName="colonia">
               <mat-option value="Copilco El Alto">Copilco El Alto</mat-option>
@@ -207,19 +207,19 @@
           </mat-form-field>
         </div>
         <div class="col-12 col-md-6">
-          <mat-form-field appearance="outline" class="profile-field">
+          <mat-form-field appearance="outline" class="app-form-field">
             <mat-label>Calle</mat-label>
             <input matInput formControlName="calle" />
           </mat-form-field>
         </div>
         <div class="col-12 col-md-6">
-          <mat-form-field appearance="outline" class="profile-field">
+          <mat-form-field appearance="outline" class="app-form-field">
             <mat-label>Número exterior</mat-label>
             <input matInput formControlName="numeroExterior" />
           </mat-form-field>
         </div>
         <div class="col-12 col-md-6">
-          <mat-form-field appearance="outline" class="profile-field">
+          <mat-form-field appearance="outline" class="app-form-field">
             <mat-label>Número interior</mat-label>
             <input matInput formControlName="numeroInterior" />
           </mat-form-field>

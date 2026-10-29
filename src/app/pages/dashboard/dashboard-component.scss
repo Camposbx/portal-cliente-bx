@@ -4,7 +4,7 @@
 }
 
 .dashboard-page {
-  min-height: calc(100dvh - 70px);
+  min-height: calc(100dvh - 18px);
   background: #dfe3e6;
   color: #1e232b;
 }
@@ -14,7 +14,6 @@
   margin: 0 auto;
   padding: 22px 26px 0;
   width: 988px;
-height: 164px;
 }
 
 .banner-carousel {
@@ -378,6 +377,7 @@ height: 164px;
 @media (max-width: 640px) {
   .dashboard-page {
     min-height: auto;
+    margin-bottom: 0;
   }
 
   .module-footer {

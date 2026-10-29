@@ -1,15 +1,15 @@
 <div class="analysis-shell">
   <aside class="analysis-panel">
-    <h1 class="analysis-title">Análisis y autorización</h1>
+    <h1 class="analysis-title text-display-xs">Análisis y autorización</h1>
 
     <section class="side-card applicant-card" aria-labelledby="applicant-title">
-      <h2 id="applicant-title" class="card-heading">Solicitante</h2>
+      <h2 id="applicant-title" class="card-heading text-label-sm">Solicitante</h2>
       <div class="applicant-details">
         <span class="applicant-avatar" aria-hidden="true">
           <mat-icon>person</mat-icon>
         </span>
         <a
-          class="applicant-name"
+          class="applicant-name text-label-sm"
           routerLink="/analisis/documentos"
           (click)="seleccionarSolicitante()"
         >
@@ -19,7 +19,7 @@
     </section>
 
     <section class="side-card people-card" aria-labelledby="people-title">
-      <h2 id="people-title" class="card-heading">Personas involucradas</h2>
+      <h2 id="people-title" class="card-heading text-body-sm-medium">Personas involucradas</h2>
       @if (personas().length > 0) {
         <div class="people-list" aria-label="Personas registradas">
           @for (persona of personas(); track persona.id) {
@@ -32,7 +32,7 @@
               <span class="person-avatar" aria-hidden="true">
                 <mat-icon>person</mat-icon>
               </span>
-              <span class="person-name">{{ persona.nombre }}</span>
+              <span class="person-name text-body-sm-medium">{{ persona.nombre }}</span>
             </button>
           }
         </div>
@@ -43,13 +43,13 @@
             <span class="person-avatar"><mat-icon>person</mat-icon></span>
             <span class="person-avatar"><mat-icon>person</mat-icon></span>
           </div>
-          <p class="people-prompt">Registra las personas involucradas</p>
+          <p class="people-prompt text-label-sm">Registra las personas involucradas</p>
         </div>
       }
       <button
         mat-flat-button
         type="button"
-        class="register-button"
+        class="register-button text-label-sm"
         routerLink="/analisis/registro-persona"
       >
         Registrar persona

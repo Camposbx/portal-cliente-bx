@@ -5,8 +5,9 @@
     <section class="side-card applicant-card" aria-labelledby="applicant-title">
       <h2 id="applicant-title" class="card-heading text-label-sm">Solicitante</h2>
       <div class="applicant-details">
-        <span class="applicant-avatar" aria-hidden="true">
-          <mat-icon>person</mat-icon>
+        <span class="applicant-avatar" role="img" aria-label="Documentación parcialmente cargada">
+          <mat-icon aria-hidden="true">person</mat-icon>
+          <span class="document-status document-status--partial" aria-hidden="true"></span>
         </span>
         <a
           class="applicant-name text-label-sm"
@@ -29,8 +30,9 @@
               [attr.aria-pressed]="selectedName() === persona.nombre"
               (click)="seleccionarPersona(persona.nombre)"
             >
-              <span class="person-avatar" aria-hidden="true">
-                <mat-icon>person</mat-icon>
+              <span class="person-avatar" role="img" aria-label="Documentación parcialmente cargada">
+                <mat-icon aria-hidden="true">person</mat-icon>
+                <span class="document-status document-status--partial" aria-hidden="true"></span>
               </span>
               <span class="person-name text-body-sm-medium">{{ persona.nombre }}</span>
             </button>

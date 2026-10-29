@@ -1,7 +1,7 @@
 :host {
   display: block;
   min-height: 100dvh;
-  margin-top: -18px;
+  margin-left: 20px;
 }
 
 .analysis-shell {
@@ -18,7 +18,7 @@
   box-sizing: border-box;
   height: 100dvh;
   overflow-y: auto;
-  padding: 18px 12px;
+  padding: 24px 16px;
   background: var(--color-surface-sunken);
 }
 
@@ -50,13 +50,14 @@
   align-items: center;
   gap: 7px;
   margin: 6px;
-  padding: 5px;
+  padding: 8px;
   border-radius: 8px;
   background: #80d1de;
 }
 
 .applicant-avatar,
 .person-avatar {
+  position: relative;
   display: grid;
   flex: 0 0 auto;
   place-items: center;
@@ -74,6 +75,30 @@
   width: 17px;
   height: 17px;
   font-size: 17px;
+}
+
+.document-status {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  z-index: 1;
+  width: 10px;
+  height: 10px;
+  box-sizing: border-box;
+  border: 2px solid var(--color-surface-default);
+  border-radius: 50%;
+}
+
+.document-status--none {
+  background: #d32f2f;
+}
+
+.document-status--partial {
+  background: #fbc02d;
+}
+
+.document-status--complete {
+  background: #2e7d32;
 }
 
 .applicant-name {
@@ -149,7 +174,7 @@
   align-items: center;
   gap: 6px;
   margin: 6px;
-  padding: 5px;
+  padding: 8px;
   border: 0;
   border-radius: 8px;
   background: #80d1de;
@@ -197,7 +222,7 @@
 
 .analysis-content {
   min-width: 0;
-  padding: 30px 28px;
+  padding: 24px 16px;
   background: var(--color-surface-default);
 }
 
@@ -208,7 +233,7 @@
   }
 
   :host {
-    margin: 0;
+    margin: 0 0 0 20px;
   }
 
   .analysis-shell {
@@ -221,7 +246,7 @@
     position: static;
     height: auto;
     overflow: visible;
-    padding: 20px;
+    padding: 24px 16px;
   }
 
   .analysis-title {
@@ -234,6 +259,12 @@
   }
 
   .analysis-content {
-    padding: 24px 20px;
+    padding: 24px 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  :host {
+    margin: 0;
   }
 }

@@ -27,7 +27,7 @@ export class Dashboard implements OnInit {
     title: 'Análisis y autorización',
     description:
       'Aquí puedes integrar el expediente para el análisis y autorización del crédito.',
-    image: '/baners/card-analisis.png',
+    image: 'baners/card-analisis.png',
     route: '/analisis',
     disabled: false,
     progress: 0,
@@ -37,7 +37,7 @@ export class Dashboard implements OnInit {
     title: 'Contratación',
     description:
     'Aquí puedes integrar el expediente para la contratación del crédito.',
-    image: '/baners/card-contratacion.png',
+    image: 'baners/card-contratacion.png',
     route: '/contratacion',
     disabled: true,
     progress: 0,
@@ -46,7 +46,7 @@ export class Dashboard implements OnInit {
     number: 3,
     title: 'Operación',
     description: 'Aquí puedes solicitar tus documentos para operar.',
-    image: '/baners/card-operacion.png',
+    image: 'baners/card-operacion.png',
     route: '/operacion',
     disabled: false,
     progress: 0,
@@ -55,7 +55,7 @@ export class Dashboard implements OnInit {
 
   protected readonly banners = [
   {
-    src: '/baners/Banner.png',
+    src: 'baners/Banner.png',
     alt: 'Oficina Digital de Crédito BX+. Consulta y da seguimiento a tu crédito empresarial desde un solo lugar.',
   },
 ];

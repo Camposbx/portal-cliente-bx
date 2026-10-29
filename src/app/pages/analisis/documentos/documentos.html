@@ -5,15 +5,26 @@
         <mat-icon>person</mat-icon>
       </span>
       <div class="client-details">
-        <h1 class="client-name">El Patito, S.A. de C.V.</h1>
+        <h1 class="client-name">{{ selectedName() }}</h1>
         <div class="client-meta">
           <span class="client-type">Acreditado PM</span>
           <a class="edit-button" routerLink="/analisis/perfil">Editar datos</a>
         </div>
       </div>
     </div>
+    <div class="progress-area">
+      <span class="progress-label">{{ completionPercentage }}% de documentación completada</span>
+      <mat-progress-bar
+        class="documentation-progress"
+        mode="determinate"
+        [value]="completionPercentage"
+        [attr.aria-label]="completionPercentage + '% de documentación completada'"
+      />
+    </div>
   </header>
 
-  <h2 class="documents-title">Documentos</h2>
-  <app-documentacion></app-documentacion>
+  <!-- <h2 class="documents-title">Documentos</h2> -->
+  <app-documentacion
+    (completionPercentageChange)="completionPercentage = $event"
+  ></app-documentacion>
 </section>

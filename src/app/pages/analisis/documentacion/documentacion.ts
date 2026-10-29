@@ -1,6 +1,9 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, output } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { PersonasInvolucradasService } from '../personas-involucradas.service';
 import { ModalCargaDocs } from './modal-carga-docs/modal-carga-docs';
+import { ModalFirmantes } from './modal-firmantes/modal-firmantes';
 import { ModalVistaPrevia } from './modal-vista-previa/modal-vista-previa';
 
 interface DocumentItem {
@@ -14,6 +17,7 @@ interface DocumentItem {
   uploadProgress: number;
   fileSize: number;
   signatureRequested: boolean;
+  requestedSignerIds?: number[];
 }
 
 @Component({
@@ -22,7 +26,9 @@ interface DocumentItem {
   styleUrl: './documentacion.scss',
   templateUrl: './documentacion.html',
 })
-export class Documentacion implements OnDestroy {
+export class Documentacion implements OnDestroy, OnInit {
+  readonly completionPercentageChange = output<number>();
+
   readonly documents: DocumentItem[] = [
     {
       name: 'Estados financieros parciales',
@@ -118,7 +124,23 @@ export class Documentacion implements OnDestroy {
 
   private readonly uploadTimers = new Map<DocumentItem, ReturnType<typeof setInterval>>();
 
-  constructor(private readonly dialog: MatDialog) {}
+  constructor(
+    private readonly dialog: MatDialog,
+    private readonly personasInvolucradas: PersonasInvolucradasService,
+    private readonly router: Router,
+  ) {}
+
+  get completionPercentage(): number {
+    const completedDocuments = this.documents.filter(
+      (document) => document.uploadState === 'uploaded',
+    ).length;
+
+    return Math.round((completedDocuments / this.documents.length) * 100);
+  }
+
+  ngOnInit(): void {
+    this.emitCompletionPercentage();
+  }
 
   ngOnDestroy(): void {
     this.uploadTimers.forEach((timer) => clearInterval(timer));
@@ -177,10 +199,36 @@ export class Documentacion implements OnDestroy {
     document.uploadProgress = 0;
     document.uploadState = 'idle';
     document.status = 'Pendiente';
+    this.emitCompletionPercentage();
   }
 
   solicitarFirmaDigital(document: DocumentItem): void {
-    document.signatureRequested = true;
+    this.dialog
+      .open(ModalFirmantes, {
+        ariaLabelledBy: 'signers-title',
+        backdropClass: 'modal-firmantes-backdrop',
+        data: {
+          personas: this.personasInvolucradas.personas().filter((persona) =>
+            persona.roles.some((role) => role === 'aval' || role === 'apoderado'),
+          ),
+        },
+        height: '344px',
+        maxWidth: 'calc(100vw - 32px)',
+        panelClass: 'modal-firmantes',
+        width: '468px',
+      })
+      .afterClosed()
+      .subscribe((firmantes: number[] | 'register' | undefined) => {
+        if (firmantes === 'register') {
+          void this.router.navigateByUrl('/analisis/registro-persona');
+          return;
+        }
+
+        if (firmantes?.length) {
+          document.signatureRequested = true;
+          document.requestedSignerIds = firmantes;
+        }
+      });
   }
 
   verArchivo(document: DocumentItem): void {
@@ -253,9 +301,14 @@ export class Documentacion implements OnDestroy {
         this.uploadTimers.delete(document);
         document.uploadState = 'uploaded';
         document.status = 'En revisión';
+        this.emitCompletionPercentage();
       }
     }, 100);
 
     this.uploadTimers.set(document, timer);
+  }
+
+  private emitCompletionPercentage(): void {
+    this.completionPercentageChange.emit(this.completionPercentage);
   }
 }

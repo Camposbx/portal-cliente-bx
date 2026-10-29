@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,6 +16,7 @@ import { ModalPortalUso } from './modal/modal-portal-uso';
   templateUrl: './login.html',
 })
 export class Login {
+  readonly loginBackgroundImage = `url("${new URL('bg-login-bx+.jpg', inject(DOCUMENT).baseURI).href}")`;
   hidePassword = true;
 
   constructor(

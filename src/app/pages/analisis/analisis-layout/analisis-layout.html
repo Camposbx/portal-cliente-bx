@@ -8,7 +8,13 @@
         <span class="applicant-avatar" aria-hidden="true">
           <mat-icon>person</mat-icon>
         </span>
-        <a class="applicant-name" routerLink="/analisis/documentos">ASOCIACION MEXICANA PARA LAS NACIONES UNIDAS DE JOVENES AMNU JOVENES</a>
+        <a
+          class="applicant-name"
+          routerLink="/analisis/documentos"
+          (click)="seleccionarSolicitante()"
+        >
+          ASOCIACION MEXICANA PARA LAS NACIONES UNIDAS DE JOVENES AMNU JOVENES
+        </a>
       </div>
     </section>
 
@@ -16,13 +22,18 @@
       <h2 id="people-title" class="card-heading">Personas involucradas</h2>
       @if (personas().length > 0) {
         <div class="people-list" aria-label="Personas registradas">
-          @for (persona of personas(); track $index) {
-            <div class="involved-person">
+          @for (persona of personas(); track persona.id) {
+            <button
+              type="button"
+              class="involved-person"
+              [attr.aria-pressed]="selectedName() === persona.nombre"
+              (click)="seleccionarPersona(persona.nombre)"
+            >
               <span class="person-avatar" aria-hidden="true">
                 <mat-icon>person</mat-icon>
               </span>
-              <span class="person-name">{{ persona }}</span>
-            </div>
+              <span class="person-name">{{ persona.nombre }}</span>
+            </button>
           }
         </div>
       } @else {
@@ -35,10 +46,14 @@
           <p class="people-prompt">Registra las personas involucradas</p>
         </div>
       }
-      <a mat-button class="register-button" routerLink="/analisis/registro-persona">
-        <mat-icon aria-hidden="true">add_circle</mat-icon>
+      <button
+        mat-flat-button
+        type="button"
+        class="register-button"
+        routerLink="/analisis/registro-persona"
+      >
         Registrar persona
-      </a>
+      </button>
     </section>
   </aside>
 

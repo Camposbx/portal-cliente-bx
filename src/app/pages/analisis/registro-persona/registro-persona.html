@@ -93,7 +93,7 @@
             <div class="row form-fields">
               @if (personType === 'fisica') {
                 <div class="col-12 col-md-6">
-                  <mat-form-field appearance="outline" class="person-field">
+                  <mat-form-field appearance="outline" class="app-form-field">
                     <mat-label>Nombre 1</mat-label>
                     <input matInput formControlName="nombre1" autocomplete="given-name" />
                     @if (personForm.controls.nombre1.hasError('required') && personForm.controls.nombre1.touched) {
@@ -102,19 +102,19 @@
                   </mat-form-field>
                 </div>
                 <div class="col-12 col-md-6">
-                  <mat-form-field appearance="outline" class="person-field">
+                  <mat-form-field appearance="outline" class="app-form-field">
                     <mat-label>Nombre 2</mat-label>
                     <input matInput formControlName="nombre2" />
                   </mat-form-field>
                 </div>
                 <div class="col-12 col-md-6">
-                  <mat-form-field appearance="outline" class="person-field">
+                  <mat-form-field appearance="outline" class="app-form-field">
                     <mat-label>Nombre 3</mat-label>
                     <input matInput formControlName="nombre3" />
                   </mat-form-field>
                 </div>
                 <div class="col-12 col-md-6">
-                  <mat-form-field appearance="outline" class="person-field">
+                  <mat-form-field appearance="outline" class="app-form-field">
                     <mat-label>Primer apellido</mat-label>
                     <input matInput formControlName="primerApellido" autocomplete="family-name" />
                     @if (personForm.controls.primerApellido.hasError('required') && personForm.controls.primerApellido.touched) {
@@ -123,14 +123,14 @@
                   </mat-form-field>
                 </div>
                 <div class="col-12 col-md-6">
-                  <mat-form-field appearance="outline" class="person-field">
+                  <mat-form-field appearance="outline" class="app-form-field">
                     <mat-label>Segundo apellido</mat-label>
                     <input matInput formControlName="segundoApellido" />
                   </mat-form-field>
                 </div>
               } @else {
                 <div class="col-12 col-md-6">
-                  <mat-form-field appearance="outline" class="person-field">
+                  <mat-form-field appearance="outline" class="app-form-field">
                     <mat-label>Razón social</mat-label>
                     <input matInput formControlName="razonSocial" autocomplete="organization" />
                     @if (
@@ -142,7 +142,7 @@
                   </mat-form-field>
                 </div>
                 <div class="col-12 col-md-6">
-                  <mat-form-field appearance="outline" class="person-field">
+                  <mat-form-field appearance="outline" class="app-form-field">
                     <mat-label>Tipo de sociedad</mat-label>
                     <mat-select formControlName="tipoSociedad">
                       <mat-option value="SA de CV">Sociedad Anónima de Capital Variable</mat-option>
@@ -165,7 +165,7 @@
                 </div>
               }
               <div class="col-12 col-md-6">
-                <mat-form-field appearance="outline" class="person-field">
+                <mat-form-field appearance="outline" class="app-form-field">
                   <mat-label>Nacionalidad</mat-label>
                   <mat-select formControlName="nacionalidad">
                     <mat-option value="Mexicana">Mexicana</mat-option>
@@ -178,21 +178,21 @@
               </div>
               @if (personType === 'fisica') {
                 <div class="col-12 col-md-6">
-                  <mat-form-field appearance="outline" class="person-field">
+                  <mat-form-field appearance="outline" class="app-form-field">
                     <mat-label>Ingresa el CURP</mat-label>
                     <input matInput formControlName="curp" autocomplete="off" />
                   </mat-form-field>
                 </div>
               }
               <div class="col-12 col-md-6">
-                <mat-form-field appearance="outline" class="person-field">
+                <mat-form-field appearance="outline" class="app-form-field">
                   <mat-label>Ingresa el RFC</mat-label>
                   <input matInput formControlName="rfc" autocomplete="off" />
                 </mat-form-field>
               </div>
               @if (personType === 'moral') {
                 <div class="col-12 col-md-6">
-                  <mat-form-field appearance="outline" class="person-field">
+                  <mat-form-field appearance="outline" class="app-form-field">
                     <mat-label>Correo electrónico</mat-label>
                     <input matInput formControlName="correo" type="email" autocomplete="email" />
                     @if (personForm.controls.correo.hasError('email') && personForm.controls.correo.touched) {
@@ -209,7 +209,7 @@
               <h2 id="participation-title" class="section-title">Participación</h2>
               <div class="row form-fields">
                 <div class="col-12 col-md-6">
-                  <mat-form-field appearance="outline" class="person-field">
+                  <mat-form-field appearance="outline" class="app-form-field">
                     <mat-label>Porcentaje de participación accionaria</mat-label>
                     <input
                       matInput
@@ -229,7 +229,7 @@
               <h2 id="general-info-title" class="section-title">Información general</h2>
               <div class="row form-fields">
                 <div class="col-12 col-md-6">
-                  <mat-form-field appearance="outline" class="person-field">
+                  <mat-form-field appearance="outline" class="app-form-field">
                     <mat-label>Estado civil</mat-label>
                     <mat-select formControlName="estadoCivil">
                       <mat-option value="Soltero">Soltero(a)</mat-option>
@@ -241,7 +241,7 @@
                   </mat-form-field>
                 </div>
                 <div class="col-12 col-md-6">
-                  <mat-form-field appearance="outline" class="person-field">
+                  <mat-form-field appearance="outline" class="app-form-field">
                     <mat-label>Régimen matrimonial</mat-label>
                     <mat-select formControlName="regimenMatrimonial">
                       <mat-option value="SociedadConyugal">Sociedad conyugal</mat-option>
@@ -259,7 +259,7 @@
               <h2 id="contact-info-title" class="section-title">Datos de contacto</h2>
               <div class="row form-fields">
                 <div class="col-12">
-                  <mat-form-field appearance="outline" class="person-field">
+                  <mat-form-field appearance="outline" class="app-form-field">
                     <mat-label>Correo electrónico</mat-label>
                     <input matInput formControlName="correo" type="email" autocomplete="email" />
                     @if (personForm.controls.correo.hasError('email') && personForm.controls.correo.touched) {

@@ -1,0 +1,35 @@
+@mixin apply-typography-token($token) {
+  font-family: var(--font-#{$token}-family);
+  font-size: var(--font-#{$token}-size);
+  font-weight: var(--font-#{$token}-weight);
+  line-height: var(--font-#{$token}-line-height);
+  letter-spacing: var(--font-#{$token}-letter-spacing);
+  margin-block-end: var(--font-#{$token}-paragraph-space);
+}
+
+$typography-tokens: (
+  display-lg,
+  display-md,
+  display-xs,
+  heading-lg,
+  heading-md,
+  heading-sm,
+  body-lg-regular,
+  body-lg-medium,
+  body-md-regular,
+  body-md-medium,
+  body-sm-regular,
+  body-sm-medium,
+  label-lg,
+  label-md,
+  label-sm,
+  label-xs,
+  caption-regular,
+  caption-medium
+);
+
+@each $token in $typography-tokens {
+  .text-#{$token} {
+    @include apply-typography-token($token);
+  }
+}

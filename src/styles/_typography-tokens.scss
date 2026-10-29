@@ -1,0 +1,130 @@
+:root {
+  --font-family-balto: 'Balto', sans-serif;
+  --font-family-duplicate-slab: 'Duplicate Slab', serif;
+
+  --font-display-lg-family: var(--font-family-duplicate-slab);
+  --font-display-lg-size: 40px;
+  --font-display-lg-weight: 500;
+  --font-display-lg-line-height: 48px;
+  --font-display-lg-paragraph-space: 0px;
+  --font-display-lg-letter-spacing: 0px;
+
+  --font-display-md-family: var(--font-family-duplicate-slab);
+  --font-display-md-size: 32px;
+  --font-display-md-weight: 500;
+  --font-display-md-line-height: 40px;
+  --font-display-md-paragraph-space: 0px;
+  --font-display-md-letter-spacing: 0px;
+
+  --font-display-xs-family: var(--font-family-duplicate-slab);
+  --font-display-xs-size: 28px;
+  --font-display-xs-weight: 500;
+  --font-display-xs-line-height: 36px;
+  --font-display-xs-paragraph-space: 0px;
+  --font-display-xs-letter-spacing: 0px;
+
+  --font-heading-lg-family: var(--font-family-balto);
+  --font-heading-lg-size: 24px;
+  --font-heading-lg-weight: 500;
+  --font-heading-lg-line-height: 32px;
+  --font-heading-lg-paragraph-space: 0px;
+  --font-heading-lg-letter-spacing: 0px;
+
+  --font-heading-md-family: var(--font-family-balto);
+  --font-heading-md-size: 20px;
+  --font-heading-md-weight: 500;
+  --font-heading-md-line-height: 28px;
+  --font-heading-md-paragraph-space: 0px;
+  --font-heading-md-letter-spacing: 0px;
+
+  --font-heading-sm-family: var(--font-family-balto);
+  --font-heading-sm-size: 18px;
+  --font-heading-sm-weight: 500;
+  --font-heading-sm-line-height: 26px;
+  --font-heading-sm-paragraph-space: 0px;
+  --font-heading-sm-letter-spacing: 0px;
+
+  --font-body-lg-regular-family: var(--font-family-balto);
+  --font-body-lg-regular-size: 18px;
+  --font-body-lg-regular-weight: 400;
+  --font-body-lg-regular-line-height: 28px;
+  --font-body-lg-regular-paragraph-space: 0px;
+  --font-body-lg-regular-letter-spacing: 0px;
+
+  --font-body-lg-medium-family: var(--font-family-balto);
+  --font-body-lg-medium-size: 18px;
+  --font-body-lg-medium-weight: 500;
+  --font-body-lg-medium-line-height: 28px;
+  --font-body-lg-medium-paragraph-space: 0px;
+  --font-body-lg-medium-letter-spacing: 0px;
+
+  --font-body-md-regular-family: var(--font-family-balto);
+  --font-body-md-regular-size: 16px;
+  --font-body-md-regular-weight: 400;
+  --font-body-md-regular-line-height: 24px;
+  --font-body-md-regular-paragraph-space: 0px;
+  --font-body-md-regular-letter-spacing: 0px;
+
+  --font-body-md-medium-family: var(--font-family-balto);
+  --font-body-md-medium-size: 16px;
+  --font-body-md-medium-weight: 500;
+  --font-body-md-medium-line-height: 24px;
+  --font-body-md-medium-paragraph-space: 0px;
+  --font-body-md-medium-letter-spacing: 0px;
+
+  --font-body-sm-regular-family: var(--font-family-balto);
+  --font-body-sm-regular-size: 14px;
+  --font-body-sm-regular-weight: 400;
+  --font-body-sm-regular-line-height: 22px;
+  --font-body-sm-regular-paragraph-space: 0px;
+  --font-body-sm-regular-letter-spacing: 0px;
+
+  --font-body-sm-medium-family: var(--font-family-balto);
+  --font-body-sm-medium-size: 14px;
+  --font-body-sm-medium-weight: 500;
+  --font-body-sm-medium-line-height: 22px;
+  --font-body-sm-medium-paragraph-space: 0px;
+  --font-body-sm-medium-letter-spacing: 0px;
+
+  --font-label-lg-family: var(--font-family-balto);
+  --font-label-lg-size: 18px;
+  --font-label-lg-weight: 500;
+  --font-label-lg-line-height: 20px;
+  --font-label-lg-paragraph-space: 0px;
+  --font-label-lg-letter-spacing: 0px;
+
+  --font-label-md-family: var(--font-family-balto);
+  --font-label-md-size: 16px;
+  --font-label-md-weight: 500;
+  --font-label-md-line-height: 18px;
+  --font-label-md-paragraph-space: 0px;
+  --font-label-md-letter-spacing: 0px;
+
+  --font-label-sm-family: var(--font-family-balto);
+  --font-label-sm-size: 14px;
+  --font-label-sm-weight: 500;
+  --font-label-sm-line-height: 16px;
+  --font-label-sm-paragraph-space: 0px;
+  --font-label-sm-letter-spacing: 0px;
+
+  --font-label-xs-family: var(--font-family-balto);
+  --font-label-xs-size: 12px;
+  --font-label-xs-weight: 500;
+  --font-label-xs-line-height: 14px;
+  --font-label-xs-paragraph-space: 0px;
+  --font-label-xs-letter-spacing: 0px;
+
+  --font-caption-regular-family: var(--font-family-balto);
+  --font-caption-regular-size: 12px;
+  --font-caption-regular-weight: 400;
+  --font-caption-regular-line-height: 16px;
+  --font-caption-regular-paragraph-space: 0px;
+  --font-caption-regular-letter-spacing: 0px;
+
+  --font-caption-medium-family: var(--font-family-balto);
+  --font-caption-medium-size: 12px;
+  --font-caption-medium-weight: 500;
+  --font-caption-medium-line-height: 16px;
+  --font-caption-medium-paragraph-space: 0px;
+  --font-caption-medium-letter-spacing: 0px;
+}

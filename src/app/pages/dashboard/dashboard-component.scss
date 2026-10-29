@@ -4,10 +4,9 @@
 }
 
 .dashboard-page {
-  min-height: calc(100dvh - 70px);
+  min-height: calc(100dvh - 18px);
   background: #dfe3e6;
   color: #1e232b;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .dashboard-shell {
@@ -15,7 +14,6 @@
   margin: 0 auto;
   padding: 22px 26px 0;
   width: 988px;
-height: 164px;
 }
 
 .banner-carousel {
@@ -89,16 +87,11 @@ height: 164px;
 .welcome-block p {
   margin: 0;
   color: #5d6870;
-  font-size: 0.9rem;
-  font-weight: 500;
 }
 
 .welcome-block h1 {
   margin: 6px 0 0;
   color: #2e363c;
-  font-size: clamp(2rem, 2.7vw, 3rem);
-  letter-spacing: -0.06em;
-  font-weight: 700;
 }
 
 .module-grid {
@@ -141,24 +134,16 @@ height: 164px;
   display: inline-block;
   margin-bottom: 8px;
   color: rgba(229, 234, 236, 0.7);
-  font-size: 0.7rem;
-  letter-spacing: 0.01em;
 }
 
 .module-body h3 {
   margin: 0 0 10px;
   color: #fff;
-  font-size: clamp(1.4rem, 1.7vw, 1.9rem);
-  line-height: 1.2;
-  letter-spacing: -0.05em;
-  font-weight: 700;
 }
 
 .module-body p {
   margin: 0;
   color: rgba(228, 233, 236, 0.8);
-  font-size: 0.8rem;
-  line-height: 1.55;
   min-height: 54px;
 }
 
@@ -174,7 +159,6 @@ height: 164px;
   flex: 1 1 auto;
   max-width: 150px;
   color: #dce2e5;
-  font-size: 0.68rem;
 }
 
 .progress-copy {
@@ -186,8 +170,6 @@ height: 164px;
 
 .progress-copy strong {
   color: #fff;
-  font-size: 0.78rem;
-  font-weight: 700;
 }
 
 .progress-track {
@@ -232,7 +214,6 @@ height: 164px;
   border-radius: 999px;
   background: #d8e000;
   color: #1d242c;
-  font-weight: 700;
   cursor: pointer;
 }
 
@@ -252,64 +233,68 @@ height: 164px;
 .summary-card {
   display: flex;
   align-items: center;
-  gap: 18px;
-  min-height: 122px;
-  padding: 18px 18px 18px 16px;
-  border: 1px solid rgba(102, 112, 118, 0.12);
+  gap: 24px;
+  min-height: 120px;
+  padding: 16px;
+  border: 0;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.74);
-  box-shadow: 0 8px 20px rgba(19, 24, 29, 0.04);
+  background: #f9fafa;
+  box-shadow: none;
 }
 
 .summary-value {
   display: flex;
+  flex: 0 0 84px;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 96px;
-  color: #0d9ec8;
-  font-size: clamp(2.4rem, 2.5vw, 3.25rem);
+  width: 84px;
+  height: 72px;
+  border-right: 1px solid #cbd3d8;
+  color: #287f9b;
+  font-size: 2.25rem;
   font-weight: 700;
   line-height: 1;
-  letter-spacing: -0.06em;
 }
 
-.summary-value::after {
-  content: 'días';
+.summary-unit {
   display: block;
-  margin-left: 10px;
-  color: #4f5c64;
-  font-size: 0.72rem;
+  margin: 4px 0 0;
+  color: #287f9b;
+  font-family: var(--font-body-md-medium-family);
+  font-size: 1rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  line-height: 1.2;
+  letter-spacing: var(--font-body-md-medium-letter-spacing);
   text-transform: lowercase;
 }
 
 .summary-content {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
+  min-width: 0;
   color: #27333a;
 }
 
 .summary-caption {
-  color: #5d6870;
-  font-size: 0.72rem;
-  font-weight: 600;
+  color: #46535d;
+  font-size: 0.875rem;
+  line-height: 1.2;
 }
 
 .summary-content h4 {
   margin: 0;
   color: #1d262d;
-  font-size: clamp(1.05rem, 1.3vw, 1.35rem);
-  line-height: 1.35;
-  letter-spacing: -0.03em;
-  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.2;
 }
 
 .summary-content p {
   margin: 0;
-  color: #5f6c74;
-  font-size: 0.82rem;
+  color: #46535d;
+  font-size: 0.875rem;
+  line-height: 1.2;
 }
 
 .site-footer {
@@ -392,6 +377,7 @@ height: 164px;
 @media (max-width: 640px) {
   .dashboard-page {
     min-height: auto;
+    margin-bottom: 0;
   }
 
   .module-footer {
@@ -404,16 +390,12 @@ height: 164px;
   }
 
   .summary-card {
-    flex-direction: column;
-    align-items: flex-start;
+    gap: 16px;
   }
 
   .summary-value {
-    min-width: 0;
-  }
-
-  .summary-value::after {
-    margin-left: 6px;
+    flex-basis: 72px;
+    width: 72px;
   }
 }
 

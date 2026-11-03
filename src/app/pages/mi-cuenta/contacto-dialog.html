@@ -1,0 +1,49 @@
+<button class="dialog-close" type="button" aria-label="Cerrar" (click)="cancelar()">×</button>
+<h2 mat-dialog-title id="contact-dialog-title">{{ title }}</h2>
+<mat-dialog-content>
+  <p class="dialog-description">{{ description }}</p>
+
+  <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="guardar()">
+    @if (data.type === 'phone') {
+      <mat-form-field appearance="outline">
+        <mat-label>Etiqueta</mat-label>
+        <input matInput formControlName="label" autocomplete="off" />
+        @if (
+          contactForm.controls.label.hasError('required') && contactForm.controls.label.touched
+        ) {
+          <mat-error>Escribe una etiqueta para identificar el teléfono.</mat-error>
+        }
+      </mat-form-field>
+    }
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ valueLabel }}</mat-label>
+      <input
+        matInput
+        [type]="data.type === 'email' ? 'email' : 'tel'"
+        formControlName="value"
+        [autocomplete]="data.type === 'email' ? 'email' : 'tel'"
+      />
+      @if (contactForm.controls.value.hasError('required') && contactForm.controls.value.touched) {
+        <mat-error>Este campo es obligatorio.</mat-error>
+      } @else if (
+        contactForm.controls.value.hasError('email') && contactForm.controls.value.touched
+      ) {
+        <mat-error>Escribe un correo electrónico válido.</mat-error>
+      } @else if (
+        contactForm.controls.value.hasError('pattern') && contactForm.controls.value.touched
+      ) {
+        <mat-error>Escribe un número telefónico válido.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-dialog-actions align="center">
+      <button mat-stroked-button type="button" class="dialog-cancel" (click)="cancelar()">
+        Cancelar
+      </button>
+      <button mat-flat-button type="submit" class="dialog-submit">
+        {{ submitLabel }}
+      </button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

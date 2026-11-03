@@ -1,0 +1,66 @@
+<section class="signers-dialog" aria-labelledby="signers-title">
+  @if (data.personas.length === 0) {
+    <span class="empty-icon" aria-hidden="true">
+      <mat-icon>info_outline</mat-icon>
+    </span>
+  }
+  <h2 mat-dialog-title id="signers-title">Firmantes</h2>
+
+  @if (data.personas.length > 0) {
+    <p class="signers-intro">
+      Selecciona quién deberá firmar el documento (máximo 2 personas), les llegará notificación al
+      correo:
+    </p>
+    <mat-dialog-content class="signers-content">
+      <div class="signer-list">
+        @for (persona of data.personas; track persona.id) {
+          <div class="signer-row">
+            <mat-checkbox
+              color="primary"
+              [checked]="selectedIds.includes(persona.id)"
+              [disabled]="!persona.correo && !selectedIds.includes(persona.id) || selectedIds.length >= 2 && !selectedIds.includes(persona.id)"
+              [aria-label]="'Seleccionar a ' + persona.nombre"
+              (change)="togglePersona(persona.id, $event.checked)"
+            />
+            <span class="signer-avatar" aria-hidden="true">
+              <mat-icon>person</mat-icon>
+            </span>
+            <span class="signer-details">
+              <strong>{{ persona.nombre }}</strong>
+              <span>{{ persona.correo || 'Correo no registrado' }}</span>
+            </span>
+          </div>
+        }
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center" class="signers-actions">
+      <button mat-stroked-button type="button" class="cancel-button" (click)="cancelar()">
+        Cancelar
+      </button>
+      <button
+        mat-flat-button
+        type="button"
+        class="send-button"
+        [disabled]="selectedIds.length === 0"
+        (click)="enviar()"
+      >
+        Enviar a firma
+      </button>
+    </mat-dialog-actions>
+  } @else {
+    <mat-dialog-content class="signers-content signers-empty-content">
+      <p class="signers-empty" role="status">
+        No tienes personas registradas con roles de firma. Registra un Aval o Apoderado Legal para
+        continuar tu proceso.
+      </p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center" class="signers-actions empty-actions">
+      <button mat-stroked-button type="button" class="cancel-button" (click)="cancelar()">
+        Hacerlo más tarde
+      </button>
+      <button mat-flat-button type="button" class="send-button" (click)="registrarAhora()">
+        Registrar ahora
+      </button>
+    </mat-dialog-actions>
+  }
+</section>

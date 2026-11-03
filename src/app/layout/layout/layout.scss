@@ -98,8 +98,8 @@
 }
 
 .utility-button svg {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   stroke: currentColor;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -108,8 +108,6 @@
 
 .nav-label {
   max-width: 82px;
-  font-size: 14px;
-  line-height: 1.2;
   text-align: center;
 }
 
@@ -139,8 +137,8 @@
 
 .utility-button {
   display: grid;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   place-items: center;
   border: 0;
   border-radius: 50%;
@@ -153,8 +151,8 @@
 }
 
 .notification-button svg {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   stroke: currentColor;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -164,14 +162,19 @@
 .profile-button {
   background: #fff;
   color: var(--color-surface-inverse);
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 700;
+  text-decoration: none;
+}
+
+.profile-button.active {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
 }
 
 .page-content {
   min-height: 100dvh;
   margin-left: 88px;
-  padding: 18px;
 }
 
 @media (max-width: 640px) {
@@ -208,10 +211,6 @@
     inset: 0 0 auto;
     width: auto;
     height: 3px;
-  }
-
-  .nav-label {
-    font-size: 8px;
   }
 
   .page-content {

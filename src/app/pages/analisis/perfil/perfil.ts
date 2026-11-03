@@ -27,8 +27,17 @@ export class Perfil {
   readonly profileForm = this.formBuilder.group({
     razonSocial: 'El Patito SA de CV',
     tipoSociedad: 'Sociedad Anónima de Capital Variable',
+    nombre1: 'Juan',
+    nombre2: '',
+    nombre3: '',
+    primerApellido: 'Pérez',
+    segundoApellido: 'García',
     nacionalidad: 'Mexicana',
+    curp: 'PEGJ870344HDFRRN08',
     rfc: 'PAEL870344PQ3',
+    tin: '',
+    estadoCivil: 'Casado',
+    sociedadConyugal: 'SociedadConyugal',
     correo: 'info@altamiracapital.com',
     tipoDomicilio: this.formBuilder.control('Fiscal', Validators.required),
     codigoPostal: '04100',
@@ -41,6 +50,7 @@ export class Perfil {
     direccionPrincipal: true,
   });
 
+  personaMoral = true;
   editing = false;
   private savedValues = this.profileForm.getRawValue();
 
@@ -51,6 +61,10 @@ export class Perfil {
   editar(): void {
     this.editing = true;
     this.profileForm.enable();
+  }
+
+  alternarTipoPersona(): void {
+    this.personaMoral = !this.personaMoral;
   }
 
   cancelar(): void {

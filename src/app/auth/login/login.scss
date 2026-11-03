@@ -30,7 +30,7 @@
       rgb(16 20 24 / 22%) 45%,
       rgb(16 20 24 / 82%) 100%
     ),
-    url('/bg-login-bx+.jpg') right center / cover no-repeat;
+    var(--login-background-image) right center / cover no-repeat;
   color: var(--color-text-on-dark-default);
 }
 

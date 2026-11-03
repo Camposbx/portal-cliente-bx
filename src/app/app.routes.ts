@@ -33,6 +33,11 @@ export const routes: Routes = [
         title: 'Mi ejecutivo | Portal BX+',
       },
       {
+        path: 'mi-cuenta',
+        loadComponent: () => import('./pages/mi-cuenta/mi-cuenta').then((page) => page.MiCuenta),
+        title: 'Mi cuenta | Portal BX+',
+      },
+      {
         path: 'ayuda',
         loadComponent: () => import('./pages/ayuda/ayuda').then((page) => page.Ayuda),
         title: 'Ayuda | Portal BX+',

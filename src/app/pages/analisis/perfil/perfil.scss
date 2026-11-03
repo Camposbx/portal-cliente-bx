@@ -45,10 +45,10 @@
 .client-name {
   margin: 0;
   color: var(--color-neutral-strongest);
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 25px;
-  font-weight: 700;
-  line-height: 1.15;
+  // font-family: Georgia, 'Times New Roman', serif;
+  // font-size: 40px;
+  // font-weight: 500;
+  // line-height: 1.15;
 }
 
 .client-meta {
@@ -69,7 +69,8 @@
   border-radius: 999px;
   background: var(--color-info-subtlest);
   color: var(--color-info-strong);
-  font-size: 9px;
+  font-size: 12px;
+  font-weight: 500;
   line-height: 1.2;
 }
 
@@ -81,16 +82,20 @@
   margin: 22px 0 12px;
 }
 
+.profile-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .profile-title {
   margin: 0;
   color: var(--color-neutral-strongest);
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.4;
 }
 
 .close-button,
-.action-button {
+.action-button,
+.type-toggle-button {
   display: inline-flex;
   min-height: 36px;
   align-items: center;
@@ -117,9 +122,19 @@
 }
 
 .close-button:focus-visible,
-.action-button:focus-visible {
+.action-button:focus-visible,
+.type-toggle-button:focus-visible {
   outline: 2px solid var(--color-border-focus);
   outline-offset: 2px;
+}
+
+.type-toggle-button {
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+.type-toggle-button:hover {
+  background: var(--color-action-secondary-hover);
 }
 
 .profile-section {
@@ -127,40 +142,13 @@
 }
 
 .section-title {
-  margin: 0 0 8px;
+  margin: 0;
   color: var(--color-neutral-strongest);
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.4;
 }
 
 .profile-fields {
   --bs-gutter-x: 16px;
   --bs-gutter-y: 12px;
-}
-
-.profile-field {
-  width: 100%;
-  --mat-form-field-container-height: 48px;
-  --mat-form-field-container-vertical-padding: 8px;
-}
-
-.profile-field ::ng-deep .mat-mdc-text-field-wrapper {
-  background: var(--color-surface-default);
-}
-
-.profile-field ::ng-deep .mdc-text-field--disabled {
-  background: var(--color-surface-muted);
-}
-
-.profile-field ::ng-deep .mdc-text-field--disabled .mdc-notched-outline__leading,
-.profile-field ::ng-deep .mdc-text-field--disabled .mdc-notched-outline__notch,
-.profile-field ::ng-deep .mdc-text-field--disabled .mdc-notched-outline__trailing {
-  border-color: var(--color-border-subtle);
-}
-
-.profile-field ::ng-deep .mat-mdc-form-field-subscript-wrapper {
-  font-size: 9px;
 }
 
 .address-section {
@@ -208,6 +196,11 @@
 
   .profile-heading {
     margin-top: 18px;
+  }
+
+  .profile-heading-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .profile-actions {

@@ -1,1 +1,69 @@
-<p>mi-ejecutivo works!</p>
+<main class="executive-page">
+  <div class="executive-shell">
+    <header class="page-header">
+      <h1 class="text-display-lg">Mi ejecutivo</h1>
+      <p class="text-body-md-regular">Quién lleva tu cuenta y por dónde localizarlo.</p>
+    </header>
+
+    <section class="executive-grid" aria-label="Información de tu ejecutivo">
+      <article class="executive-card profile-card">
+        <div class="profile-avatar" role="img" [attr.aria-label]="'Ícono de ' + ejecutivo.nombre + ' ' + ejecutivo.apellidos">
+          <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">person</mat-icon>
+        </div>
+
+        <h2 class="text-heading-lg">{{ ejecutivo.nombre }} {{ ejecutivo.apellidos }}</h2>
+        <p class="profile-role text-body-md-regular">{{ ejecutivo.cargo }}</p>
+        <p class="profile-hours text-body-sm-regular">Horario de atención: {{ ejecutivo.horarioAtencion }}</p>
+        <a class="primary-action text-label-sm" [href]="'mailto:' + ejecutivo.correo">Escríbele</a>
+      </article>
+
+      <article class="executive-card contact-card">
+        <h2 class="text-heading-md">Cómo contactarlo</h2>
+
+        <div class="contact-list">
+          <div class="contact-row">
+            <span class="contact-icon" aria-hidden="true">
+              <mat-icon fontSet="material-symbols-outlined">mail</mat-icon>
+            </span>
+            <div class="contact-copy">
+              <span class="text-label-xs">Correo electrónico</span>
+              <a class="text-body-md-medium" [href]="'mailto:' + ejecutivo.correo">{{ ejecutivo.correo }}</a>
+            </div>
+            <a class="secondary-action text-label-sm" [href]="'mailto:' + ejecutivo.correo">Escríbele</a>
+          </div>
+
+          <div class="contact-row">
+            <span class="contact-icon" aria-hidden="true">
+              <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
+            </span>
+            <div class="contact-copy">
+              <span class="text-label-xs">Whatsapp</span>
+              <a class="text-body-md-medium" [href]="whatsappUrl" target="_blank" rel="noopener noreferrer">{{ ejecutivo.telefono }}</a>
+            </div>
+            <a class="secondary-action text-label-sm" [href]="whatsappUrl" target="_blank" rel="noopener noreferrer">Mandar mensaje</a>
+          </div>
+
+          <div class="contact-row">
+            <span class="contact-icon" aria-hidden="true">
+              <mat-icon fontSet="material-symbols-outlined">apartment</mat-icon>
+            </span>
+            <div class="contact-copy">
+              <span class="text-label-xs">Sucursal</span>
+              <span class="text-body-md-medium">{{ ejecutivo.sucursal.nombre }} · {{ ejecutivo.sucursal.direccion }}</span>
+            </div>
+            <a class="secondary-action text-label-sm" [href]="sucursalUrl" target="_blank" rel="noopener noreferrer">Ver en maps</a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <article class="executive-card backup-card" [attr.aria-label]="ejecutivo.suplente.cargo">
+      <div class="backup-avatar" aria-hidden="true">{{ ejecutivo.suplente.iniciales }}</div>
+      <div class="backup-copy">
+        <h2 class="text-body-md-medium">{{ ejecutivo.suplente.nombre }} · {{ ejecutivo.suplente.cargo }}</h2>
+        <p class="text-body-sm-regular">Te atiende cuando {{ ejecutivo.nombre }} no está disponible · {{ ejecutivo.suplente.correo }}</p>
+      </div>
+      <a class="secondary-action text-label-sm" [href]="'mailto:' + ejecutivo.suplente.correo">Escríbele</a>
+    </article>
+  </div>
+</main>

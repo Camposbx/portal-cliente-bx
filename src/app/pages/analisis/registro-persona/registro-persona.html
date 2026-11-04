@@ -1,18 +1,55 @@
 <section class="registration-page">
   <header class="registration-header">
-    @if (personType) {
+    @if (personType || modoEdicion()) {
       <button class="back-button" type="button" aria-label="Regresar" (click)="volver()">
         <mat-icon>arrow_back</mat-icon>
       </button>
     } @else {
-      <a class="back-button" routerLink="/analisis/documentos" aria-label="Regresar a documentos">
+      <a
+        class="back-button"
+        [routerLink]="desdePersonas() ? '/analisis/personas-involucradas' : '/analisis/documentos'"
+        [attr.aria-label]="desdePersonas() ? 'Regresar a personas involucradas' : 'Regresar a documentos'"
+      >
         <mat-icon>arrow_back</mat-icon>
       </a>
     }
-    <h1 class="page-title text-display-lg">Registro de persona</h1>
+    <h1 class="page-title text-display-lg">{{ modoEdicion() ? 'Editar persona' : 'Registro de persona' }}</h1>
   </header>
 
   <div class="registration-content">
+    @if (edicionInvalida()) {
+      <div class="link-notice link-notice--error text-body-sm-regular" role="alert">
+        <mat-icon aria-hidden="true">error_outline</mat-icon>
+        <span>
+          No se encontró la persona que deseas editar.
+          <a routerLink="/analisis/personas-involucradas" [queryParams]="{ vista: 'arbol' }">Ver personas involucradas</a>
+        </span>
+      </div>
+    } @else if (personaVinculada(); as persona) {
+      <div class="link-notice text-body-sm-regular" role="status">
+        <mat-icon aria-hidden="true">link</mat-icon>
+        <span>La nueva persona quedará vinculada con <strong>{{ persona.nombre }}</strong>.</span>
+      </div>
+    } @else if (vinculoInvalido()) {
+      <div class="link-notice link-notice--error text-body-sm-regular" role="alert">
+        <mat-icon aria-hidden="true">error_outline</mat-icon>
+        <span>
+          No se encontró la persona seleccionada. Vuelve al registro de personas para elegirla nuevamente.
+          <a routerLink="/analisis/personas-involucradas">Ver personas involucradas</a>
+        </span>
+      </div>
+    }
+
+    @if (personaEditada(); as persona) {
+      @if (!persona.datos) {
+        <div class="link-notice text-body-sm-regular" role="status">
+          <mat-icon aria-hidden="true">info</mat-icon>
+          <span>Este registro no incluye datos detallados. Revisa el nombre y completa los campos requeridos antes de guardar.</span>
+        </div>
+      }
+    }
+
+    @if (!vinculoInvalido() && !edicionInvalida()) {
     <section class="flow-section" aria-labelledby="person-type-title">
       <h2 id="person-type-title" class="section-title text-heading-sm">Elige el tipo de persona</h2>
       <mat-radio-group
@@ -26,7 +63,7 @@
       </mat-radio-group>
     </section>
 
-    @if (personType) {
+    @if (personType && !modoEdicion()) {
       <section class="flow-section capture-section" aria-labelledby="capture-method-title">
         <h2 id="capture-method-title" class="section-title text-heading-sm">¿Cómo quieres continuar?</h2>
         <div class="row capture-options">
@@ -67,7 +104,7 @@
       </p>
     }
 
-    @if (captureMethod === 'manual') {
+    @if (captureMethod === 'manual' && personType) {
       <form [formGroup]="personForm" (ngSubmit)="finalizarRegistro()">
         <section class="flow-section roles-section" aria-labelledby="roles-title">
           <h2 id="roles-title" class="section-title text-heading-sm">
@@ -271,6 +308,7 @@
               </div>
             </section>
           }
+        }
 
           <div class="form-actions">
             <button class="action-button secondary-button text-label-sm" type="button" (click)="cancelar()">
@@ -281,11 +319,11 @@
               type="submit"
               [disabled]="personForm.invalid || selectedRoles.length === 0"
             >
-              Finalizar registro
+              {{ modoEdicion() ? 'Guardar cambios' : 'Finalizar registro' }}
             </button>
           </div>
-        }
       </form>
+    }
     }
   </div>
 </section>

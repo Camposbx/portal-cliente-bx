@@ -5,6 +5,8 @@ export interface PersonaInvolucrada {
   nombre: string;
   correo: string;
   roles: string[];
+  tipoPersona: 'fisica' | 'moral';
+  nivel?: number;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -23,12 +25,26 @@ export class PersonasInvolucradasService {
     this.selectedName.set(nombre);
   }
 
-  agregar(nombre: string, correo: string, roles: string[]): void {
+  agregar(
+    nombre: string,
+    correo: string,
+    roles: string[],
+    tipoPersona: 'fisica' | 'moral',
+    nivel = 0,
+  ): void {
     const nombreLimpio = nombre.trim();
     if (nombreLimpio) {
+      const nivelSeguro = Number.isFinite(nivel) ? Math.max(0, Math.floor(nivel)) : 0;
       this.personas.update((personas) => [
         ...personas,
-        { id: this.nextPersonaId++, nombre: nombreLimpio, correo: correo.trim(), roles: [...roles] },
+        {
+          id: this.nextPersonaId++,
+          nombre: nombreLimpio,
+          correo: correo.trim(),
+          roles: [...roles],
+          tipoPersona,
+          nivel: nivelSeguro,
+        },
       ]);
     }
   }

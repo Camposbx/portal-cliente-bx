@@ -113,7 +113,7 @@ export class RegistroPersona {
   }
 
   finalizarRegistro(): void {
-    if (this.selectedRoles.length === 0 || this.personForm.invalid) {
+    if (!this.personType || this.selectedRoles.length === 0 || this.personForm.invalid) {
       this.personForm.markAllAsTouched();
       return;
     }
@@ -126,7 +126,7 @@ export class RegistroPersona {
             .join(' ')
         : datos.razonSocial;
 
-    this.personasInvolucradas.agregar(nombre, datos.correo, this.selectedRoles);
+    this.personasInvolucradas.agregar(nombre, datos.correo, this.selectedRoles, this.personType);
     void this.router.navigateByUrl('/analisis/documentos');
   }
 }

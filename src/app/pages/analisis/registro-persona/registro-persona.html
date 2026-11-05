@@ -13,7 +13,9 @@
         <mat-icon>arrow_back</mat-icon>
       </a>
     }
-    <h1 class="page-title text-display-lg">{{ modoEdicion() ? 'Editar persona' : 'Registro de persona' }}</h1>
+    <h1 class="page-title text-display-lg">
+      {{ modoEdicion() ? 'Editar persona' : isSecondLevel ? 'Registro de persona del segundo nivel' : 'Registro de persona' }}
+    </h1>
   </header>
 
   <div class="registration-content">
@@ -40,6 +42,16 @@
       </div>
     }
 
+    @if (isSecondLevel) {
+      <div class="link-notice text-body-sm-regular" role="status">
+        <mat-icon aria-hidden="true">link</mat-icon>
+        <span>
+          Registra una persona vinculada con <strong>{{ nombrePersonaSegundoNivel() }}</strong>.
+          Los roles disponibles dependen del tipo de persona y de la relación seleccionada.
+        </span>
+      </div>
+    }
+
     @if (personaEditada(); as persona) {
       @if (!persona.datos) {
         <div class="link-notice text-body-sm-regular" role="status">
@@ -50,20 +62,28 @@
     }
 
     @if (!vinculoInvalido() && !edicionInvalida()) {
+    @if (!esperandoAccionSegundoNivel) {
     <section class="flow-section" aria-labelledby="person-type-title">
-      <h2 id="person-type-title" class="section-title text-heading-sm">Elige el tipo de persona</h2>
+      <h2 id="person-type-title" class="section-title text-heading-sm">
+        {{ isSecondLevel ? 'Elige el tipo de persona del segundo nivel' : 'Elige el tipo de persona' }}
+      </h2>
       <mat-radio-group
         class="person-type-options"
         aria-labelledby="person-type-title"
         [value]="personType"
         (change)="selectPersonType($event.value)"
       >
-        <mat-radio-button class="text-body-sm-regular" value="fisica">Persona física</mat-radio-button>
-        <mat-radio-button class="text-body-sm-regular" value="moral">Persona moral</mat-radio-button>
+        @if (tiposPersonaDisponibles.includes('fisica')) {
+          <mat-radio-button class="text-body-sm-regular" value="fisica">Persona física</mat-radio-button>
+        }
+        @if (tiposPersonaDisponibles.includes('moral')) {
+          <mat-radio-button class="text-body-sm-regular" value="moral">Persona moral</mat-radio-button>
+        }
       </mat-radio-group>
     </section>
+    }
 
-    @if (personType && !modoEdicion()) {
+    @if (personType && !modoEdicion() && !esperandoAccionSegundoNivel) {
       <section class="flow-section capture-section" aria-labelledby="capture-method-title">
         <h2 id="capture-method-title" class="section-title text-heading-sm">¿Cómo quieres continuar?</h2>
         <div class="row capture-options">
@@ -97,28 +117,43 @@
       </section>
     }
 
-    @if (captureMethod === 'automatic') {
+    @if (captureMethod === 'automatic' && !esperandoAccionSegundoNivel) {
       <p class="method-notice text-body-sm-regular" role="status">
         La carga automática de datos no está disponible en este flujo. Selecciona “Ingresar datos
         manualmente” para continuar.
       </p>
     }
 
-    @if (captureMethod === 'manual' && personType) {
+    @if (captureMethod === 'manual' && personType && !esperandoAccionSegundoNivel) {
       <form [formGroup]="personForm" (ngSubmit)="finalizarRegistro()">
         <section class="flow-section roles-section" aria-labelledby="roles-title">
           <h2 id="roles-title" class="section-title text-heading-sm">
-            ¿Qué roles ocupará esta persona? (elige todos los que apliquen)
+            {{ isSecondLevel ? 'Rol correspondiente a la relación' : '¿Qué roles ocupará esta persona? (elige todos los que apliquen)' }}
           </h2>
           <div class="role-options">
-            @for (role of roles; track role.id) {
-              <mat-checkbox
-                class="text-body-sm-regular"
-                [checked]="selectedRoles.includes(role.id)"
-                (change)="toggleRole(role.id, $event.checked)"
+            @if (isSecondLevel) {
+              <mat-radio-group
+                class="role-options"
+                aria-label="Rol correspondiente a la relación"
+                [value]="selectedRoles[0] ?? null"
+                (change)="selectSecondLevelRole($event.value)"
               >
-                {{ role.label }}
-              </mat-checkbox>
+                @for (role of rolesDisponiblesSegundoNivel; track role.id) {
+                  <mat-radio-button class="text-body-sm-regular" [value]="role.id">
+                    {{ role.label }}
+                  </mat-radio-button>
+                }
+              </mat-radio-group>
+            } @else {
+              @for (role of rolesDisponiblesPrimerNivel; track role.id) {
+                <mat-checkbox
+                  class="text-body-sm-regular"
+                  [checked]="selectedRoles.includes(role.id)"
+                  (change)="toggleRole(role.id, $event.checked)"
+                >
+                  {{ role.label }}
+                </mat-checkbox>
+              }
             }
           </div>
         </section>
@@ -319,10 +354,37 @@
               type="submit"
               [disabled]="personForm.invalid || selectedRoles.length === 0"
             >
-              {{ modoEdicion() ? 'Guardar cambios' : 'Finalizar registro' }}
+              {{ modoEdicion() ? 'Guardar cambios' : isSecondLevel ? 'Guardar persona vinculada' : 'Finalizar registro' }}
             </button>
           </div>
       </form>
+    }
+    @if (esperandoAccionSegundoNivel) {
+      <section class="flow-section capture-section" aria-labelledby="second-level-actions-title">
+        <h2 id="second-level-actions-title" class="section-title text-heading-sm">
+          Persona vinculada guardada
+        </h2>
+        <p class="text-body-sm-regular" role="status">
+          Se han registrado {{ cantidadPersonasSegundoNivel }} personas vinculadas con
+          <strong>{{ nombrePersonaSegundoNivel() }}</strong>. Puedes agregar otra o terminar el registro.
+        </p>
+        <div class="form-actions">
+          <button
+            class="action-button secondary-button text-label-sm"
+            type="button"
+            (click)="registrarOtraPersonaSegundoNivel()"
+          >
+            Registrar otra persona
+          </button>
+          <button
+            class="action-button primary-button text-label-sm"
+            type="button"
+            (click)="terminarRegistroSegundoNivel()"
+          >
+            Terminar
+          </button>
+        </div>
+      </section>
     }
     }
   </div>

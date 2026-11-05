@@ -70,6 +70,10 @@ export class RegistroPersona {
 
   personType: PersonType | null = null;
   captureMethod: CaptureMethod | null = null;
+  secondLevelParentId: number | null = null;
+  esperandoAccionSegundoNivel = false;
+  private secondLevelSourceRoles: string[] = [];
+  secondLevelRoleOptions: string[] = [];
   readonly roles = [
     { id: 'aval', label: 'Aval (AV)' },
     { id: 'apoderado', label: 'Apoderado Legal (AL)' },
@@ -79,35 +83,70 @@ export class RegistroPersona {
   ];
   selectedRoles: string[] = [];
 
+  get isSecondLevel(): boolean {
+    return this.secondLevelParentId !== null;
+  }
+
+  get tiposPersonaDisponibles(): PersonType[] {
+    if (!this.isSecondLevel) return ['fisica', 'moral'];
+    return (['fisica', 'moral'] as const).filter((tipo) => this.rolesSegundoNivel(tipo).length > 0);
+  }
+
+  get rolesDisponiblesSegundoNivel(): typeof this.roles {
+    return this.roles.filter((role) => this.secondLevelRoleOptions.includes(role.id));
+  }
+
+  get rolesDisponiblesPrimerNivel(): typeof this.roles {
+    const rolesPermitidos = this.personType === 'moral'
+      ? ['aval', 'accionista', 'garante']
+      : this.roles.map((role) => role.id);
+    return this.roles.filter((role) => rolesPermitidos.includes(role.id));
+  }
+
+  nombrePersonaSegundoNivel(): string {
+    return this.personasInvolucradas.personas().find((persona) => persona.id === this.secondLevelParentId)?.nombre ?? '';
+  }
+
+  get cantidadPersonasSegundoNivel(): number {
+    return this.personasInvolucradas.personas()
+      .filter((persona) => persona.vinculadaConId === this.secondLevelParentId).length;
+  }
+
   constructor() {
     this.route.queryParamMap.pipe(
       map((params) => params.get('editar')),
       distinctUntilChanged(),
       takeUntilDestroyed(),
-    ).subscribe((id) => {
-      this.personType = null;
-      this.captureMethod = null;
-      this.selectedRoles = [];
-      this.personForm.reset();
-      const persona = this.buscarPersona(id);
-      if (!persona) return;
+    ).subscribe((id) => this.cargarPersona(id));
+  }
 
-      if (persona.tipo) this.configurarTipo(persona.tipo);
-      this.captureMethod = 'manual';
-      this.selectedRoles = [...persona.roles];
-      if (persona.datos) {
-        this.personForm.patchValue({
-          ...persona.datos,
-          participacion: persona.datos.participacion == null ? '' : String(persona.datos.participacion),
-        });
-      } else {
-        // Older in-memory records contain only the full name; do not guess its individual parts.
-        this.personForm.patchValue({
-          nombre1: persona.tipo !== 'moral' ? persona.nombre : '',
-          razonSocial: persona.tipo !== 'fisica' ? persona.nombre : '',
-          correo: persona.correo,
-        });
-      }
+  private cargarPersona(id: string | null): void {
+    this.personType = null;
+    this.captureMethod = null;
+    this.selectedRoles = [];
+    this.personForm.reset();
+    const persona = this.buscarPersona(id);
+    if (!persona) return;
+
+    const tipo = persona.tipo
+      ?? persona.tipoPersona
+      ?? (persona.datos?.razonSocial.trim() ? 'moral' : 'fisica');
+    this.configurarTipo(tipo);
+    this.captureMethod = 'manual';
+    this.selectedRoles = [...persona.roles];
+    if (persona.datos) {
+      this.personForm.patchValue({
+        ...persona.datos,
+        participacion: persona.datos.participacion == null ? '' : String(persona.datos.participacion),
+      });
+      return;
+    }
+
+    // Older in-memory records contain only the full name; do not guess its individual parts.
+    this.personForm.patchValue({
+      nombre1: tipo === 'fisica' ? persona.nombre : '',
+      razonSocial: tipo === 'moral' ? persona.nombre : '',
+      correo: persona.correo,
     });
   }
 
@@ -123,9 +162,22 @@ export class RegistroPersona {
     this.configurarTipo(personType);
     if (!this.modoEdicion()) {
       this.captureMethod = null;
-      this.selectedRoles = [];
       this.personForm.reset();
+      this.secondLevelRoleOptions = this.isSecondLevel ? this.rolesSegundoNivel(personType) : [];
+      this.selectedRoles = [];
     }
+  }
+
+  private rolesSegundoNivel(personType: PersonType): string[] {
+    const rolesPorTipo: Record<PersonType, Record<string, string>> = {
+      fisica: { aval: 'apoderado', accionista: 'accionista', garante: 'apoderado' },
+      moral: { accionista: 'accionista' },
+    };
+    return [...new Set(
+      this.secondLevelSourceRoles
+        .map((role) => rolesPorTipo[personType][role])
+        .filter((role): role is string => role !== undefined),
+    )];
   }
 
   private configurarTipo(personType: PersonType): void {
@@ -150,10 +202,15 @@ export class RegistroPersona {
 
   selectCaptureMethod(method: CaptureMethod): void {
     this.captureMethod = method;
-    this.selectedRoles = [];
+    if (!this.isSecondLevel) this.selectedRoles = [];
+  }
+
+  selectSecondLevelRole(roleId: string): void {
+    if (this.secondLevelRoleOptions.includes(roleId)) this.selectedRoles = [roleId];
   }
 
   toggleRole(roleId: string, selected: boolean): void {
+    if (!this.rolesDisponiblesPrimerNivel.some((role) => role.id === roleId)) return;
     this.selectedRoles = selected
       ? [...this.selectedRoles, roleId]
       : this.selectedRoles.filter((role) => role !== roleId);
@@ -172,9 +229,17 @@ export class RegistroPersona {
 
     this.personType = null;
     this.personForm.reset();
+    this.selectedRoles = [];
+    this.secondLevelRoleOptions = [];
   }
 
   cancelar(): void {
+    if (this.isSecondLevel) {
+      void this.router.navigateByUrl(
+        this.desdePersonas() ? '/analisis/personas-involucradas' : '/analisis/documentos',
+      );
+      return;
+    }
     if (this.modoEdicion()) {
       this.volverAlArbol();
       return;
@@ -192,6 +257,22 @@ export class RegistroPersona {
 
   private volverAlArbol(): void {
     void this.router.navigate(['/analisis/personas-involucradas'], { queryParams: { vista: 'arbol' } });
+  }
+
+  registrarOtraPersonaSegundoNivel(): void {
+    this.personType = null;
+    this.captureMethod = null;
+    this.selectedRoles = [];
+    this.secondLevelRoleOptions = [];
+    this.personForm.reset();
+    this.esperandoAccionSegundoNivel = false;
+  }
+
+  terminarRegistroSegundoNivel(): void {
+    this.esperandoAccionSegundoNivel = false;
+    void this.router.navigateByUrl(
+      this.desdePersonas() ? '/analisis/personas-involucradas' : '/analisis/documentos',
+    );
   }
 
   finalizarRegistro(): void {
@@ -216,17 +297,51 @@ export class RegistroPersona {
       return;
     }
 
+    const personaVinculada = this.isSecondLevel
+      ? this.personasInvolucradas.personas().find((persona) => persona.id === this.secondLevelParentId)
+      : this.personaVinculada();
     const agregada = this.personasInvolucradas.agregar(
       nombre,
       datos.correo,
       this.selectedRoles,
       this.personType,
-      { vinculadaConId: this.personaVinculada()?.id, datos },
+      {
+        vinculadaConId: personaVinculada?.id,
+        datos,
+        nivel: personaVinculada ? (personaVinculada.nivel ?? 0) + 1 : 0,
+      },
     );
-    if (agregada) {
-      void this.router.navigateByUrl(
-        this.desdePersonas() ? '/analisis/personas-involucradas' : '/analisis/documentos',
-      );
+    if (!agregada) return;
+
+    if (this.isSecondLevel) {
+      this.esperandoAccionSegundoNivel = true;
+      this.personType = null;
+      this.captureMethod = null;
+      this.selectedRoles = [];
+      this.secondLevelRoleOptions = [];
+      this.personForm.reset();
+      return;
     }
+
+    if (!this.isSecondLevel) {
+      const rolesOrigen = this.selectedRoles.filter((role) => ['aval', 'accionista', 'garante'].includes(role));
+      if (rolesOrigen.length > 0) {
+        const personaGuardada = this.personasInvolucradas.personas().at(-1);
+        if (personaGuardada) {
+          this.secondLevelParentId = personaGuardada.id;
+          this.secondLevelSourceRoles = rolesOrigen;
+          this.personType = null;
+          this.captureMethod = null;
+          this.selectedRoles = [];
+          this.secondLevelRoleOptions = [];
+          this.personForm.reset();
+          return;
+        }
+      }
+    }
+
+    void this.router.navigateByUrl(
+      this.desdePersonas() ? '/analisis/personas-involucradas' : '/analisis/documentos',
+    );
   }
 }

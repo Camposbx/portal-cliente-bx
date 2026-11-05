@@ -31,38 +31,12 @@
           <mat-icon aria-hidden="true">visibility</mat-icon>
         </a>
       </div>
-      @if (mostrarEjemplos()) {
-        <div id="people-examples" class="people-list people-examples" aria-label="Ejemplo de persona principal y personas asociadas">
-          <div class="involved-person involved-person--example">
-            <span class="person-name text-body-sm-medium">{{ personaEjemploPrincipal.nombre }}</span>
-            <span class="person-role-label">Persona moral</span>
-          </div>
-          <div class="associated-people">
-            @for (persona of personasEjemplo; track persona.id) {
-              <div
-                class="involved-person involved-person--example"
-                [style.--level-indent.px]="(persona.nivel - 1) * 3"
-              >
-                <span class="person-name text-body-sm-medium">{{ persona.nombre }}</span>
-                <span class="person-role-label">{{ etiquetaRoles(persona.roles) }}</span>
-              </div>
-            }
-          </div>
-        </div>
-      }
       @if (personas().length > 0) {
-        <div class="people-list" aria-label="Personas registradas">
-          @for (persona of personasVisuales(); track persona.id) {
-            <button
-              type="button"
-              class="involved-person"
-              [attr.aria-pressed]="selectedName() === persona.nombre"
-              (click)="seleccionarPersona(persona.nombre)"
-            >
-              <span class="person-name text-body-sm-medium">{{ persona.nombre }}</span>
-              <span class="person-role-label">{{ etiquetaRoles(persona.roles) }}</span>
-            </button>
-          }
+        <div class="people-list people-tree" aria-label="Personas registradas">
+          <ng-container
+            [ngTemplateOutlet]="registeredPeople"
+            [ngTemplateOutletContext]="{ $implicit: arbolPersonas() }"
+          />
         </div>
       } @else {
         <div class="people-empty-state">
@@ -78,18 +52,36 @@
         Registrar persona
       </button>
     </section>
-    <button
-      type="button"
-      class="examples-toggle"
-      [attr.aria-expanded]="mostrarEjemplos()"
-      aria-controls="people-examples"
-      (click)="toggleEjemplos()"
-    >
-      {{ mostrarEjemplos() ? 'Ocultar ejemplos' : 'Ver ejemplos' }}
-    </button>
   </aside>
 
   <main class="analysis-content">
     <router-outlet />
   </main>
 </div>
+
+<ng-template #registeredPeople let-personas>
+  <ul class="people-tree-list">
+    @for (persona of personas; track persona.id) {
+      <li class="people-tree-node">
+        <a
+          class="involved-person"
+          routerLink="/analisis/registro-persona"
+          [queryParams]="{ editar: persona.id }"
+          [attr.aria-current]="selectedName() === persona.nombre ? 'true' : null"
+          [attr.aria-label]="'Editar ' + persona.nombre"
+          (click)="seleccionarPersona(persona.nombre)"
+        >
+          <mat-icon class="person-type-icon" aria-hidden="true">{{ tipoPersonaIcono(persona.tipo) }}</mat-icon>
+          <span class="person-name text-body-sm-medium">{{ persona.nombre }}</span>
+          <span class="person-role-label">{{ etiquetaRoles(persona.roles) }}</span>
+        </a>
+        @if (persona.hijos.length > 0) {
+          <ng-container
+            [ngTemplateOutlet]="registeredPeople"
+            [ngTemplateOutletContext]="{ $implicit: persona.hijos }"
+          />
+        }
+      </li>
+    }
+  </ul>
+</ng-template>

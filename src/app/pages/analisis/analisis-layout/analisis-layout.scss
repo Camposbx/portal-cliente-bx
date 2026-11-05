@@ -44,32 +44,6 @@
   color: var(--color-neutral-strongest);
 }
 
-.examples-toggle {
-  display: block;
-  width: fit-content;
-  flex: 0 0 auto;
-  margin: 3px 4px 0 auto;
-  padding: 3px 4px;
-  border: 0;
-  border-radius: 4px;
-  background: transparent;
-  color: var(--color-text-subtle);
-  font: inherit;
-  font-size: 10px;
-  line-height: 1.2;
-  cursor: pointer;
-}
-
-.examples-toggle:hover {
-  background: var(--color-surface-muted);
-  color: var(--color-neutral-strongest);
-}
-
-.examples-toggle:focus-visible {
-  outline: 2px solid var(--color-border-focus);
-  outline-offset: 1px;
-}
-
 .applicant-details {
   display: flex;
   min-height: 51px;
@@ -236,33 +210,46 @@
   padding-top: 1px;
 }
 
-.people-examples {
-  margin-top: 4px;
-  padding: 2px 0;
+.people-tree {
+  padding: 4px 6px 6px;
 }
 
-.associated-people {
-  margin-left: 3px;
-  padding-left: 2px;
+.people-tree-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.people-tree-node {
+  position: relative;
+}
+
+.people-tree-node > .people-tree-list {
+  margin-left: 10px;
+  padding: 4px 0 0 9px;
   border-left: 1px solid var(--color-border-default);
 }
 
-.involved-person.involved-person--example {
-  --level-indent: 0px;
-  width: calc(100% - 12px - var(--level-indent));
-  margin-left: calc(6px + var(--level-indent));
+.people-tree-node > .people-tree-list > .people-tree-node::before {
+  position: absolute;
+  top: 20px;
+  left: -9px;
+  width: 9px;
+  border-top: 1px solid var(--color-border-default);
+  content: '';
 }
 
 .involved-person {
   display: grid;
-  width: calc(100% - 12px);
+  width: 100%;
   min-height: 48px;
-  grid-template-columns: minmax(0, 1fr);
+  box-sizing: border-box;
+  grid-template-columns: 18px minmax(0, 1fr);
   grid-template-rows: auto auto;
   align-content: start;
   align-items: start;
   row-gap: 2px;
-  margin: 6px;
+  margin: 4px 0;
   padding: 8px;
   border: 0;
   border-left: 3px solid var(--color-info-default);
@@ -271,18 +258,27 @@
   color: inherit;
   font: inherit;
   text-align: left;
+  text-decoration: none;
   cursor: pointer;
 }
 
-.involved-person .person-name {
+.person-type-icon {
+  width: 16px;
+  height: 16px;
   grid-column: 1;
+  grid-row: 1;
+  font-size: 16px;
+}
+
+.involved-person .person-name {
+  grid-column: 2;
   grid-row: 1;
   white-space: normal;
   overflow-wrap: anywhere;
 }
 
 .involved-person .person-role-label {
-  grid-column: 1;
+  grid-column: 2;
   grid-row: 2;
   justify-self: start;
 }
@@ -296,22 +292,8 @@
   outline-offset: 1px;
 }
 
-.involved-person[aria-pressed='true'] {
+.involved-person[aria-current='true'] {
   box-shadow: inset 0 0 0 1px var(--color-info-strong);
-}
-
-.involved-person--example {
-  background: var(--color-surface-subtle);
-  color: var(--color-text-subtle);
-  cursor: default;
-}
-
-.involved-person--example .person-role-label {
-  background: var(--color-surface-muted);
-}
-
-.involved-person--example:hover {
-  background: var(--color-surface-subtle);
 }
 
 .person-name {

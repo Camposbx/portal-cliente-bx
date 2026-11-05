@@ -18,6 +18,11 @@ export const ANALISIS_ROUTES: Routes = [
         path: 'registro-persona',
         loadComponent: () => import('./registro-persona/registro-persona').then((page) => page.RegistroPersona),
       },
+      {
+        path: 'personas-involucradas',
+        loadComponent: () =>
+          import('./personas-involucradas/personas-involucradas').then((page) => page.PersonasInvolucradas),
+      },
     ],
   },
 ];

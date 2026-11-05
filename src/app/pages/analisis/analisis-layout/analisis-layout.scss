@@ -145,6 +145,86 @@
   padding-bottom: 4px;
 }
 
+.people-heading {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 4px 8px 4px 12px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  color: var(--color-neutral-strongest);
+}
+
+.people-heading h2 {
+  margin: 0;
+}
+
+.view-people {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--color-info-strong);
+}
+
+.view-people:hover {
+  background: var(--color-action-accent-hover);
+}
+
+.view-people:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 1px;
+}
+
+.view-people mat-icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+}
+
+.people-avatars {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0 8px;
+}
+
+.people-avatars .person-avatar {
+  margin-left: -4px;
+  border: 2px solid var(--color-surface-default);
+}
+
+.people-avatars .person-avatar:first-child {
+  margin-left: 0;
+}
+
+.people-avatars .person-avatar:nth-child(2) {
+  background: #a6e5eb;
+}
+
+.people-avatars .person-avatar:nth-child(3) {
+  background: #f3c18c;
+}
+
+.person-avatar {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-info-subtle);
+  color: var(--color-info-default);
+}
+
+.person-avatar mat-icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+}
+
 .people-prompt {
   max-width: 204px;
   margin: 0 auto 6px;

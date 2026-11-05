@@ -1,0 +1,366 @@
+:host {
+  display: block;
+  color: var(--color-text-default);
+}
+
+.people-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  color: var(--color-text-link);
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.back-link mat-icon,
+.add-person mat-icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+}
+
+.page-header h1 {
+  margin: 0 0 8px;
+}
+
+.page-description,
+.section-description {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.add-person {
+  display: inline-flex;
+  min-height: 48px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: var(--color-action-primary-default);
+  color: var(--color-action-on-primary);
+  text-decoration: none;
+}
+
+.add-person:hover {
+  background: var(--color-action-primary-hover);
+}
+
+.back-link:focus-visible,
+.add-person:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 3px;
+}
+
+.people-tabs {
+  --mat-tab-header-active-label-text-color: var(--color-text-default);
+  --mat-tab-header-active-focus-label-text-color: var(--color-text-default);
+  --mat-tab-header-active-hover-label-text-color: var(--color-text-default);
+  --mat-tab-header-active-indicator-color: var(--color-brand-primary);
+  --mat-tab-header-active-focus-indicator-color: var(--color-brand-primary);
+  --mat-tab-header-active-hover-indicator-color: var(--color-brand-primary);
+  --mat-tab-header-inactive-label-text-color: var(--color-text-muted);
+  --mat-tab-header-label-text-font: var(--font-label-md-family);
+  --mat-tab-header-label-text-size: var(--font-label-md-size);
+  --mat-tab-header-label-text-weight: var(--font-label-md-weight);
+}
+
+.tab-content {
+  padding: 28px 0 40px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.section-heading > div {
+  min-width: 0;
+}
+
+.section-heading h2 {
+  margin: 0 0 4px;
+}
+
+.applicant-context {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+  margin: 0;
+  color: var(--color-text-muted);
+  overflow-wrap: anywhere;
+}
+
+.count,
+.example-label {
+  flex: 0 0 auto;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--color-surface-muted);
+  color: var(--color-text-muted);
+}
+
+.example-label {
+  background: var(--color-info-subtle);
+  color: var(--color-info-strong);
+}
+
+.example-section {
+  margin-top: 36px;
+}
+
+.table-container {
+  overflow-x: auto;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 12px;
+}
+
+.people-table {
+  width: 100%;
+  min-width: 850px;
+  border-collapse: collapse;
+  font-family: var(--font-body-sm-regular-family);
+  font-size: var(--font-body-sm-regular-size);
+  line-height: var(--font-body-sm-regular-line-height);
+  text-align: left;
+}
+
+.people-table th,
+.people-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  vertical-align: middle;
+}
+
+.people-table th {
+  background: var(--color-surface-subtle);
+  color: var(--color-text-muted);
+  font-family: var(--font-label-sm-family);
+  font-size: var(--font-label-sm-size);
+  font-weight: var(--font-label-sm-weight);
+  line-height: var(--font-label-sm-line-height);
+}
+
+.people-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.person-cell {
+  color: var(--color-text-default);
+}
+
+.add-linked {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-text-link);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.add-linked:hover {
+  text-decoration: underline;
+}
+
+.add-linked:focus-visible {
+  border-radius: 4px;
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 3px;
+}
+
+.add-linked mat-icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+}
+
+.add-linked--icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-info-subtle);
+}
+
+.add-linked--icon:hover {
+  background: var(--color-action-accent-hover);
+}
+
+.example-action {
+  color: var(--color-text-subtle);
+}
+
+.role-badge {
+  display: inline-block;
+  margin: 2px 4px 2px 0;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--color-info-subtle);
+  color: var(--color-info-strong);
+  font-family: var(--font-label-xs-family);
+  font-size: var(--font-label-xs-size);
+  font-weight: var(--font-label-xs-weight);
+  line-height: var(--font-label-xs-line-height);
+}
+
+.empty-state {
+  padding: 24px;
+  border: 1px dashed var(--color-border-default);
+  border-radius: 12px;
+  background: var(--color-surface-subtle);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.tree-container {
+  overflow-x: auto;
+  padding: 24px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 12px;
+  background: var(--color-surface-subtle);
+}
+
+.tree-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tree-node {
+  position: relative;
+}
+
+.tree-node > .tree-list {
+  margin-left: 24px;
+  padding: 18px 0 0 28px;
+  border-left: 1px solid var(--color-border-default);
+}
+
+.tree-node > .tree-list > .tree-node::before {
+  position: absolute;
+  top: 30px;
+  left: -28px;
+  width: 28px;
+  border-top: 1px solid var(--color-border-default);
+  content: '';
+}
+
+.tree-list > .tree-node + .tree-node {
+  margin-top: 18px;
+}
+
+.tree-card {
+  display: flex;
+  width: min(100%, 520px);
+  min-width: 280px;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 12px;
+  background: var(--color-surface-default);
+}
+
+.applicant-tree-card {
+  background: var(--color-info-subtle);
+}
+
+.applicant-tree-label {
+  color: var(--color-info-strong);
+}
+
+.tree-empty {
+  margin: 16px 0 0;
+  color: var(--color-text-muted);
+}
+
+.tree-avatar {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-info-subtle);
+  color: var(--color-info-default);
+}
+
+.tree-avatar mat-icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+}
+
+.tree-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.tree-details {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tree-name,
+.tree-meta {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.tree-meta {
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 700px) {
+  .page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .section-heading {
+    flex-wrap: wrap;
+  }
+
+  .tree-container {
+    padding: 16px;
+  }
+
+  .tree-node > .tree-list {
+    margin-left: 14px;
+    padding-left: 18px;
+  }
+
+  .tree-node > .tree-list > .tree-node::before {
+    left: -18px;
+    width: 18px;
+  }
+
+}

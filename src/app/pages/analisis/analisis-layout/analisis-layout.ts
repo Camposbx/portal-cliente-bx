@@ -13,6 +13,7 @@ import { PersonasInvolucradasService } from '../personas-involucradas.service';
 export class AnalisisLayout {
   private readonly personasService = inject(PersonasInvolucradasService);
 
+  readonly nombreSolicitante = this.personasService.nombreSolicitante;
   readonly mostrarEjemplos = signal(false);
   readonly personaEjemploPrincipal = {
     id: 'solicitante',

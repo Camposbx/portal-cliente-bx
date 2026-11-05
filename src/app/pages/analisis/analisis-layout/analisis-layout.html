@@ -14,13 +14,23 @@
           routerLink="/analisis/documentos"
           (click)="seleccionarSolicitante()"
         >
-          ASOCIACION MEXICANA PARA LAS NACIONES UNIDAS DE JOVENES AMNU JOVENES
+          {{ nombreSolicitante }}
         </a>
       </div>
     </section>
 
     <section class="side-card people-card" aria-labelledby="people-title">
-      <h2 id="people-title" class="card-heading text-body-sm-medium">Personas involucradas</h2>
+      <div class="people-heading">
+        <h2 id="people-title" class="text-body-sm-medium">Personas involucradas</h2>
+        <a
+          class="view-people"
+          routerLink="/analisis/personas-involucradas"
+          aria-label="Ver personas involucradas"
+          title="Ver personas involucradas"
+        >
+          <mat-icon aria-hidden="true">visibility</mat-icon>
+        </a>
+      </div>
       @if (mostrarEjemplos()) {
         <div id="people-examples" class="people-list people-examples" aria-label="Ejemplo de persona principal y personas asociadas">
           <div class="involved-person involved-person--example">

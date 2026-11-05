@@ -25,8 +25,16 @@ export interface PersonaInvolucrada {
   correo: string;
   roles: string[];
   tipo?: TipoPersona;
+  tipoPersona?: TipoPersona;
   vinculadaConId?: number;
   datos?: DatosPersona;
+  nivel?: number;
+}
+
+export interface OpcionesPersona {
+  vinculadaConId?: number;
+  datos?: DatosPersona;
+  nivel?: number;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -49,9 +57,15 @@ export class PersonasInvolucradasService {
     correo: string,
     roles: string[],
     tipo?: TipoPersona,
-    vinculadaConId?: number,
-    datos?: DatosPersona,
+    opcionesOId?: OpcionesPersona | number,
+    datosAnteriores?: DatosPersona,
   ): boolean {
+    // The numeric fifth argument remains a linked-person ID for existing callers.
+    const opciones: OpcionesPersona = typeof opcionesOId === 'object'
+      ? opcionesOId
+      : { vinculadaConId: opcionesOId, datos: datosAnteriores };
+    const { vinculadaConId, datos } = opciones;
+    const nivel = opciones.nivel ?? 0;
     const nombreLimpio = nombre.trim();
     if (
       !nombreLimpio ||
@@ -60,11 +74,12 @@ export class PersonasInvolucradasService {
       return false;
     }
 
+    const nivelSeguro = Number.isFinite(nivel) ? Math.max(0, Math.floor(nivel)) : 0;
     this.personas.update((personas) => [
       ...personas,
       {
         id: this.nextPersonaId++, nombre: nombreLimpio, correo: correo.trim(), roles: [...roles],
-        tipo, vinculadaConId, datos: datos ? { ...datos } : undefined,
+        tipo, tipoPersona: tipo, vinculadaConId, datos: datos ? { ...datos } : undefined, nivel: nivelSeguro,
       },
     ]);
     return true;
@@ -76,7 +91,7 @@ export class PersonasInvolucradasService {
     if (!persona || !nombreLimpio) return false;
 
     this.personas.update((personas) => personas.map((item) => item.id === id
-      ? { ...item, nombre: nombreLimpio, correo: correo.trim(), roles: [...roles], tipo, datos: { ...datos } }
+      ? { ...item, nombre: nombreLimpio, correo: correo.trim(), roles: [...roles], tipo, tipoPersona: tipo, datos: { ...datos } }
       : item));
     if (this.selectedName() === persona.nombre) this.selectedName.set(nombreLimpio);
     return true;

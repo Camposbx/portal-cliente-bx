@@ -221,8 +221,7 @@ export class RegistroPersona {
       datos.correo,
       this.selectedRoles,
       this.personType,
-      this.personaVinculada()?.id,
-      datos,
+      { vinculadaConId: this.personaVinculada()?.id, datos },
     );
     if (agregada) {
       void this.router.navigateByUrl(

@@ -31,30 +31,41 @@
           <mat-icon aria-hidden="true">visibility</mat-icon>
         </a>
       </div>
+      @if (mostrarEjemplos()) {
+        <div id="people-examples" class="people-list people-examples" aria-label="Ejemplo de persona principal y personas asociadas">
+          <div class="involved-person involved-person--example">
+            <span class="person-name text-body-sm-medium">{{ personaEjemploPrincipal.nombre }}</span>
+            <span class="person-role-label">Persona moral</span>
+          </div>
+          <div class="associated-people">
+            @for (persona of personasEjemplo; track persona.id) {
+              <div
+                class="involved-person involved-person--example"
+                [style.--level-indent.px]="(persona.nivel - 1) * 3"
+              >
+                <span class="person-name text-body-sm-medium">{{ persona.nombre }}</span>
+                <span class="person-role-label">{{ etiquetaRoles(persona.roles) }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      }
       @if (personas().length > 0) {
         <div class="people-list" aria-label="Personas registradas">
-          @for (persona of personas(); track persona.id) {
+          @for (persona of personasVisuales(); track persona.id) {
             <button
               type="button"
               class="involved-person"
               [attr.aria-pressed]="selectedName() === persona.nombre"
               (click)="seleccionarPersona(persona.nombre)"
             >
-              <span class="person-avatar" role="img" aria-label="Documentación parcialmente cargada">
-                <mat-icon aria-hidden="true">person</mat-icon>
-                <span class="document-status document-status--partial" aria-hidden="true"></span>
-              </span>
               <span class="person-name text-body-sm-medium">{{ persona.nombre }}</span>
+              <span class="person-role-label">{{ etiquetaRoles(persona.roles) }}</span>
             </button>
           }
         </div>
       } @else {
         <div class="people-empty-state">
-          <div class="people-avatars" aria-hidden="true">
-            <span class="person-avatar"><mat-icon>person</mat-icon></span>
-            <span class="person-avatar"><mat-icon>person</mat-icon></span>
-            <span class="person-avatar"><mat-icon>person</mat-icon></span>
-          </div>
           <p class="people-prompt text-label-sm">Registra las personas involucradas</p>
         </div>
       }
@@ -67,6 +78,15 @@
         Registrar persona
       </button>
     </section>
+    <button
+      type="button"
+      class="examples-toggle"
+      [attr.aria-expanded]="mostrarEjemplos()"
+      aria-controls="people-examples"
+      (click)="toggleEjemplos()"
+    >
+      {{ mostrarEjemplos() ? 'Ocultar ejemplos' : 'Ver ejemplos' }}
+    </button>
   </aside>
 
   <main class="analysis-content">

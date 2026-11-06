@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { PersonasInvolucradasService } from '../personas-involucradas.service';
+import { PersonasInvolucradas } from '../personas-involucradas/personas-involucradas';
 import { AnalisisLayout } from './analisis-layout';
 
 @Component({ template: '' })
-class RegistroPersonaDePrueba {}
+class PaginaDePrueba {}
 
 describe('Integración del panel de análisis', () => {
   let fixture: ComponentFixture<AnalisisLayout>;
@@ -16,7 +17,8 @@ describe('Integración del panel de análisis', () => {
     await TestBed.configureTestingModule({
       imports: [AnalisisLayout],
       providers: [provideRouter([
-        { path: 'analisis/registro-persona', component: RegistroPersonaDePrueba },
+        { path: 'analisis/documentos', component: PaginaDePrueba },
+        { path: 'analisis/personas-involucradas', component: PersonasInvolucradas },
       ])],
     }).compileComponents();
     service = TestBed.inject(PersonasInvolucradasService);
@@ -44,20 +46,37 @@ describe('Integración del panel de análisis', () => {
     await fixture.whenStable();
 
     const people: HTMLAnchorElement[] = Array.from(
-      fixture.nativeElement.querySelectorAll('[aria-label="Personas registradas"] a'),
+      fixture.nativeElement.querySelectorAll('.people-tree a.involved-person'),
     );
     expect(people).toHaveLength(2);
     expect(people[0].textContent).toContain('Primer nivel');
+    expect(people[0].querySelector('.involved-person-avatar')).toBeNull();
+    expect(people[0].getAttribute('href')).toBe('/analisis/documentos');
+    const treeLink = fixture.nativeElement.querySelector(
+      '[aria-label="Ver Primer nivel en el árbol de personas"]',
+    );
+    expect(treeLink.getAttribute('href')).toBe(
+      '/analisis/personas-involucradas?vista=arbol&seleccionada=1',
+    );
+    expect(fixture.nativeElement.querySelector('[aria-label="Editar Primer nivel"]')).toBeNull();
+    expect(fixture.nativeElement.querySelector('[aria-label="Añadir persona vinculada con Primer nivel"]'))
+      .toBeNull();
+
     people[0].click();
     fixture.detectChanges();
+    await fixture.whenStable();
     expect(service.selectedName()).toBe('Primer nivel');
-    expect(people[0].getAttribute('aria-current')).toBe('true');
+    expect(service.selectedPersonaId()).toBe(1);
+    expect(fixture.nativeElement.querySelector('.involved-person-row--selected .person-name').textContent)
+      .toContain('Primer nivel');
+    expect(router.url).toBe('/analisis/documentos');
 
     fixture.componentInstance.seleccionarSolicitante();
     expect(service.selectedName()).toBe(service.nombreSolicitante);
+    expect(service.selectedPersonaId()).toBeNull();
   });
 
-  it('muestra las personas anidadas y cada vínculo abre la edición de esa persona', async () => {
+  it('abre documentación al tocar la tarjeta y el ojo abre el árbol seleccionado', async () => {
     service.agregar('Persona principal', '', ['aval'], 'moral');
     const principalId = service.personas()[0].id;
     service.agregar('Persona vinculada', '', ['apoderado'], 'fisica', {
@@ -72,19 +91,29 @@ describe('Integración del panel de análisis', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const examples: HTMLElement[] = Array.from(
-      fixture.nativeElement.querySelectorAll('[aria-label="Personas registradas"] a.involved-person'),
+    const peopleLinks: HTMLAnchorElement[] = Array.from(
+      fixture.nativeElement.querySelectorAll('.people-tree a.involved-person'),
     );
-    expect(examples).toHaveLength(3);
-    expect(examples[0].textContent).toContain('Persona principal');
-    expect(examples[1].textContent).toContain('Persona vinculada');
-    expect(examples[2].textContent).toContain('Persona del tercer nivel');
-    expect(examples[0].getAttribute('href')).toContain(`editar=${principalId}`);
-    expect(examples[1].getAttribute('href')).toContain(`editar=${vinculadaId}`);
+    expect(peopleLinks).toHaveLength(3);
+    expect(peopleLinks[0].textContent).toContain('Persona principal');
+    expect(peopleLinks[1].textContent).toContain('Persona vinculada');
+    expect(peopleLinks[2].textContent).toContain('Persona del tercer nivel');
+    expect(peopleLinks[0].getAttribute('href')).toBe('/analisis/documentos');
+    expect(peopleLinks[1].getAttribute('href')).toBe('/analisis/documentos');
+    const treeLink: HTMLAnchorElement = fixture.nativeElement.querySelector(
+      '[aria-label="Ver Persona vinculada en el árbol de personas"]',
+    );
+    expect(treeLink.getAttribute('href')).toContain(`seleccionada=${vinculadaId}`);
+    expect(fixture.nativeElement.querySelector('[aria-label^="Editar "]')).toBeNull();
+    expect(fixture.nativeElement.querySelector('[aria-label^="Añadir persona vinculada"]')).toBeNull();
 
-    examples[1].click();
+    peopleLinks[1].click();
     await fixture.whenStable();
-    expect(router.url).toBe(`/analisis/registro-persona?editar=${vinculadaId}`);
+    expect(router.url).toBe('/analisis/documentos');
     expect(service.selectedName()).toBe('Persona vinculada');
+
+    treeLink.click();
+    await fixture.whenStable();
+    expect(router.url).toBe(`/analisis/personas-involucradas?vista=arbol&seleccionada=${vinculadaId}`);
   });
 });

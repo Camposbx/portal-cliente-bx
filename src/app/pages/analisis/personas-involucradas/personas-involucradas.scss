@@ -274,6 +274,7 @@
 }
 
 .tree-card {
+  position: relative;
   display: flex;
   width: min(100%, 520px);
   min-width: 280px;
@@ -283,6 +284,12 @@
   border: 1px solid var(--color-border-subtle);
   border-radius: 12px;
   background: var(--color-surface-default);
+}
+
+.tree-card--selected {
+  border-color: var(--color-info-strong);
+  background: var(--color-info-subtlest);
+  box-shadow: 0 0 0 2px var(--color-info-subtle);
 }
 
 .applicant-tree-card {
@@ -319,6 +326,9 @@
   display: flex;
   flex: 0 0 auto;
   gap: 8px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .tree-details {
@@ -327,6 +337,7 @@
   flex: 1;
   flex-direction: column;
   gap: 2px;
+  padding-right: 84px;
 }
 
 .tree-name,

@@ -22,14 +22,14 @@
     <section class="side-card people-card" aria-labelledby="people-title">
       <div class="people-heading">
         <h2 id="people-title" class="text-body-sm-medium">Personas involucradas</h2>
-        <a
+      <!--   <a
           class="view-people"
           routerLink="/analisis/personas-involucradas"
           aria-label="Ver personas involucradas"
           title="Ver personas involucradas"
         >
           <mat-icon aria-hidden="true">visibility</mat-icon>
-        </a>
+        </a> -->
       </div>
       @if (personas().length > 0) {
         <div class="people-list people-tree" aria-label="Personas registradas">
@@ -63,18 +63,31 @@
   <ul class="people-tree-list">
     @for (persona of personas; track persona.id) {
       <li class="people-tree-node">
-        <a
-          class="involved-person"
-          routerLink="/analisis/registro-persona"
-          [queryParams]="{ editar: persona.id }"
-          [attr.aria-current]="selectedName() === persona.nombre ? 'true' : null"
-          [attr.aria-label]="'Editar ' + persona.nombre"
-          (click)="seleccionarPersona(persona.nombre)"
+        <div
+          class="involved-person-row"
+          [class.involved-person-row--selected]="selectedPersonaId() === persona.id"
         >
-          <mat-icon class="person-type-icon" aria-hidden="true">{{ tipoPersonaIcono(persona.tipo) }}</mat-icon>
-          <span class="person-name text-body-sm-medium">{{ persona.nombre }}</span>
-          <span class="person-role-label">{{ etiquetaRoles(persona.roles) }}</span>
-        </a>
+          <a
+            class="involved-person"
+            routerLink="/analisis/documentos"
+            [attr.aria-label]="'Abrir documentación de ' + persona.nombre"
+            [attr.aria-current]="selectedPersonaId() === persona.id ? 'true' : null"
+            (click)="seleccionarPersona(persona)"
+          >
+            <span class="person-name text-body-sm-medium">{{ persona.nombre }}</span>
+            <span class="person-role-label">{{ etiquetaRoles(persona.roles) }}</span>
+          </a>
+          <a
+            class="person-action-link person-tree-link"
+            routerLink="/analisis/personas-involucradas"
+            [queryParams]="{ vista: 'arbol', seleccionada: persona.id }"
+            [attr.aria-label]="'Ver ' + persona.nombre + ' en el árbol de personas'"
+            title="Ver árbol de personas"
+            (click)="seleccionarPersona(persona)"
+          >
+            <mat-icon aria-hidden="true">visibility</mat-icon>
+          </a>
+        </div>
         @if (persona.hijos.length > 0) {
           <ng-container
             [ngTemplateOutlet]="registeredPeople"

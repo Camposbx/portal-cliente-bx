@@ -30,6 +30,12 @@ export class PersonasInvolucradas {
   private readonly route = inject(ActivatedRoute);
   private readonly queryParams = toSignal(this.route.queryParamMap, { initialValue: this.route.snapshot.queryParamMap });
   readonly selectedTab = computed(() => this.queryParams().get('vista') === 'arbol' ? 1 : 0);
+  readonly personaSeleccionadaId = computed(() => {
+    const id = this.queryParams().get('seleccionada');
+    if (id === null || !/^(0|[1-9]\d*)$/.test(id)) return null;
+    const numero = Number(id);
+    return Number.isSafeInteger(numero) ? numero : null;
+  });
 
   readonly nombreSolicitante = this.personasService.nombreSolicitante;
   readonly personas = this.personasService.personas;

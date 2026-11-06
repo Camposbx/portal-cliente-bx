@@ -138,7 +138,10 @@
                   </div>
                 </div>
                 @if (personas().length) {
-                  <ng-container [ngTemplateOutlet]="registeredTree" [ngTemplateOutletContext]="{ $implicit: arbol() }" />
+                  <ng-container
+                    [ngTemplateOutlet]="registeredTree"
+                    [ngTemplateOutletContext]="{ $implicit: arbol(), nivel: 0 }"
+                  />
                 }
               </li>
             </ul>
@@ -167,11 +170,15 @@
   </mat-tab-group>
 </section>
 
-<ng-template #registeredTree let-personas>
+<ng-template #registeredTree let-personas let-nivel="nivel">
   <ul class="tree-list">
     @for (persona of personas; track persona.id) {
       <li class="tree-node">
-        <div class="tree-card">
+        <div
+          class="tree-card"
+          [class.tree-card--selected]="persona.id === personaSeleccionadaId()"
+          [attr.aria-current]="persona.id === personaSeleccionadaId() ? 'true' : null"
+        >
           <span class="tree-avatar" aria-hidden="true">
             <mat-icon>{{ persona.tipo === 'moral' ? 'business' : 'person' }}</mat-icon>
           </span>
@@ -193,19 +200,24 @@
             >
               <mat-icon aria-hidden="true">edit</mat-icon>
             </a>
-            <a
-              class="add-linked add-linked--icon"
-              routerLink="/analisis/registro-persona"
-              [queryParams]="{ vinculadaCon: persona.id }"
-              [attr.aria-label]="'Añadir persona vinculada con ' + persona.nombre"
-              title="Añadir persona vinculada"
-            >
-              <mat-icon aria-hidden="true">person_add</mat-icon>
-            </a>
+            @if (nivel !== 1) {
+              <a
+                class="add-linked add-linked--icon"
+                routerLink="/analisis/registro-persona"
+                [queryParams]="{ vinculadaCon: persona.id }"
+                [attr.aria-label]="'Añadir persona vinculada con ' + persona.nombre"
+                title="Añadir persona vinculada"
+              >
+                <mat-icon aria-hidden="true">person_add</mat-icon>
+              </a>
+            }
           </div>
         </div>
         @if (persona.hijos.length) {
-          <ng-container [ngTemplateOutlet]="registeredTree" [ngTemplateOutletContext]="{ $implicit: persona.hijos }" />
+          <ng-container
+            [ngTemplateOutlet]="registeredTree"
+            [ngTemplateOutletContext]="{ $implicit: persona.hijos, nivel: nivel + 1 }"
+          />
         }
       </li>
     }

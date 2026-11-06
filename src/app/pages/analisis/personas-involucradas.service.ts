@@ -42,14 +42,17 @@ export class PersonasInvolucradasService {
   readonly personas = signal<PersonaInvolucrada[]>([]);
   readonly nombreSolicitante = 'ASOCIACION MEXICANA PARA LAS NACIONES UNIDAS DE JOVENES AMNU JOVENES';
   readonly selectedName = signal(this.nombreSolicitante);
+  readonly selectedPersonaId = signal<number | null>(null);
   private nextPersonaId = 0;
 
   seleccionarSolicitante(): void {
     this.selectedName.set(this.nombreSolicitante);
+    this.selectedPersonaId.set(null);
   }
 
-  seleccionarPersona(nombre: string): void {
+  seleccionarPersona(nombre: string, id?: number): void {
     this.selectedName.set(nombre);
+    this.selectedPersonaId.set(id ?? null);
   }
 
   agregar(

@@ -42,17 +42,14 @@ export class AnalisisLayout {
     return raices;
   });
   readonly selectedName = this.personasService.selectedName;
+  readonly selectedPersonaId = this.personasService.selectedPersonaId;
 
   seleccionarSolicitante(): void {
     this.personasService.seleccionarSolicitante();
   }
 
-  seleccionarPersona(persona: string): void {
-    this.personasService.seleccionarPersona(persona);
-  }
-
-  tipoPersonaIcono(tipo?: PersonaInvolucrada['tipo']): string {
-    return tipo === 'moral' ? 'business' : 'person';
+  seleccionarPersona(persona: PersonaInvolucrada): void {
+    this.personasService.seleccionarPersona(persona.nombre, persona.id);
   }
 
   etiquetaRoles(roles: string[]): string {

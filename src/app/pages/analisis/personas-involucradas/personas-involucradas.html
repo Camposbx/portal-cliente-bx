@@ -9,165 +9,47 @@
       <p class="page-description text-body-md-regular">
         Consulta las personas registradas y organiza sus relaciones.
       </p>
+       <span class="count text-label-xs">{{ personas().length }} en total</span>
     </div>
     <a class="add-person text-label-sm" routerLink="/analisis/registro-persona" [queryParams]="{ volver: 'personas' }">
       <mat-icon aria-hidden="true">person_add</mat-icon>
       Registrar persona
     </a>
+
   </header>
 
-  <mat-tab-group class="people-tabs" animationDuration="0ms" [selectedIndex]="selectedTab()">
-    <mat-tab label="Registro de personas">
-      <div class="tab-content">
-        <section aria-labelledby="registered-title">
-          <div class="section-heading">
-            <div>
-              <h2 id="registered-title" class="text-heading-sm">Personas involucradas del solicitante</h2>
-              <p class="applicant-context text-body-sm-regular">
-                <span class="text-label-xs">Solicitante</span>
-                <span>{{ nombreSolicitante }}</span>
-              </p>
+  <section aria-labelledby="registered-tree-title">
+    <div class="section-heading">
+     <!--  <div>
+        <h2 id="registered-tree-title" class="text-heading-sm">Personas registradas</h2>
+        <p class="section-description text-body-sm-regular">
+          Las personas se agrupan bajo el solicitante; sus vínculos se muestran debajo de cada persona.
+        </p>
+      </div> -->
+    </div>
+    <div class="tree-container">
+      <ul class="tree-list">
+        <li class="tree-node applicant-node">
+          <div class="tree-card applicant-tree-card">
+            <span class="tree-avatar" aria-hidden="true"><mat-icon>person</mat-icon></span>
+            <div class="tree-details">
+              <span class="applicant-tree-label text-label-xs">Solicitante</span>
+              <span class="tree-name text-body-sm-medium">{{ nombreSolicitante }}</span>
             </div>
-            <span class="count text-label-xs">{{ personas().length }} en total</span>
           </div>
-
           @if (personas().length) {
-            <div class="table-container">
-              <table class="people-table">
-                <thead>
-                  <tr>
-                    <th scope="col">Nombre o razón social</th>
-                    <th scope="col">Tipo de persona</th>
-                    <th scope="col">Rol</th>
-                    <th scope="col">Correo electrónico</th>
-                    <th scope="col">Vinculada con</th>
-                    <th scope="col">Añadir persona</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @for (persona of personas(); track persona.id) {
-                    <tr>
-                      <td class="person-cell text-body-sm-medium">{{ persona.nombre }}</td>
-                      <td>{{ tipoPersona(persona.tipo) }}</td>
-                      <td>
-                        @for (rol of persona.roles; track $index) {
-                          <span class="role-badge">{{ nombreRol(rol) }}</span>
-                        } @empty {
-                          —
-                        }
-                      </td>
-                      <td>{{ persona.correo || '—' }}</td>
-                      <td>{{ nombreVinculo(persona) }}</td>
-                      <td>
-                        <a
-                          class="add-linked text-label-sm"
-                          routerLink="/analisis/registro-persona"
-                          [queryParams]="{ vinculadaCon: persona.id }"
-                          [attr.aria-label]="'Añadir persona vinculada con ' + persona.nombre"
-                        >
-                          <mat-icon aria-hidden="true">person_add</mat-icon>
-                          Añadir persona
-                        </a>
-                      </td>
-                    </tr>
-                  }
-                </tbody>
-              </table>
-            </div>
-          } @else {
-            <div class="empty-state text-body-sm-regular">Aún no hay personas registradas.</div>
+            <ng-container
+              [ngTemplateOutlet]="registeredTree"
+              [ngTemplateOutletContext]="{ $implicit: arbol(), nivel: 0 }"
+            />
           }
-        </section>
-
-        <!-- <section class="example-section" aria-labelledby="example-table-title">
-          <div class="section-heading">
-            <div>
-              <h2 id="example-table-title" class="text-heading-sm">Ejemplo de organización</h2>
-              <p class="section-description text-body-sm-regular">Datos ilustrativos: no forman parte de tus registros.</p>
-            </div>
-            <span class="example-label text-label-xs">Ejemplo</span>
-          </div>
-          <div class="table-container">
-            <table class="people-table">
-              <thead>
-                <tr>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Tipo de persona</th>
-                  <th scope="col">Rol</th>
-                  <th scope="col">Vinculada con</th>
-                  <th scope="col">Añadir persona</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (persona of filasEjemplo; track persona.id) {
-                  <tr>
-                    <td class="person-cell text-body-sm-medium">{{ persona.nombre }}</td>
-                    <td>{{ tipoPersona(persona.tipo) }}</td>
-                    <td><span class="role-badge">{{ persona.rol }}</span></td>
-                    <td>{{ persona.vinculadaCon }}</td>
-                    <td class="example-action">Solo ejemplo</td>
-                  </tr>
-                }
-              </tbody>
-            </table>
-          </div>
-        </section> -->
-      </div>
-    </mat-tab>
-
-    <mat-tab label="Árbol de personas">
-      <div class="tab-content">
-        <section aria-labelledby="registered-tree-title">
-          <div class="section-heading">
-            <div>
-              <h2 id="registered-tree-title" class="text-heading-sm">Personas registradas</h2>
-              <p class="section-description text-body-sm-regular">
-                Las personas se agrupan bajo el solicitante; sus vínculos se muestran debajo de cada persona.
-              </p>
-            </div>
-            <span class="count text-label-xs">{{ personas().length }} en total</span>
-          </div>
-          <div class="tree-container">
-            <ul class="tree-list">
-              <li class="tree-node applicant-node">
-                <div class="tree-card applicant-tree-card">
-                  <span class="tree-avatar" aria-hidden="true"><mat-icon>person</mat-icon></span>
-                  <div class="tree-details">
-                    <span class="applicant-tree-label text-label-xs">Solicitante</span>
-                    <span class="tree-name text-body-sm-medium">{{ nombreSolicitante }}</span>
-                  </div>
-                </div>
-                @if (personas().length) {
-                  <ng-container
-                    [ngTemplateOutlet]="registeredTree"
-                    [ngTemplateOutletContext]="{ $implicit: arbol(), nivel: 0 }"
-                  />
-                }
-              </li>
-            </ul>
-            @if (!personas().length) {
-              <p class="tree-empty text-body-sm-regular">Aún no hay personas registradas.</p>
-            }
-          </div>
-        </section>
-
-        <!-- <section class="example-section" aria-labelledby="example-tree-title">
-          <div class="section-heading">
-            <div>
-              <h2 id="example-tree-title" class="text-heading-sm">Ejemplo de organización</h2>
-              <p class="section-description text-body-sm-regular">
-                Una persona física, su aval y el aval de este. Los datos son ilustrativos.
-              </p>
-            </div>
-            <span class="example-label text-label-xs">Ejemplo</span>
-          </div>
-          <div class="tree-container">
-            <ng-container [ngTemplateOutlet]="tree" [ngTemplateOutletContext]="{ $implicit: ejemplo }" />
-          </div>
-        </section> -->
-      </div>
-    </mat-tab>
-  </mat-tab-group>
+        </li>
+      </ul>
+      @if (!personas().length) {
+        <p class="tree-empty text-body-sm-regular">Aún no hay personas registradas.</p>
+      }
+    </div>
+  </section>
 </section>
 
 <ng-template #registeredTree let-personas let-nivel="nivel">
@@ -176,8 +58,10 @@
       <li class="tree-node">
         <div
           class="tree-card"
+          title="Haz clic para abrir la documentación"
           [class.tree-card--selected]="persona.id === personaSeleccionadaId()"
           [attr.aria-current]="persona.id === personaSeleccionadaId() ? 'true' : null"
+          (click)="abrirDocumentacion($event, persona)"
         >
           <span class="tree-avatar" aria-hidden="true">
             <mat-icon>{{ persona.tipo === 'moral' ? 'business' : 'person' }}</mat-icon>
@@ -211,6 +95,15 @@
                 <mat-icon aria-hidden="true">person_add</mat-icon>
               </a>
             }
+            <button
+              class="add-linked add-linked--icon delete-person"
+              type="button"
+              [attr.aria-label]="'Eliminar ' + persona.nombre"
+              title="Eliminar persona y sus vinculadas"
+              (click)="eliminarPersona(persona)"
+            >
+              <mat-icon aria-hidden="true">delete</mat-icon>
+            </button>
           </div>
         </div>
         @if (persona.hijos.length) {
@@ -218,27 +111,6 @@
             [ngTemplateOutlet]="registeredTree"
             [ngTemplateOutletContext]="{ $implicit: persona.hijos, nivel: nivel + 1 }"
           />
-        }
-      </li>
-    }
-  </ul>
-</ng-template>
-
-<ng-template #tree let-personas>
-  <ul class="tree-list">
-    @for (persona of personas; track persona.id) {
-      <li class="tree-node">
-        <div class="tree-card">
-          <span class="tree-avatar" aria-hidden="true">
-            <mat-icon>{{ persona.tipo === 'moral' ? 'business' : 'person' }}</mat-icon>
-          </span>
-          <div class="tree-details">
-            <span class="tree-name text-body-sm-medium">{{ persona.nombre }}</span>
-          </div>
-          <span class="role-badge">{{ persona.rol }}</span>
-        </div>
-        @if (persona.hijos.length) {
-          <ng-container [ngTemplateOutlet]="tree" [ngTemplateOutletContext]="{ $implicit: persona.hijos }" />
         }
       </li>
     }

@@ -198,7 +198,7 @@
 .tree-card {
   position: relative;
   display: flex;
-  width: min(100%, 520px);
+  width: min(100%);
   min-width: 280px;
   align-items: flex-start;
   gap: 12px;
@@ -213,10 +213,6 @@
   border-color: var(--color-info-strong);
   background: var(--color-info-subtlest);
   box-shadow: 0 0 0 2px var(--color-info-subtle);
-}
-
-.applicant-tree-card {
-  background: var(--color-info-subtle);
 }
 
 .applicant-tree-label {

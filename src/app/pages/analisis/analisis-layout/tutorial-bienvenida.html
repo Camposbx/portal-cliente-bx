@@ -1,0 +1,38 @@
+<mat-dialog-content class="tutorial-content" [class.tutorial-content--compact]="data.step === 4">
+  @if (data.step === 1) {
+    <p class="tutorial-eyebrow">Te presentamos el módulo de</p>
+    <h2 id="analysis-tutorial-title">Análisis y autorización</h2>
+    <p class="tutorial-description">
+      Diseñamos una plataforma que te guía en todo tu proceso, descubre lo fácil que es integrar tu expediente.
+    </p>
+  } @else if (data.step === 2) {
+    <span class="tutorial-progress">1/4</span>
+    <h2 id="analysis-tutorial-title">Acreditado</h2>
+    <p class="tutorial-description">
+      Este es el espacio para seleccionar al acreditado y poder comenzar a integrar su expediente.
+    </p>
+  } <!-- @else if (data.step === 3) {
+    <span class="tutorial-progress">2/4</span>
+    <h2 id="analysis-tutorial-title">Carpetas</h2>
+    <p class="tutorial-description">
+      Los documentos están organizados en carpetas para facilitar su gestión, cada carpeta indica el número de documentos que requieren atención.
+    </p>
+  } @else if (data.step === 4) {
+    <span class="tutorial-progress">3/4</span>
+    <h2 id="analysis-tutorial-title">Carga de documentos</h2>
+    <p class="tutorial-description">
+      Dentro de cada carpeta puedes visualizar la lista de documentos requeridos, algunos requieren ser descargados, firmados y cargados, siempre podrás ver su estatus.
+    </p>
+  } @else {
+    <span class="tutorial-progress">4/4</span>
+    <h2 id="analysis-tutorial-title">Registro de personas</h2>
+    <p class="tutorial-description">
+      Este es el espacio para registrar: Apoderados Legales, Accionistas, Avales y/o Otorgantes de la garantía, y cada uno tendrá sus carpetas de documentación requerida.
+    </p>
+  } -->
+</mat-dialog-content>
+
+<mat-dialog-actions class="tutorial-actions" [class.tutorial-actions--compact]="data.step === 4">
+  <button type="button" class="tutorial-back" (click)="regresar()">Regresar</button>
+  <button type="button" class="tutorial-next" (click)="siguiente()">Siguiente</button>
+</mat-dialog-actions>

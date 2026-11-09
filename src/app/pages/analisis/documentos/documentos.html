@@ -8,7 +8,27 @@
         <h1 class="client-name text-display-lg">{{ selectedName() }}</h1>
         <div class="client-meta">
           <span class="client-type text-label-xs">Acreditado PM</span>
-          <a class="edit-button text-label-xs" routerLink="/analisis/perfil">Editar datos</a>
+          @if (selectedPersonaId() === null) {
+            <a class="edit-button text-label-xs" routerLink="/analisis/perfil">Editar datos</a>
+          } @else {
+            <a
+              class="edit-button text-label-xs"
+              routerLink="/analisis/registro-persona"
+              [queryParams]="{ editar: selectedPersonaId() }"
+            >
+              Editar datos
+            </a>
+          }
+          @if (puedeAgregarPersonaVinculada()) {
+            <a
+              class="edit-button text-label-xs"
+              routerLink="/analisis/registro-persona"
+              [queryParams]="{ vinculadaCon: selectedPersonaId() }"
+              aria-label="Agregar persona"
+            >
+              Agregar persona
+            </a>
+          }
         </div>
       </div>
     </div>

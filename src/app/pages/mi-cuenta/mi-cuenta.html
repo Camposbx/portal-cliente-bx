@@ -27,7 +27,9 @@
         </p>
       </div>
       <div class="col-12 col-sm-auto">
-        <button class="btn btn-primary-brand" type="button">Invitar</button>
+        <button class="btn btn-primary-brand" type="button" (click)="abrirUsuarioSecundario()">
+          Invitar
+        </button>
       </div>
     </section>
 
@@ -144,7 +146,9 @@
           <h2 id="users-title">Usuarios secundarios</h2>
           <p>Solo tú puedes darlos de alta o de baja.</p>
         </div>
-        <button class="btn btn-outline-brand" type="button">Agregar usuario</button>
+        <button class="btn btn-outline-brand" type="button" (click)="abrirUsuarioSecundario()">
+          Agregar usuario
+        </button>
       </div>
       <div class="secondary-user-list">
         @for (user of secondaryUsers; track user.email) {

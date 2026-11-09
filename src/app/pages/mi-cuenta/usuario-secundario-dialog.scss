@@ -1,0 +1,15 @@
+.terms-description {
+  margin: 4px 0 8px;
+  color: var(--color-text-muted);
+}
+
+mat-checkbox {
+  max-width: 100%;
+}
+
+.primary-button:disabled {
+  border-color: var(--color-action-primary-disabled);
+  background: var(--color-action-primary-disabled);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}

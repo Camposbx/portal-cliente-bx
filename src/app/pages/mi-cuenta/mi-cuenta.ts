@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { ContactData, ContactDialogData, ContactType, ContactoDialog } from './contacto-dialog';
 import { ContrasenaDialog } from './contrasena-dialog';
+import { UsuarioSecundarioDialog } from './usuario-secundario-dialog';
 
 @Component({
   imports: [MatIconModule],
@@ -29,6 +30,16 @@ export class MiCuenta {
       status: 'Invitación pendiente',
     },
   ];
+
+  abrirUsuarioSecundario(): void {
+    this.dialog.open(UsuarioSecundarioDialog, {
+      ariaLabelledBy: 'secondary-user-dialog-title',
+      backdropClass: 'mi-cuenta-dialog-backdrop',
+      maxWidth: 'calc(100vw - 32px)',
+      panelClass: 'mi-cuenta-contact-dialog',
+      width: '720px',
+    });
+  }
 
   abrirContrasena(): void {
     this.dialog.open(ContrasenaDialog, {

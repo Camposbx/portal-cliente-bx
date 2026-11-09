@@ -1,0 +1,106 @@
+<button class="dialog-close" type="button" aria-label="Cerrar" (click)="cancelar()">×</button>
+<h2 mat-dialog-title id="secondary-user-dialog-title">
+  <span class="text-display-xs">Registrar usuario secundario</span>
+</h2>
+<mat-dialog-content>
+  <p class="dialog-description text-body-md-regular">
+    Le llega una invitación por correo. Podrá entrar y cargar documentación por ti, pero no dar de
+    alta a nadie más.
+  </p>
+
+  <div class="row g-2 mb-4">
+    <div class="col-12">
+      <p class="text-body-md-regular mb-0">110954 INMOBILIARIA PIÑON</p>
+    </div>
+    <div class="col-12">
+      <p class="text-body-md-regular mb-0">
+        Usuario: <strong class="text-body-md-medium">IPI070426-B</strong>
+      </p>
+    </div>
+    <div class="col-12">
+      <p class="text-body-md-regular mb-0">
+        Apoderado: <strong class="text-body-md-medium">ABRAHAM EDITH TAMAYA COHEN HAMUI</strong>
+      </p>
+    </div>
+  </div>
+
+  <form [formGroup]="userForm" (ngSubmit)="guardar()">
+    <div class="row g-2">
+      <div class="col-12 col-md-6">
+        <mat-form-field class="app-form-field" appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" autocomplete="given-name" />
+          @if (userForm.controls.nombre.invalid) {
+            <mat-error>Escribe el nombre.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field class="app-form-field" appearance="outline">
+          <mat-label>Apellido paterno</mat-label>
+          <input matInput formControlName="apellidoPaterno" autocomplete="family-name" />
+          @if (userForm.controls.apellidoPaterno.invalid) {
+            <mat-error>Escribe el apellido paterno.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field class="app-form-field" appearance="outline">
+          <mat-label>Apellido materno (opcional)</mat-label>
+          <input matInput formControlName="apellidoMaterno" />
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field class="app-form-field" appearance="outline">
+          <mat-label>Puesto</mat-label>
+          <mat-select formControlName="puesto">
+            @for (puesto of puestos; track puesto) {
+              <mat-option [value]="puesto">{{ puesto }}</mat-option>
+            }
+          </mat-select>
+          @if (userForm.controls.puesto.invalid) {
+            <mat-error>Selecciona el puesto.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-12">
+        <mat-form-field class="app-form-field" appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput type="email" formControlName="correo" autocomplete="email" />
+          @if (userForm.controls.correo.hasError('required')) {
+            <mat-error>Escribe el correo electrónico.</mat-error>
+          } @else if (userForm.controls.correo.hasError('email')) {
+            <mat-error>Escribe un correo electrónico válido.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="col-12 mt-4">
+        <p id="secondary-user-terms" class="terms-description text-caption-regular">
+          Acepta la generación de un segundo usuario para tener acceso al portal de clientes, el cual
+          permita el envío de información y documentación relacionada con la solicitud de su crédito.
+          Asimismo, será responsable por el uso que los usuarios agregados hagan de las claves de acceso.
+        </p>
+        <mat-checkbox formControlName="aceptaTerminos" aria-describedby="secondary-user-terms">
+          Acepto términos y condiciones
+        </mat-checkbox>
+      </div>
+    </div>
+
+    <mat-dialog-actions align="center">
+      <button
+        type="button"
+        class="action-button secondary-button dialog-cancel text-label-sm"
+        (click)="cancelar()"
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        class="action-button primary-button dialog-submit text-label-sm"
+        [disabled]="userForm.invalid"
+      >
+        Guardar
+      </button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

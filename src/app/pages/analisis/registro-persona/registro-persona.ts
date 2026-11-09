@@ -66,7 +66,7 @@ export class RegistroPersona {
     regimenMatrimonial: [''],
     correo: ['', Validators.email],
     participacion: [''],
-    tipoDomicilio: [''],
+    tipoDomicilio: this.formBuilder.control<string[]>([]),
     codigoPostal: [''],
     entidad: [''],
     municipio: [''],
@@ -150,6 +150,9 @@ export class RegistroPersona {
     if (persona.datos) {
       this.personForm.patchValue({
         ...persona.datos,
+        tipoDomicilio: Array.isArray(persona.datos.tipoDomicilio)
+          ? persona.datos.tipoDomicilio
+          : persona.datos.tipoDomicilio ? [persona.datos.tipoDomicilio] : [],
         participacion: persona.datos.participacion == null ? '' : String(persona.datos.participacion),
       });
       return;

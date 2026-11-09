@@ -210,6 +210,17 @@ body {
   position: relative;
   border-radius: 12px;
 }
+
+.message-dialog-panel .mat-mdc-dialog-surface {
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.message-dialog-backdrop {
+  background: rgb(30 37 46 / 48%);
+  backdrop-filter: blur(5px);
+}
+
 .modal-carga-docs .mat-mdc-dialog-surface {
   overflow: hidden;
   border-radius: 12px;
@@ -238,5 +249,39 @@ body {
 .modal-firmantes-backdrop {
   background: rgb(30 37 46 / 48%);
   backdrop-filter: blur(6px);
+}
+
+.analysis-tutorial-backdrop {
+  background: rgb(30 37 46 / 58%);
+  backdrop-filter: blur(5px);
+}
+
+.analysis-tutorial-backdrop--spotlight {
+  --spot-top: 0px;
+  --spot-left: 0px;
+  --spot-right: 0px;
+  --spot-bottom: 0px;
+  --spot-height: 0px;
+  mask:
+    linear-gradient(#000 0 0) 0 0 / 100% calc(var(--spot-top) + 1px) no-repeat,
+    linear-gradient(#000 0 0) 0 calc(var(--spot-bottom) - 1px) / 100% calc(100% - var(--spot-bottom) + 1px) no-repeat,
+    linear-gradient(#000 0 0) 0 calc(var(--spot-top) - 1px) / var(--spot-left) calc(var(--spot-height) + 2px) no-repeat,
+    linear-gradient(#000 0 0) var(--spot-right) calc(var(--spot-top) - 1px) / calc(100% - var(--spot-right)) calc(var(--spot-height) + 2px) no-repeat;
+  mask-composite: add;
+}
+
+.analysis-tutorial-panel .mat-mdc-dialog-surface {
+  border-radius: 12px;
+}
+
+.analysis-tutorial-panel--step-4::after {
+  position: absolute;
+  top: 50%;
+  right: -10px;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid #fff;
+  content: '';
+  transform: translateY(-50%);
 }
 /* You can add global styles to this file, and also import other style files */

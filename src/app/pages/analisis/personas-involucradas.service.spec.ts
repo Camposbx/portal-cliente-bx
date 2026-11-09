@@ -50,4 +50,20 @@ describe('PersonasInvolucradasService', () => {
     expect(service.personas()[0]).toMatchObject({ tipo: undefined, tipoPersona: undefined, nivel: 0 });
     expect(service.personas().map((persona) => persona.nivel)).toEqual([0, 0, 0]);
   });
+
+  it('elimina una persona y todos sus descendientes, y limpia la selección si fue eliminada', () => {
+    service.agregar('Principal', '', ['aval'], 'fisica');
+    const idPrincipal = service.personas()[0].id;
+    service.agregar('Vinculada', '', ['aval'], 'fisica', { vinculadaConId: idPrincipal, nivel: 1 });
+    const idVinculada = service.personas()[1].id;
+    service.agregar('Descendiente', '', ['aval'], 'fisica', { vinculadaConId: idVinculada, nivel: 2 });
+    service.agregar('Otra raíz', '', ['garante'], 'moral');
+    service.seleccionarPersona('Vinculada', idVinculada);
+
+    expect(service.eliminar(idVinculada)).toBe(true);
+    expect(service.personas().map((persona) => persona.nombre)).toEqual(['Principal', 'Otra raíz']);
+    expect(service.selectedName()).toBe(service.nombreSolicitante);
+    expect(service.selectedPersonaId()).toBeNull();
+    expect(service.eliminar(999)).toBe(false);
+  });
 });

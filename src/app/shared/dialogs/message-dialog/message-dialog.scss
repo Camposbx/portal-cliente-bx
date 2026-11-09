@@ -1,0 +1,153 @@
+:host {
+  display: block;
+  color: var(--color-text-default);
+}
+
+.message-dialog {
+  position: relative;
+  padding: 36px 32px 28px;
+  text-align: center;
+}
+
+.message-dialog__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.message-dialog__close:hover {
+  background: var(--color-surface-muted);
+}
+
+.message-dialog__close svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 1.5;
+}
+
+.message-dialog__icon {
+  display: grid;
+  width: 60px;
+  height: 60px;
+  place-items: center;
+  margin: 0 auto 22px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  color: var(--color-error-default);
+}
+
+.message-dialog__icon svg {
+  width: 34px;
+  height: 34px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.message-dialog--success .message-dialog__icon {
+  color: var(--color-success-default);
+}
+
+.message-dialog--warning .message-dialog__icon {
+  color: var(--color-warning-strong);
+}
+
+.message-dialog--info .message-dialog__icon {
+  color: var(--color-info-default);
+}
+
+.message-dialog__title {
+  margin: 0;
+  color: var(--color-neutral-strongest);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.message-dialog__description {
+  margin: 12px 0 28px;
+  color: var(--color-text-muted);
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.message-dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.message-dialog__button {
+  min-width: 112px;
+  min-height: 44px;
+  padding: 0 22px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.message-dialog__button--cancel {
+  border-color: var(--color-action-secondary-border);
+  background: var(--color-surface-default);
+  color: var(--color-action-secondary-text);
+}
+
+.message-dialog__button--cancel:hover {
+  background: var(--color-action-secondary-hover);
+}
+
+.message-dialog__button--confirm {
+  background: var(--color-action-primary-default);
+  color: var(--color-action-on-primary);
+}
+
+.message-dialog__button--confirm:hover {
+  background: var(--color-action-primary-hover);
+}
+
+.message-dialog__close:focus-visible,
+.message-dialog__button:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .message-dialog {
+    padding: 34px 20px 24px;
+  }
+
+  .message-dialog__title {
+    font-size: 21px;
+  }
+
+  .message-dialog__description {
+    font-size: 14px;
+  }
+
+  .message-dialog__actions {
+    flex-direction: column-reverse;
+  }
+
+  .message-dialog__button {
+    width: 100%;
+  }
+}

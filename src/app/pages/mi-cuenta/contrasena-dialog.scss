@@ -1,0 +1,41 @@
+mat-dialog-content {
+  padding: 0 32px 24px;
+}
+
+.dialog-description {
+  margin-bottom: 24px;
+}
+
+.password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.password-form mat-icon {
+  color: var(--color-icon-subtle);
+}
+
+mat-dialog-actions {
+  margin-top: 12px;
+  padding-bottom: 0;
+}
+
+.action-button {
+  min-height: 52px;
+  padding: 0 24px;
+}
+
+.primary-button:disabled {
+  border-color: var(--color-action-primary-disabled);
+  background: var(--color-action-primary-disabled);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+@media (max-width: 400px) {
+  mat-dialog-content {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+}

@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
@@ -20,13 +19,7 @@ export interface ContactDialogData {
 }
 
 @Component({
-  imports: [
-    MatButtonModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule,
-  ],
+  imports: [MatDialogModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule],
   selector: 'app-contacto-dialog',
   styleUrl: './contacto-dialog.scss',
   templateUrl: './contacto-dialog.html',

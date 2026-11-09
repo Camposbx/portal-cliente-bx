@@ -74,7 +74,7 @@ export class TutorialBienvenida implements AfterViewInit {
         top: `${Math.min(bottom + 28, window.innerHeight - 200)}px`,
         left: `${Math.min(Math.max(16, left - 12), window.innerWidth - dialogWidth - 16)}px`,
       });
-    } /* else if (window.innerWidth > 640 && this.data.step === 4) {
+    }  else if (window.innerWidth > 640 && this.data.step === 4) {
       this.dialogRef.updatePosition({
         top: `${Math.max(16, top + (bottom - top - 160) / 2)}px`,
         left: `${Math.max(16, left - dialogWidth - 16)}px`,
@@ -89,6 +89,6 @@ export class TutorialBienvenida implements AfterViewInit {
         top: `${Math.max(16, top + (bottom - top - 160) / 2)}px`,
         left: `${Math.max(16, left - dialogWidth - 16)}px`,
       });
-    } */
+    } 
   }
 }

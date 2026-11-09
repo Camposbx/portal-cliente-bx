@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { ContactData, ContactDialogData, ContactType, ContactoDialog } from './contacto-dialog';
+import { ContrasenaDialog } from './contrasena-dialog';
 
 @Component({
   imports: [MatIconModule],
@@ -29,6 +30,16 @@ export class MiCuenta {
     },
   ];
 
+  abrirContrasena(): void {
+    this.dialog.open(ContrasenaDialog, {
+      ariaLabelledBy: 'password-dialog-title',
+      backdropClass: 'mi-cuenta-dialog-backdrop',
+      maxWidth: 'calc(100vw - 32px)',
+      panelClass: 'mi-cuenta-contact-dialog',
+      width: '456px',
+    });
+  }
+
   abrirContacto(type: ContactType, contact?: ContactData): void {
     const data: ContactDialogData = {
       type,
@@ -43,7 +54,7 @@ export class MiCuenta {
         data,
         maxWidth: 'calc(100vw - 32px)',
         panelClass: 'mi-cuenta-contact-dialog',
-        width: '328px',
+        width: '528px',
       })
       .afterClosed()
       .subscribe((result: ContactData | undefined) => {

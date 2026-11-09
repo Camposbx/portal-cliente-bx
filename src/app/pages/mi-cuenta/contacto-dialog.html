@@ -1,11 +1,13 @@
 <button class="dialog-close" type="button" aria-label="Cerrar" (click)="cancelar()">×</button>
-<h2 mat-dialog-title id="contact-dialog-title">{{ title }}</h2>
-<mat-dialog-content>
-  <p class="dialog-description">{{ description }}</p>
+<h2 mat-dialog-title id="contact-dialog-title">
+  <span class="text-display-xs">{{ title }}</span>
+</h2>
+<mat-dialog-content class="pb-4">
+  <p class="dialog-description text-body-md-regular">{{ description }}</p>
 
   <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="guardar()">
     @if (data.type === 'phone') {
-      <mat-form-field appearance="outline">
+      <mat-form-field class="app-form-field mb-2" appearance="outline">
         <mat-label>Etiqueta</mat-label>
         <input matInput formControlName="label" autocomplete="off" />
         @if (
@@ -16,7 +18,7 @@
       </mat-form-field>
     }
 
-    <mat-form-field appearance="outline">
+    <mat-form-field class="app-form-field" appearance="outline">
       <mat-label>{{ valueLabel }}</mat-label>
       <input
         matInput
@@ -38,10 +40,14 @@
     </mat-form-field>
 
     <mat-dialog-actions align="center">
-      <button mat-stroked-button type="button" class="dialog-cancel" (click)="cancelar()">
+      <button
+        type="button"
+        class="action-button secondary-button dialog-cancel text-label-sm"
+        (click)="cancelar()"
+      >
         Cancelar
       </button>
-      <button mat-flat-button type="submit" class="dialog-submit">
+      <button type="submit" class="action-button primary-button dialog-submit text-label-sm">
         {{ submitLabel }}
       </button>
     </mat-dialog-actions>

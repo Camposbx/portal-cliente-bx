@@ -15,7 +15,7 @@
       </div> -->
     </header>
 
-    <!-- <section
+    <section
       class="invite-banner row align-items-center g-3"
       aria-labelledby="secondary-capacity-title"
     >
@@ -29,7 +29,7 @@
       <div class="col-12 col-sm-auto">
         <button class="btn btn-primary-brand" type="button">Invitar</button>
       </div>
-    </section> -->
+    </section>
 
     <section class="account-card" aria-labelledby="personal-data-title">
       <div class="section-heading">
@@ -138,7 +138,7 @@
       </div>
     </section>
 
-    <!-- <section class="account-card" aria-labelledby="users-title">
+    <section class="account-card" aria-labelledby="users-title">
       <div class="section-heading section-heading-actions">
         <div>
           <h2 id="users-title">Usuarios secundarios</h2>
@@ -169,7 +169,7 @@
           </div>
         }
       </div>
-    </section> -->
+    </section>
 
     <section
       class="account-card compact-card row align-items-center g-3"
@@ -180,7 +180,9 @@
         <p>La cambiaste hace 4 meses. Puedes cambiarla cuando quieras.</p>
       </div>
       <div class="col-12 col-sm-auto">
-        <button class="btn btn-outline-brand" type="button">Cambiar contraseña</button>
+        <button class="btn btn-outline-brand" type="button" (click)="abrirContrasena()">
+          Cambiar contraseña
+        </button>
       </div>
     </section>
 

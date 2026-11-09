@@ -28,13 +28,21 @@ ng generate --help
 
 ## Building
 
-To build the project run:
+Build a specific environment:
 
 ```bash
-ng build
+npm run build:desa
+npm run build:qa
+npm run build:prod
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+The development, QA, and production builds are written separately to `dist/portal-cliente/development`, `dist/portal-cliente/qa`, and `dist/portal-cliente/production`. Generate all three with:
+
+```bash
+npm run build:all
+```
+
+Each environment exports `environment.apiUrl`; its current value is `https://dockerqa.vepormas.com/credito/portal/` for all three builds. Update the corresponding file in `src/environments/` when the service URL changes.
 
 ## Running unit tests
 

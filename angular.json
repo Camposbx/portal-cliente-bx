@@ -36,6 +36,13 @@
           },
           "configurations": {
             "production": {
+              "outputPath": "dist/portal-cliente/production",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -50,7 +57,33 @@
               ],
               "outputHashing": "all"
             },
+            "qa": {
+              "outputPath": "dist/portal-cliente/qa",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.qa.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "optimization": true,
+              "extractLicenses": true,
+              "sourceMap": false,
+              "outputHashing": "all"
+            },
             "development": {
+              "outputPath": "dist/portal-cliente/development",
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true

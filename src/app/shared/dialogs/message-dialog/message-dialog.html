@@ -1,0 +1,61 @@
+<section
+  class="message-dialog"
+  [class.message-dialog--question]="data.type === 'question'"
+  [class.message-dialog--success]="data.type === 'success'"
+  [class.message-dialog--warning]="data.type === 'warning'"
+  [class.message-dialog--error]="data.type === 'error'"
+  [class.message-dialog--info]="data.type === 'info'"
+  role="alertdialog"
+  aria-modal="true"
+  aria-labelledby="message-dialog-title"
+  aria-describedby="message-dialog-description"
+>
+  <button class="message-dialog__close" type="button" aria-label="Cerrar" (click)="cancelar()">
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="m5 5 10 10M15 5 5 15" />
+    </svg>
+  </button>
+
+  <span class="message-dialog__icon" aria-hidden="true">
+    @switch (data.type) {
+      @case ('success') {
+        <svg viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="13.5" />
+          <path d="m10 16 4 4 8-8" />
+        </svg>
+      }
+      @case ('info') {
+        <svg viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="13.5" />
+          <path d="M16 14v8m0-13h.01" />
+        </svg>
+      }
+      @case ('warning') {
+        <svg viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="13.5" />
+          <path d="M16 9v9m0 5h.01" />
+        </svg>
+      }
+      @default {
+        <svg viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="13.5" />
+          <path d="m11 11 10 10m0-10L11 21" />
+        </svg>
+      }
+    }
+  </span>
+
+  <h2 class="message-dialog__title" id="message-dialog-title">{{ data.title }}</h2>
+  <p class="message-dialog__description" id="message-dialog-description">{{ data.message }}</p>
+
+  <div class="message-dialog__actions">
+    @if (cancelText; as label) {
+      <button class="message-dialog__button message-dialog__button--cancel" type="button" (click)="cancelar()">
+        {{ label }}
+      </button>
+    }
+    <button class="message-dialog__button message-dialog__button--confirm" type="button" (click)="aceptar()">
+      {{ confirmText }}
+    </button>
+  </div>
+</section>

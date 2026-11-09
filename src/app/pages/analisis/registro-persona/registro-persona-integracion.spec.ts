@@ -22,16 +22,43 @@ describe('Registro de persona desde análisis', () => {
     const harness = await RouterTestingHarness.create();
     const component = await harness.navigateByUrl('/analisis/registro-persona', RegistroPersona);
     component.selectPersonType('fisica');
+    expect(component.captureMethod).toBe('manual');
     component.selectCaptureMethod('manual');
     component.toggleRole('depositario', true);
-    component.personForm.patchValue({ nombre1: 'Ana', primerApellido: 'Pérez', nacionalidad: 'Mexicana' });
+    component.personForm.patchValue({
+      nombre1: 'Ana',
+      primerApellido: 'Pérez',
+      nacionalidad: 'Mexicana',
+      tipoDomicilio: 'Fiscal',
+      codigoPostal: '04100',
+      entidad: 'Ciudad de México (CDMX)',
+      municipio: 'Coyoacán',
+      colonia: 'Copilco El Alto',
+      calle: 'Allende',
+      numeroExterior: '24',
+      numeroInterior: '2',
+      direccionPrincipal: true,
+    });
     component.finalizarRegistro();
     await harness.fixture.whenStable();
 
     expect(service.personas()).toHaveLength(1);
     expect(service.personas()[0]).toMatchObject({
       nombre: 'Ana Pérez', tipo: 'fisica', tipoPersona: 'fisica', nivel: 0,
-      datos: { nombre1: 'Ana', primerApellido: 'Pérez', nacionalidad: 'Mexicana' },
+      datos: {
+        nombre1: 'Ana',
+        primerApellido: 'Pérez',
+        nacionalidad: 'Mexicana',
+        tipoDomicilio: 'Fiscal',
+        codigoPostal: '04100',
+        entidad: 'Ciudad de México (CDMX)',
+        municipio: 'Coyoacán',
+        colonia: 'Copilco El Alto',
+        calle: 'Allende',
+        numeroExterior: '24',
+        numeroInterior: '2',
+        direccionPrincipal: true,
+      },
     });
     expect(router.url).toBe('/analisis/documentos');
   });
@@ -214,11 +241,12 @@ describe('Registro de persona desde análisis', () => {
     expect(component.rolesDisponiblesSegundoNivel.map((role) => role.id)).toEqual(['accionista']);
   });
 
-  it('permite registrar varias personas vinculadas al mismo primer nivel y terminar', async () => {
+  it('al terminar selecciona la última persona vinculada que se registró', async () => {
     await TestBed.configureTestingModule({
       providers: [provideRouter([
         { path: 'analisis/registro-persona', component: RegistroPersona },
         { path: 'analisis/documentos', component: DocumentosDePrueba },
+        { path: 'analisis/personas-involucradas', component: DocumentosDePrueba },
       ])],
     }).compileComponents();
 
@@ -267,7 +295,59 @@ describe('Registro de persona desde análisis', () => {
 
     component.terminarRegistroSegundoNivel();
     await harness.fixture.whenStable();
-    expect(router.url).toBe('/analisis/documentos');
+    const ultimaPersona = service.personas()[2];
+    expect(router.url).toBe(
+      `/analisis/personas-involucradas?vista=arbol&seleccionada=${ultimaPersona.id}`,
+    );
+    expect(service.selectedName()).toBe('Luis García');
+    expect(service.selectedPersonaId()).toBe(ultimaPersona.id);
+  });
+
+  it('agrega una persona desde el árbol al segundo nivel sin abrir un tercer nivel', async () => {
+    await TestBed.configureTestingModule({
+      providers: [provideRouter([
+        { path: 'analisis/registro-persona', component: RegistroPersona },
+        { path: 'analisis/personas-involucradas', component: DocumentosDePrueba },
+      ])],
+    }).compileComponents();
+
+    const service = TestBed.inject(PersonasInvolucradasService);
+    service.agregar('Empresa principal', '', ['aval'], 'moral');
+    const idPrincipal = service.personas()[0].id;
+    service.agregar('Persona vinculada existente', '', ['apoderado'], 'fisica', {
+      vinculadaConId: idPrincipal,
+      nivel: 1,
+    });
+
+    const router = TestBed.inject(Router);
+    const harness = await RouterTestingHarness.create();
+    const component = await harness.navigateByUrl(
+      `/analisis/registro-persona?vinculadaCon=${idPrincipal}`,
+      RegistroPersona,
+    );
+
+    expect(component.isSecondLevel).toBe(true);
+    component.selectPersonType('fisica');
+    expect(component.rolesDisponiblesSegundoNivel.map((role) => role.id)).toEqual(['apoderado']);
+    component.selectCaptureMethod('manual');
+    component.selectSecondLevelRole('apoderado');
+    component.personForm.patchValue({
+      nombre1: 'Nueva',
+      primerApellido: 'Persona',
+      nacionalidad: 'Mexicana',
+    });
+    component.finalizarRegistro();
+    await harness.fixture.whenStable();
+
+    expect(component.esperandoAccionSegundoNivel).toBe(false);
+    expect(service.personas()).toHaveLength(3);
+    expect(service.personas()[1].nombre).toBe('Persona vinculada existente');
+    expect(service.personas()[2]).toMatchObject({
+      nombre: 'Nueva Persona',
+      vinculadaConId: idPrincipal,
+      nivel: 1,
+    });
+    expect(router.url).toBe('/analisis/personas-involucradas');
   });
 
   it('carga los datos existentes al abrir la edición y actualiza sin duplicar la persona', async () => {
@@ -309,7 +389,7 @@ describe('Registro de persona desde análisis', () => {
     expect(component.personType).toBe('fisica');
     expect(component.captureMethod).toBe('manual');
     expect(component.selectedRoles).toEqual(['accionista']);
-    expect(component.personForm.getRawValue()).toEqual(datos);
+    expect(component.personForm.getRawValue()).toMatchObject(datos);
     expect(
       harness.fixture.nativeElement.querySelector('[formControlName="nombre1"]').value,
     ).toBe('Ana');

@@ -66,6 +66,15 @@ export class RegistroPersona {
     regimenMatrimonial: [''],
     correo: ['', Validators.email],
     participacion: [''],
+    tipoDomicilio: [''],
+    codigoPostal: [''],
+    entidad: [''],
+    municipio: [''],
+    colonia: [''],
+    calle: [''],
+    numeroExterior: [''],
+    numeroInterior: [''],
+    direccionPrincipal: [false],
   });
 
   personType: PersonType | null = null;
@@ -84,7 +93,7 @@ export class RegistroPersona {
   selectedRoles: string[] = [];
 
   get isSecondLevel(): boolean {
-    return this.secondLevelParentId !== null;
+    return this.secondLevelParentId !== null || this.vinculoSolicitado() !== null;
   }
 
   get tiposPersonaDisponibles(): PersonType[] {
@@ -104,12 +113,16 @@ export class RegistroPersona {
   }
 
   nombrePersonaSegundoNivel(): string {
-    return this.personasInvolucradas.personas().find((persona) => persona.id === this.secondLevelParentId)?.nombre ?? '';
+    const persona = this.personasInvolucradas.personas().find((item) => item.id === this.secondLevelParentId)
+      ?? this.personaVinculada();
+    return persona?.nombre ?? '';
   }
 
   get cantidadPersonasSegundoNivel(): number {
+    const parentId = this.secondLevelParentId ?? this.personaVinculada()?.id;
+    if (parentId === undefined || parentId === null) return 0;
     return this.personasInvolucradas.personas()
-      .filter((persona) => persona.vinculadaConId === this.secondLevelParentId).length;
+      .filter((persona) => persona.vinculadaConId === parentId).length;
   }
 
   constructor() {
@@ -161,7 +174,7 @@ export class RegistroPersona {
   selectPersonType(personType: PersonType): void {
     this.configurarTipo(personType);
     if (!this.modoEdicion()) {
-      this.captureMethod = null;
+      this.captureMethod = 'manual';
       this.personForm.reset();
       this.secondLevelRoleOptions = this.isSecondLevel ? this.rolesSegundoNivel(personType) : [];
       this.selectedRoles = [];
@@ -174,10 +187,15 @@ export class RegistroPersona {
       moral: { accionista: 'accionista' },
     };
     return [...new Set(
-      this.secondLevelSourceRoles
+      this.rolesOrigenSegundoNivel
         .map((role) => rolesPorTipo[personType][role])
         .filter((role): role is string => role !== undefined),
     )];
+  }
+
+  private get rolesOrigenSegundoNivel(): string[] {
+    if (this.secondLevelParentId !== null) return this.secondLevelSourceRoles;
+    return this.personaVinculada()?.roles ?? [];
   }
 
   private configurarTipo(personType: PersonType): void {
@@ -270,6 +288,17 @@ export class RegistroPersona {
 
   terminarRegistroSegundoNivel(): void {
     this.esperandoAccionSegundoNivel = false;
+    const ultimaPersona = this.personasInvolucradas.personas()
+      .filter((persona) => persona.vinculadaConId === this.secondLevelParentId)
+      .at(-1);
+    if (ultimaPersona) {
+      this.personasInvolucradas.seleccionarPersona(ultimaPersona.nombre, ultimaPersona.id);
+      void this.router.navigate(['/analisis/personas-involucradas'], {
+        queryParams: { vista: 'arbol', seleccionada: ultimaPersona.id },
+      });
+      return;
+    }
+
     void this.router.navigateByUrl(
       this.desdePersonas() ? '/analisis/personas-involucradas' : '/analisis/documentos',
     );
@@ -297,7 +326,7 @@ export class RegistroPersona {
       return;
     }
 
-    const personaVinculada = this.isSecondLevel
+    const personaVinculada = this.secondLevelParentId !== null
       ? this.personasInvolucradas.personas().find((persona) => persona.id === this.secondLevelParentId)
       : this.personaVinculada();
     const agregada = this.personasInvolucradas.agregar(
@@ -313,7 +342,7 @@ export class RegistroPersona {
     );
     if (!agregada) return;
 
-    if (this.isSecondLevel) {
+    if (this.secondLevelParentId !== null) {
       this.esperandoAccionSegundoNivel = true;
       this.personType = null;
       this.captureMethod = null;

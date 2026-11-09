@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { firstValueFrom } from 'rxjs';
+import { ANALISIS_TUTORIAL_STORAGE_KEY } from '../../shared/analisis-tutorial';
 import { Login } from './login';
 
 describe('Login', () => {
@@ -25,6 +26,16 @@ describe('Login', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('resets the analysis tutorial when the login screen loads', () => {
+    localStorage.setItem(ANALISIS_TUTORIAL_STORAGE_KEY, 'true');
+
+    const loginFixture = TestBed.createComponent(Login);
+    loginFixture.detectChanges();
+
+    expect(localStorage.getItem(ANALISIS_TUTORIAL_STORAGE_KEY)).toBeNull();
+    loginFixture.destroy();
   });
 
   it('should open the portal acceptance dialog when ingresar is called', () => {

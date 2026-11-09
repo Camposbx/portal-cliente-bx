@@ -17,6 +17,15 @@ export interface DatosPersona {
   regimenMatrimonial: string;
   correo: string;
   participacion: string | number | null;
+  tipoDomicilio?: string;
+  codigoPostal?: string;
+  entidad?: string;
+  municipio?: string;
+  colonia?: string;
+  calle?: string;
+  numeroExterior?: string;
+  numeroInterior?: string;
+  direccionPrincipal?: boolean;
 }
 
 export interface PersonaInvolucrada {
@@ -42,14 +51,17 @@ export class PersonasInvolucradasService {
   readonly personas = signal<PersonaInvolucrada[]>([]);
   readonly nombreSolicitante = 'ASOCIACION MEXICANA PARA LAS NACIONES UNIDAS DE JOVENES AMNU JOVENES';
   readonly selectedName = signal(this.nombreSolicitante);
+  readonly selectedPersonaId = signal<number | null>(null);
   private nextPersonaId = 0;
 
   seleccionarSolicitante(): void {
     this.selectedName.set(this.nombreSolicitante);
+    this.selectedPersonaId.set(null);
   }
 
-  seleccionarPersona(nombre: string): void {
+  seleccionarPersona(nombre: string, id?: number): void {
     this.selectedName.set(nombre);
+    this.selectedPersonaId.set(id ?? null);
   }
 
   agregar(
@@ -94,6 +106,34 @@ export class PersonasInvolucradasService {
       ? { ...item, nombre: nombreLimpio, correo: correo.trim(), roles: [...roles], tipo, tipoPersona: tipo, datos: { ...datos } }
       : item));
     if (this.selectedName() === persona.nombre) this.selectedName.set(nombreLimpio);
+    return true;
+  }
+
+  eliminar(id: number): boolean {
+    const personas = this.personas();
+    if (!personas.some((persona) => persona.id === id)) return false;
+
+    const idsEliminados = new Set([id]);
+    let huboNuevosDescendientes = true;
+    while (huboNuevosDescendientes) {
+      huboNuevosDescendientes = false;
+      for (const persona of personas) {
+        if (
+          persona.vinculadaConId !== undefined &&
+          idsEliminados.has(persona.vinculadaConId) &&
+          !idsEliminados.has(persona.id)
+        ) {
+          idsEliminados.add(persona.id);
+          huboNuevosDescendientes = true;
+        }
+      }
+    }
+
+    this.personas.set(personas.filter((persona) => !idsEliminados.has(persona.id)));
+    const personaSeleccionadaId = this.selectedPersonaId();
+    if (personaSeleccionadaId !== null && idsEliminados.has(personaSeleccionadaId)) {
+      this.seleccionarSolicitante();
+    }
     return true;
   }
 }

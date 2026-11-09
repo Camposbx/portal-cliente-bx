@@ -70,23 +70,6 @@
   outline-offset: 3px;
 }
 
-.people-tabs {
-  --mat-tab-header-active-label-text-color: var(--color-text-default);
-  --mat-tab-header-active-focus-label-text-color: var(--color-text-default);
-  --mat-tab-header-active-hover-label-text-color: var(--color-text-default);
-  --mat-tab-header-active-indicator-color: var(--color-brand-primary);
-  --mat-tab-header-active-focus-indicator-color: var(--color-brand-primary);
-  --mat-tab-header-active-hover-indicator-color: var(--color-brand-primary);
-  --mat-tab-header-inactive-label-text-color: var(--color-text-muted);
-  --mat-tab-header-label-text-font: var(--font-label-md-family);
-  --mat-tab-header-label-text-size: var(--font-label-md-size);
-  --mat-tab-header-label-text-weight: var(--font-label-md-weight);
-}
-
-.tab-content {
-  padding: 28px 0 40px;
-}
-
 .section-heading {
   display: flex;
   align-items: flex-start;
@@ -103,72 +86,12 @@
   margin: 0 0 4px;
 }
 
-.applicant-context {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 8px;
-  margin: 0;
-  color: var(--color-text-muted);
-  overflow-wrap: anywhere;
-}
-
-.count,
-.example-label {
+.count {
   flex: 0 0 auto;
   padding: 5px 10px;
   border-radius: 999px;
   background: var(--color-surface-muted);
   color: var(--color-text-muted);
-}
-
-.example-label {
-  background: var(--color-info-subtle);
-  color: var(--color-info-strong);
-}
-
-.example-section {
-  margin-top: 36px;
-}
-
-.table-container {
-  overflow-x: auto;
-  border: 1px solid var(--color-border-subtle);
-  border-radius: 12px;
-}
-
-.people-table {
-  width: 100%;
-  min-width: 850px;
-  border-collapse: collapse;
-  font-family: var(--font-body-sm-regular-family);
-  font-size: var(--font-body-sm-regular-size);
-  line-height: var(--font-body-sm-regular-line-height);
-  text-align: left;
-}
-
-.people-table th,
-.people-table td {
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--color-border-subtle);
-  vertical-align: middle;
-}
-
-.people-table th {
-  background: var(--color-surface-subtle);
-  color: var(--color-text-muted);
-  font-family: var(--font-label-sm-family);
-  font-size: var(--font-label-sm-size);
-  font-weight: var(--font-label-sm-weight);
-  line-height: var(--font-label-sm-line-height);
-}
-
-.people-table tr:last-child td {
-  border-bottom: 0;
-}
-
-.person-cell {
-  color: var(--color-text-default);
 }
 
 .add-linked {
@@ -210,8 +133,16 @@
   background: var(--color-action-accent-hover);
 }
 
-.example-action {
-  color: var(--color-text-subtle);
+.delete-person {
+  padding: 0;
+  border: 0;
+  color: var(--color-text-link);
+  cursor: pointer;
+}
+
+.delete-person:hover {
+  background: var(--color-action-danger-subtle, #fde8e7);
+  color: var(--color-action-danger-default, #b3261e);
 }
 
 .role-badge {
@@ -225,15 +156,6 @@
   font-size: var(--font-label-xs-size);
   font-weight: var(--font-label-xs-weight);
   line-height: var(--font-label-xs-line-height);
-}
-
-.empty-state {
-  padding: 24px;
-  border: 1px dashed var(--color-border-default);
-  border-radius: 12px;
-  background: var(--color-surface-subtle);
-  color: var(--color-text-muted);
-  text-align: center;
 }
 
 .tree-container {
@@ -274,6 +196,7 @@
 }
 
 .tree-card {
+  position: relative;
   display: flex;
   width: min(100%, 520px);
   min-width: 280px;
@@ -283,6 +206,13 @@
   border: 1px solid var(--color-border-subtle);
   border-radius: 12px;
   background: var(--color-surface-default);
+  cursor: pointer;
+}
+
+.tree-card--selected {
+  border-color: var(--color-info-strong);
+  background: var(--color-info-subtlest);
+  box-shadow: 0 0 0 2px var(--color-info-subtle);
 }
 
 .applicant-tree-card {
@@ -319,6 +249,9 @@
   display: flex;
   flex: 0 0 auto;
   gap: 8px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .tree-details {
@@ -327,6 +260,7 @@
   flex: 1;
   flex-direction: column;
   gap: 2px;
+  padding-right: 84px;
 }
 
 .tree-name,

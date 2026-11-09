@@ -17,6 +17,15 @@ export interface DatosPersona {
   regimenMatrimonial: string;
   correo: string;
   participacion: string | number | null;
+  tipoDomicilio?: string;
+  codigoPostal?: string;
+  entidad?: string;
+  municipio?: string;
+  colonia?: string;
+  calle?: string;
+  numeroExterior?: string;
+  numeroInterior?: string;
+  direccionPrincipal?: boolean;
 }
 
 export interface PersonaInvolucrada {

@@ -46,8 +46,8 @@
 }
 
 .registration-content {
-  width: min(100%, 904px);
-  margin: 38px auto 0;
+  width: min(100%, 1000px);
+  margin: 22px auto 0;
 }
 
 .link-notice {
@@ -191,8 +191,9 @@
 
 .data-section,
 .general-section,
-.contact-section {
-  margin-top: 22px;
+.contact-section,
+.address-section {
+  margin-top: 10px;
 }
 
 .form-fields {
@@ -200,6 +201,15 @@
   --bs-gutter-y: 12px;
 }
 
+.address-section {
+  margin-bottom: 20px;
+}
+
+.principal-checkbox {
+  margin-top: 4px;
+  color: var(--color-neutral-default);
+  font-size: 11px;
+}
 
 .form-actions {
   display: flex;
@@ -230,7 +240,7 @@
   }
 
   .registration-content {
-    margin-top: 26px;
+    margin-top: 18px;
   }
 
   .capture-card {

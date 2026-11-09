@@ -22,16 +22,43 @@ describe('Registro de persona desde análisis', () => {
     const harness = await RouterTestingHarness.create();
     const component = await harness.navigateByUrl('/analisis/registro-persona', RegistroPersona);
     component.selectPersonType('fisica');
+    expect(component.captureMethod).toBe('manual');
     component.selectCaptureMethod('manual');
     component.toggleRole('depositario', true);
-    component.personForm.patchValue({ nombre1: 'Ana', primerApellido: 'Pérez', nacionalidad: 'Mexicana' });
+    component.personForm.patchValue({
+      nombre1: 'Ana',
+      primerApellido: 'Pérez',
+      nacionalidad: 'Mexicana',
+      tipoDomicilio: 'Fiscal',
+      codigoPostal: '04100',
+      entidad: 'Ciudad de México (CDMX)',
+      municipio: 'Coyoacán',
+      colonia: 'Copilco El Alto',
+      calle: 'Allende',
+      numeroExterior: '24',
+      numeroInterior: '2',
+      direccionPrincipal: true,
+    });
     component.finalizarRegistro();
     await harness.fixture.whenStable();
 
     expect(service.personas()).toHaveLength(1);
     expect(service.personas()[0]).toMatchObject({
       nombre: 'Ana Pérez', tipo: 'fisica', tipoPersona: 'fisica', nivel: 0,
-      datos: { nombre1: 'Ana', primerApellido: 'Pérez', nacionalidad: 'Mexicana' },
+      datos: {
+        nombre1: 'Ana',
+        primerApellido: 'Pérez',
+        nacionalidad: 'Mexicana',
+        tipoDomicilio: 'Fiscal',
+        codigoPostal: '04100',
+        entidad: 'Ciudad de México (CDMX)',
+        municipio: 'Coyoacán',
+        colonia: 'Copilco El Alto',
+        calle: 'Allende',
+        numeroExterior: '24',
+        numeroInterior: '2',
+        direccionPrincipal: true,
+      },
     });
     expect(router.url).toBe('/analisis/documentos');
   });
@@ -362,7 +389,7 @@ describe('Registro de persona desde análisis', () => {
     expect(component.personType).toBe('fisica');
     expect(component.captureMethod).toBe('manual');
     expect(component.selectedRoles).toEqual(['accionista']);
-    expect(component.personForm.getRawValue()).toEqual(datos);
+    expect(component.personForm.getRawValue()).toMatchObject(datos);
     expect(
       harness.fixture.nativeElement.querySelector('[formControlName="nombre1"]').value,
     ).toBe('Ana');

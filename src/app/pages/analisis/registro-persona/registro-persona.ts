@@ -66,6 +66,15 @@ export class RegistroPersona {
     regimenMatrimonial: [''],
     correo: ['', Validators.email],
     participacion: [''],
+    tipoDomicilio: [''],
+    codigoPostal: [''],
+    entidad: [''],
+    municipio: [''],
+    colonia: [''],
+    calle: [''],
+    numeroExterior: [''],
+    numeroInterior: [''],
+    direccionPrincipal: [false],
   });
 
   personType: PersonType | null = null;
@@ -165,7 +174,7 @@ export class RegistroPersona {
   selectPersonType(personType: PersonType): void {
     this.configurarTipo(personType);
     if (!this.modoEdicion()) {
-      this.captureMethod = null;
+      this.captureMethod = 'manual';
       this.personForm.reset();
       this.secondLevelRoleOptions = this.isSecondLevel ? this.rolesSegundoNivel(personType) : [];
       this.selectedRoles = [];

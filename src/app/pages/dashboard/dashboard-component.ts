@@ -48,7 +48,7 @@ export class Dashboard implements OnInit {
     description: 'Aquí puedes solicitar tus documentos para operar.',
     image: 'baners/card-operacion.png',
     route: '/operacion',
-    disabled: false,
+    disabled: true,
     progress: 0,
   },
 ];

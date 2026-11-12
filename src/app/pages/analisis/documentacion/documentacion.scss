@@ -137,7 +137,7 @@
 
 .documents-table {
   width: 100%;
-  min-width: 820px;
+  min-width: 760px;
   table-layout: fixed;
   border-collapse: collapse;
   background: #fff;
@@ -164,19 +164,15 @@
 }
 
 .documents-table thead th:nth-child(3) {
-  width: 13%;
+  width: 27%;
 }
 
 .documents-table thead th:nth-child(4) {
-  width: 18%;
+  width: 13%;
 }
 
 .documents-table thead th:nth-child(5) {
-  width: 14%;
-}
-
-.documents-table thead th:nth-child(6) {
-  width: 13%;
+  width: 18%;
 }
 
 .table-heading {
@@ -216,13 +212,27 @@
 }
 
 .doc-name {
-  display: inline-flex;
-  align-items: center;
-  max-width: calc(100% - 27px);
+  min-width: 0;
+  flex: 0 1 auto;
   color: #1c2b34;
   font-weight: 500;
   line-height: 1.35;
   font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+.document-name-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+}
+
+.document-indicators {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 3px;
 }
 
 .info-mark {
@@ -265,30 +275,60 @@
   stroke-width: 1.5;
 }
 
-.signature-button {
-  max-width: 100%;
-  padding: 5px 9px;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  background: #eef0f1;
-  color: #55636b;
-  font: inherit;
-  font-size: 0.62rem;
-  font-weight: 600;
-  white-space: nowrap;
+.signature-indicator {
+  display: inline-grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #647780;
+}
+
+.signature-indicator svg {
+  width: 17px;
+  height: 17px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.4;
+}
+
+.conversation-button {
+  display: inline-grid;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #647780;
   cursor: pointer;
 }
 
-.signature-button:hover:not(:disabled) {
-  border-color: #c9d3d8;
-  background: #e3e6e8;
+.conversation-button:hover {
+  background: #e5f5f8;
+  color: #24647a;
 }
 
-.signature-button--requested,
-.signature-button:disabled {
-  background: #e2f6f8;
-  color: #24647a;
-  cursor: default;
+.conversation-button:focus-visible,
+.conversation-close:focus-visible,
+.conversation-send:focus-visible {
+  outline: 2px solid #24647a;
+  outline-offset: 2px;
+}
+
+.conversation-button svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.35;
 }
 
 .upload-document-button {
@@ -372,8 +412,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 72px;
-  padding: 5px 9px;
+  min-width: 64px;
+  padding: 5px 6px;
   border: 1px solid #d7dee1;
   border-radius: 999px;
   background: #f7f8f8;
@@ -381,6 +421,13 @@
   font-size: 0.66rem;
   font-weight: 600;
   white-space: nowrap;
+}
+
+.status-cell-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 }
 
 .status-badge--review {
@@ -531,4 +578,5 @@
   .user-info h2 {
     font-size: 1.6rem;
   }
+
 }

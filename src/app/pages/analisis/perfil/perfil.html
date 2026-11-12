@@ -5,14 +5,14 @@
         <mat-icon>person</mat-icon>
       </span>
       <div class="client-details">
-        <h1 class="client-name text-display-lg">
+        <label class="client-name text-display-sm">
           @if (personaMoral) {
             ASOCIACION MEXICANA PARA LAS NACIONES UNIDAS DE JOVENES AMNU JOVENES
           } @else {
             {{ profileForm.controls.nombre1.value }} {{ profileForm.controls.primerApellido.value }}
             {{ profileForm.controls.segundoApellido.value }}
           }
-        </h1>
+        </label>
         <div class="client-meta">
           <span class="client-type">Acreditado {{ personaMoral ? 'PM' : 'PFAE' }}</span>
           <span class="edit-button">Editar datos</span>

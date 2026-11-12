@@ -1,0 +1,74 @@
+<button
+  class="conversation-backdrop"
+  type="button"
+  aria-label="Cerrar conversación"
+  (click)="close()"
+></button>
+
+<aside
+  class="conversation-panel"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="conversation-title"
+  cdkTrapFocus
+  [cdkTrapFocusAutoCapture]="true"
+>
+  <header class="conversation-header">
+    <span class="executive-avatar" aria-hidden="true">CM</span>
+    <div class="executive-details">
+      <h2 id="conversation-title">Carlos Méndez</h2>
+      <span>Ejecutivo </span>
+    </div>
+    <button
+      class="conversation-close"
+      type="button"
+      aria-label="Cerrar conversación"
+      (click)="close()"
+    >
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="m5 5 10 10M15 5 5 15" />
+      </svg>
+    </button>
+  </header>
+
+  <div class="conversation-document" [title]="documentName()">
+    Conversación sobre: <strong>{{ documentName() }}</strong>
+  </div>
+
+  <div class="conversation-messages" aria-live="polite">
+    @for (message of messages(); track message.id; let index = $index) {
+      @if (index === 0 || messages()[index - 1].day !== message.day) {
+        <div class="conversation-day">{{ message.day }}</div>
+      }
+      <article
+        class="conversation-message"
+        [class.conversation-message--client]="message.sender === 'client'"
+      >
+        <p>{{ message.text }}</p>
+        <time>{{ message.time }}</time>
+      </article>
+    }
+  </div>
+
+  <form class="conversation-composer" (submit)="sendMessage($event)">
+    <label class="visually-hidden" for="conversation-message">Escribe un mensaje</label>
+    <input
+      id="conversation-message"
+      type="text"
+      autocomplete="off"
+      placeholder="Escribe un mensaje..."
+      [value]="draftMessage"
+      (input)="onMessageInput($event)"
+    />
+    <button
+      class="conversation-send"
+      type="submit"
+      aria-label="Enviar mensaje"
+      [disabled]="!draftMessage.trim()"
+    >
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M10 16V4m0 0L5.5 8.5M10 4l4.5 4.5" />
+      </svg>
+    </button>
+  </form>
+</aside>

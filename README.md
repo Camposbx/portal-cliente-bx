@@ -36,11 +36,13 @@ npm run build:qa
 npm run build:prod
 ```
 
-The development, QA, and production builds are written separately to `dist/portal-cliente/development`, `dist/portal-cliente/qa`, and `dist/portal-cliente/production`. Generate all three with:
+The development, QA, and production builds are written separately to `dist/desa/portal-cliente`, `dist/qa/portal-cliente`, and `dist/prod/portal-cliente`. Each build uses `/credito-portal/` as its base path. Generate all three with:
 
 ```bash
 npm run build:all
 ```
+
+QA and production builds warn when the initial bundle exceeds 600 kB or a component stylesheet exceeds 8 kB. They fail at 1 MB for the initial bundle or 10 kB for a component stylesheet.
 
 Each environment exports `environment.apiUrl`; its current value is `https://dockerqa.vepormas.com/credito/portal/` for all three builds. Update the corresponding file in `src/environments/` when the service URL changes.
 

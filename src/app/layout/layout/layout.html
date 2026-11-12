@@ -26,7 +26,14 @@
     </nav>
 
     <div class="sidebar-footer">
-      <button class="utility-button notification-button" type="button" aria-label="Notificaciones">
+      <button
+        class="utility-button notification-button"
+        type="button"
+        aria-label="Notificaciones"
+        aria-haspopup="dialog"
+        [attr.aria-expanded]="notificationsOpen"
+        (click)="openNotifications()"
+      >
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" />
         </svg>
@@ -46,4 +53,136 @@
   <main class="page-content">
     <router-outlet />
   </main>
+
+  @if (notificationsOpen) {
+    <button
+      class="notification-backdrop"
+      type="button"
+      aria-label="Cerrar notificaciones"
+      (click)="closeNotifications()"
+    ></button>
+
+    <section
+      class="notification-drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="notification-title"
+      cdkTrapFocus
+      [cdkTrapFocusAutoCapture]="true"
+    >
+      <header class="notification-header">
+        <div class="notification-heading">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" />
+          </svg>
+          <h2 id="notification-title">Notificaciones</h2>
+        </div>
+        <button
+          class="notification-close"
+          type="button"
+          aria-label="Cerrar notificaciones"
+          (click)="closeNotifications()"
+        >
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="m5 5 10 10M15 5 5 15" />
+          </svg>
+        </button>
+      </header>
+
+      <div class="notification-content">
+        <section class="notification-group" aria-labelledby="new-notifications-title">
+          <h3 id="new-notifications-title" class="notification-group-title">Nuevas</h3>
+          @for (notification of newNotifications; track notification.id) {
+            <article class="notification-item">
+              <span class="notification-unread-dot" role="img" aria-label="No leída"></span>
+              <span class="notification-document-icon" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="none">
+                  <path d="M5 2.5h6l4 4v11H5v-15Z" />
+                  <path d="M11 2.5v4h4M7.5 10h5M7.5 12.5h5" />
+                </svg>
+              </span>
+              <div class="notification-copy">
+                <div class="notification-item-heading">
+                  <h4>{{ notification.title }}</h4>
+                  <!-- <span class="notification-age">{{ notification.tiempo }}</span> -->
+                  <button
+                    class="notification-dismiss"
+                    type="button"
+                    [attr.aria-label]="'Descartar notificación: ' + notification.title"
+                    (click)="dismissNotification(notification, false)"
+                  >
+                    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <path d="m4 4 8 8m0-8-8 8" />
+                    </svg>
+                  </button>
+                </div>
+                <p>{{ notification.description }}</p>
+                <div class="notification-actions">
+                  <span class="notification-company" [title]="notification.persona">
+                    {{ notification.persona }}
+                  </span>
+                  <button
+                    class="notification-link"
+                    type="button"
+                    (click)="openNotification()"
+                  >
+                    accion de la notificación
+                  </button>
+                </div>
+              </div>
+            </article>
+          } @empty {
+            <p class="notification-empty">No tienes notificaciones nuevas.</p>
+          }
+        </section>
+
+        <section class="notification-group" aria-labelledby="previous-notifications-title">
+          <h3 id="previous-notifications-title" class="notification-group-title">Anteriores</h3>
+          @for (notification of previousNotifications; track notification.id) {
+            <article class="notification-item">
+              <span class="notification-document-icon" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="none">
+                  <path d="M5 2.5h6l4 4v11H5v-15Z" />
+                  <path d="M11 2.5v4h4M7.5 10h5M7.5 12.5h5" />
+                </svg>
+              </span>
+              <div class="notification-copy">
+                <div class="notification-item-heading">
+                  <h4>{{ notification.title }}</h4>
+                  <span class="notification-age">{{ notification.tiempo }}</span>
+                  <button
+                    class="notification-dismiss"
+                    type="button"
+                    [attr.aria-label]="'Descartar notificación: ' + notification.title"
+                    (click)="dismissNotification(notification, true)"
+                  >
+                    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <path d="m4 4 8 8m0-8-8 8" />
+                    </svg>
+                  </button>
+                </div>
+                <p>{{ notification.description }}</p>
+                <div class="notification-actions">
+                  <span class="notification-company" [title]="notification.persona">
+                    {{ notification.persona }}
+                  </span>
+                  <button
+                    class="notification-link"
+                    type="button"
+                    (click)="openNotification()"
+                  >
+                    Ir a documento
+                  </button>
+                </div>
+              </div>
+            </article>
+          } @empty {
+            <p class="notification-empty notification-empty--previous">
+              No tienes notificaciones anteriores.
+            </p>
+          }
+        </section>
+      </div>
+    </section>
+  }
 </div>

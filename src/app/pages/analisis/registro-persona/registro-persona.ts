@@ -30,6 +30,21 @@ type CaptureMethod = 'manual' | 'automatic';
   templateUrl: './registro-persona.html',
 })
 export class RegistroPersona {
+  private readonly uppercaseTextFields = [
+    'nombre1',
+    'nombre2',
+    'nombre3',
+    'primerApellido',
+    'segundoApellido',
+    'razonSocial',
+    'curp',
+    'rfc',
+    'codigoPostal',
+    'calle',
+    'numeroExterior',
+    'numeroInterior',
+  ] as const;
+
   private readonly formBuilder = inject(FormBuilder).nonNullable;
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
@@ -126,6 +141,17 @@ export class RegistroPersona {
   }
 
   constructor() {
+    this.personForm.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => {
+      for (const field of this.uppercaseTextFields) {
+        const control = this.personForm.controls[field];
+        const value = control.value;
+        const uppercaseValue = value.toUpperCase();
+        if (value !== uppercaseValue) {
+          control.setValue(uppercaseValue, { emitEvent: false });
+        }
+      }
+    });
+
     this.route.queryParamMap.pipe(
       map((params) => params.get('editar')),
       distinctUntilChanged(),

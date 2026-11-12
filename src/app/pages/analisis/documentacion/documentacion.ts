@@ -1,9 +1,7 @@
-import { Component, OnDestroy, OnInit, output } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, output } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { PersonasInvolucradasService } from '../personas-involucradas.service';
+import { DocumentChat, ChatMessage } from './document-chat/document-chat';
 import { ModalCargaDocs } from './modal-carga-docs/modal-carga-docs';
-import { ModalFirmantes } from './modal-firmantes/modal-firmantes';
 import { ModalVistaPrevia } from './modal-vista-previa/modal-vista-previa';
 
 interface DocumentItem {
@@ -16,18 +14,21 @@ interface DocumentItem {
   uploadState: 'idle' | 'uploading' | 'uploaded';
   uploadProgress: number;
   fileSize: number;
-  signatureRequested: boolean;
-  requestedSignerIds?: number[];
+  requiresSignature: boolean;
+  messages: ChatMessage[];
 }
 
 @Component({
-  imports: [MatDialogModule],
+  imports: [DocumentChat, MatDialogModule],
   selector: 'app-documentacion',
   styleUrl: './documentacion.scss',
   templateUrl: './documentacion.html',
 })
 export class Documentacion implements OnDestroy, OnInit {
   readonly completionPercentageChange = output<number>();
+
+  protected activeChatDocument: DocumentItem | null = null;
+  private nextMessageId = 4;
 
   readonly documents: DocumentItem[] = [
     {
@@ -37,7 +38,8 @@ export class Documentacion implements OnDestroy, OnInit {
       uploadState: 'idle',
       uploadProgress: 0,
       fileSize: 0,
-      signatureRequested: false,
+      requiresSignature: true,
+      messages: this.createInitialMessages(),
     },
     {
       name: 'Identificación oficial',
@@ -46,7 +48,8 @@ export class Documentacion implements OnDestroy, OnInit {
       uploadState: 'uploaded',
       uploadProgress: 100,
       fileSize: 8 * 1024 * 1024,
-      signatureRequested: false,
+      requiresSignature: true,
+      messages: this.createInitialMessages(),
     },
     {
       name: 'Estados financieros anualito último cierre',
@@ -55,7 +58,8 @@ export class Documentacion implements OnDestroy, OnInit {
       uploadState: 'idle',
       uploadProgress: 0,
       fileSize: 0,
-      signatureRequested: false,
+      requiresSignature: false,
+      messages: this.createInitialMessages(),
     },
     {
       name: 'Estados financieros anualito penúltimo cierre',
@@ -64,7 +68,8 @@ export class Documentacion implements OnDestroy, OnInit {
       uploadState: 'idle',
       uploadProgress: 0,
       fileSize: 0,
-      signatureRequested: false,
+      requiresSignature: true,
+      messages: this.createInitialMessages(),
     },
     {
       name: 'Declaraciones de impuestos',
@@ -73,7 +78,8 @@ export class Documentacion implements OnDestroy, OnInit {
       uploadState: 'idle',
       uploadProgress: 0,
       fileSize: 0,
-      signatureRequested: false,
+      requiresSignature: false,
+      messages: this.createInitialMessages(),
     },
     {
       name: 'Relación analítica de las principales cuentas analíticas de las principales cuentas',
@@ -82,7 +88,8 @@ export class Documentacion implements OnDestroy, OnInit {
       uploadState: 'idle',
       uploadProgress: 0,
       fileSize: 0,
-      signatureRequested: false,
+      requiresSignature: true,
+      messages: this.createInitialMessages(),
     },
     {
       name: 'Estados financieros año de filiales',
@@ -91,7 +98,8 @@ export class Documentacion implements OnDestroy, OnInit {
       uploadState: 'idle',
       uploadProgress: 0,
       fileSize: 0,
-      signatureRequested: false,
+      requiresSignature: false,
+      messages: this.createInitialMessages(),
     },
     {
       name: 'Pasivos con costo financiero y cuentas de orden',
@@ -100,7 +108,8 @@ export class Documentacion implements OnDestroy, OnInit {
       uploadState: 'idle',
       uploadProgress: 0,
       fileSize: 0,
-      signatureRequested: false,
+      requiresSignature: false,
+      messages: this.createInitialMessages(),
     },
     {
       name: 'Detalle de pasivos',
@@ -109,7 +118,8 @@ export class Documentacion implements OnDestroy, OnInit {
       uploadState: 'idle',
       uploadProgress: 0,
       fileSize: 0,
-      signatureRequested: false,
+      requiresSignature: true,
+      messages: this.createInitialMessages(),
     },
     {
       name: 'Descripción de las políticas de otorgamiento de crédito',
@@ -118,17 +128,14 @@ export class Documentacion implements OnDestroy, OnInit {
       uploadState: 'idle',
       uploadProgress: 0,
       fileSize: 0,
-      signatureRequested: false,
+      requiresSignature: false,
+      messages: this.createInitialMessages(),
     },
   ];
 
   private readonly uploadTimers = new Map<DocumentItem, ReturnType<typeof setInterval>>();
 
-  constructor(
-    private readonly dialog: MatDialog,
-    private readonly personasInvolucradas: PersonasInvolucradasService,
-    private readonly router: Router,
-  ) {}
+  constructor(private readonly dialog: MatDialog) {}
 
   get completionPercentage(): number {
     const completedDocuments = this.documents.filter(
@@ -145,6 +152,34 @@ export class Documentacion implements OnDestroy, OnInit {
   ngOnDestroy(): void {
     this.uploadTimers.forEach((timer) => clearInterval(timer));
     this.uploadTimers.clear();
+  }
+
+  protected openChat(document: DocumentItem): void {
+    this.activeChatDocument = document;
+  }
+
+  protected closeChat(): void {
+    this.activeChatDocument = null;
+  }
+
+  protected sendChatMessage(document: DocumentItem, text: string): void {
+    const message = text.trim();
+    if (!message) {
+      return;
+    }
+
+    document.messages.push({
+      id: this.nextMessageId++,
+      sender: 'client',
+      text: message,
+      time: this.getCurrentTime(),
+      day: 'Hoy',
+    });
+  }
+
+  @HostListener('document:keydown.escape')
+  protected onEscape(): void {
+    this.closeChat();
   }
 
   abrirCarga(document: DocumentItem): void {
@@ -200,35 +235,6 @@ export class Documentacion implements OnDestroy, OnInit {
     document.uploadState = 'idle';
     document.status = 'Pendiente';
     this.emitCompletionPercentage();
-  }
-
-  solicitarFirmaDigital(document: DocumentItem): void {
-    this.dialog
-      .open(ModalFirmantes, {
-        ariaLabelledBy: 'signers-title',
-        backdropClass: 'modal-firmantes-backdrop',
-        data: {
-          personas: this.personasInvolucradas.personas().filter((persona) =>
-            persona.roles.some((role) => role === 'aval' || role === 'apoderado'),
-          ),
-        },
-        height: '344px',
-        maxWidth: 'calc(100vw - 32px)',
-        panelClass: 'modal-firmantes',
-        width: '468px',
-      })
-      .afterClosed()
-      .subscribe((firmantes: number[] | 'register' | undefined) => {
-        if (firmantes === 'register') {
-          void this.router.navigateByUrl('/analisis/registro-persona');
-          return;
-        }
-
-        if (firmantes?.length) {
-          document.signatureRequested = true;
-          document.requestedSignerIds = firmantes;
-        }
-      });
   }
 
   verArchivo(document: DocumentItem): void {
@@ -310,5 +316,38 @@ export class Documentacion implements OnDestroy, OnInit {
 
   private emitCompletionPercentage(): void {
     this.completionPercentageChange.emit(this.completionPercentage);
+  }
+
+  private createInitialMessages(): ChatMessage[] {
+    return [
+      {
+        id: 1,
+        sender: 'executive',
+        text: 'Hola, podemos revisar cualquier duda o comentario sobre este documento.',
+        time: '10:24',
+        day: 'Hace 2 días',
+      },
+      {
+        id: 2,
+        sender: 'client',
+        text: 'Hola Carlos, buen día.',
+        time: '10:26',
+        day: 'Hoy',
+      },
+      {
+        id: 3,
+        sender: 'client',
+        text: 'Te compartiré mis comentarios por aquí.',
+        time: '10:27',
+        day: 'Hoy',
+      },
+    ];
+  }
+
+  private getCurrentTime(): string {
+    return new Intl.DateTimeFormat('es-MX', {
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(new Date());
   }
 }

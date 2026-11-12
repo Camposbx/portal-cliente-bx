@@ -1,0 +1,183 @@
+{
+  "titulo": "Ejemplos de API para inicio de sesión",
+  "version": "1.0",
+  "nota": "Contrato propuesto para revisar con el equipo de backend. La pantalla actual solicita usuario y contraseña; el inicio de sesión mostrado es demostrativo y todavía no consume estos servicios.",
+  "baseUrl": "https://api.ejemplo.com/v1",
+  "seguridad": {
+    "transporte": "HTTPS obligatorio",
+    "contraseña": "Enviar únicamente en el cuerpo HTTPS del inicio de sesión. Nunca registrar contraseñas en logs.",
+    "tokens": "No guardar refresh tokens en localStorage. Preferir cookie HttpOnly, Secure y SameSite o el mecanismo aprobado por la arquitectura.",
+    "respuestasDeError": "No revelar si un usuario existe al responder solicitudes de recuperación."
+  },
+  "formatoComunErrores": {
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "VALIDATION_ERROR",
+        "message": "Revisa los datos enviados.",
+        "details": [
+          {
+            "field": "usuario",
+            "message": "El usuario es obligatorio."
+          }
+        ],
+        "traceId": "req-01JEXAMPLE"
+      }
+    }
+  },
+  "servicios": [
+    {
+      "nombre": "Iniciar sesión",
+      "method": "POST",
+      "path": "/auth/login",
+      "request": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "usuario": "usuario.demo",
+          "contrasena": "<contraseña ingresada por el usuario>"
+        }
+      },
+      "response": {
+        "accessToken": "<access_token>",
+        "tokenType": "Bearer",
+        "expiresIn": 900,
+        "usuario": {
+          "id": "usr-1001",
+          "nombre": "Usuario Demo",
+          "correo": "usuario@example.com"
+        },
+        "permisos": [
+          "expedientes:consultar",
+          "expedientes:actualizar"
+        ]
+      },
+      "errorEjemplo": {
+        "status": 401,
+        "response": {
+          "error": {
+            "code": "INVALID_CREDENTIALS",
+            "message": "El usuario o la contraseña no son correctos.",
+            "traceId": "req-01JEXAMPLE"
+          }
+        }
+      }
+    },
+    {
+      "nombre": "Renovar sesión",
+      "method": "POST",
+      "path": "/auth/refresh",
+      "request": {
+        "headers": {
+          "Content-Type": "application/json",
+          "Cookie": "refresh_token=<cookie HttpOnly administrada por el servidor>"
+        },
+        "body": {}
+      },
+      "response": {
+        "accessToken": "<nuevo_access_token>",
+        "tokenType": "Bearer",
+        "expiresIn": 900
+      },
+      "nota": "Si la arquitectura utiliza cookies, el refresh token debería enviarse automáticamente como cookie segura y no exponerse a JavaScript."
+    },
+    {
+      "nombre": "Consultar sesión y usuario actual",
+      "method": "GET",
+      "path": "/auth/me",
+      "request": {
+        "headers": {
+          "Authorization": "Bearer <access_token>"
+        },
+        "body": null
+      },
+      "response": {
+        "id": "usr-1001",
+        "nombre": "Usuario Demo",
+        "correo": "usuario@example.com",
+        "estado": "activo",
+        "permisos": [
+          "expedientes:consultar",
+          "expedientes:actualizar"
+        ]
+      }
+    },
+    {
+      "nombre": "Cerrar sesión",
+      "method": "POST",
+      "path": "/auth/logout",
+      "request": {
+        "headers": {
+          "Authorization": "Bearer <access_token>",
+          "Cookie": "refresh_token=<cookie HttpOnly administrada por el servidor>"
+        },
+        "body": {}
+      },
+      "response": {
+        "sesionCerrada": true
+      },
+      "nota": "El backend debe invalidar el refresh token o la sesión. El frontend debe borrar el access token en memoria y navegar al login."
+    },
+    {
+      "nombre": "Solicitar recuperación de contraseña",
+      "method": "POST",
+      "path": "/auth/password/forgot",
+      "request": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "usuario": "usuario.demo"
+        }
+      },
+      "response": {
+        "message": "Si la cuenta existe, recibirás instrucciones para recuperar el acceso."
+      },
+      "nota": "La respuesta debe ser equivalente exista o no la cuenta, para evitar revelar usuarios registrados. La interfaz actual muestra el enlace, pero todavía no tiene un flujo de recuperación implementado."
+    },
+    {
+      "nombre": "Restablecer contraseña",
+      "method": "POST",
+      "path": "/auth/password/reset",
+      "request": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "token": "<token_de_un_solo_uso_recibido_por_correo>",
+          "nuevaContrasena": "<nueva_contraseña>"
+        }
+      },
+      "response": {
+        "contrasenaActualizada": true,
+        "message": "La contraseña se actualizó correctamente."
+      },
+      "errorEjemplo": {
+        "status": 400,
+        "response": {
+          "error": {
+            "code": "INVALID_OR_EXPIRED_RESET_TOKEN",
+            "message": "El enlace para restablecer la contraseña expiró o ya fue utilizado."
+          }
+        }
+      }
+    }
+  ],
+  "codigosHttpEsperados": {
+    "200": "Operación completada.",
+    "400": "Solicitud inválida o campos faltantes.",
+    "401": "Credenciales incorrectas o sesión vencida.",
+    "403": "El usuario no tiene permisos para la operación.",
+    "429": "Se excedió el límite de intentos; aplicar espera antes de reintentar.",
+    "500": "Error inesperado del servidor."
+  },
+  "acuerdosPendientesConBackend": [
+    "Confirmar si el usuario de acceso será nombre de usuario, correo o ambos.",
+    "Definir duración de access token y refresh token.",
+    "Elegir entre cookies seguras y almacenamiento de tokens de acuerdo con la arquitectura.",
+    "Definir política de bloqueo o espera ante intentos fallidos y límites por IP/cuenta.",
+    "Definir política de contraseñas y validaciones del flujo de restablecimiento.",
+    "Confirmar si se requiere segundo factor de autenticación."
+  ]
+}

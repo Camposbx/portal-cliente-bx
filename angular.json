@@ -36,7 +36,11 @@
           },
           "configurations": {
             "production": {
-              "outputPath": "dist/portal-cliente/production",
+              "outputPath": {
+                "base": "dist/prod/credito-portal",
+                "browser": ""
+              },
+              "baseHref": "/credito-portal/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -46,19 +50,23 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
+                  "maximumWarning": "600kB",
                   "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "8kB",
+                  "maximumError": "10kB"
                 }
               ],
               "outputHashing": "all"
             },
             "qa": {
-              "outputPath": "dist/portal-cliente/qa",
+              "outputPath": {
+                "base":"dist/qa/credito-portal",
+                "browser": ""
+              },
+              "baseHref": "/credito-portal/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -68,13 +76,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
+                  "maximumWarning": "600kB",
                   "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "8kB",
+                  "maximumError": "10kB"
                 }
               ],
               "optimization": true,
@@ -83,7 +91,11 @@
               "outputHashing": "all"
             },
             "development": {
-              "outputPath": "dist/portal-cliente/development",
+              "outputPath": {
+                "base": "dist/desa/credito-portal",
+                "browser": ""
+              },
+              "baseHref": "/credito-portal/",
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true

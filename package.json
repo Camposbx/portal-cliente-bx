@@ -5,6 +5,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:desa": "ng build --configuration development",
+    "build:qa": "ng build --configuration qa",
+    "build:prod": "ng build --configuration production",
+    "build:all": "npm run build:desa && npm run build:qa && npm run build:prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

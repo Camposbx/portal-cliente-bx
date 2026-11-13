@@ -40,10 +40,10 @@ export class Layout {
 
   constructor(private readonly router: Router) {}
 
+  
   protected readonly navigation = [
     { label: 'Inicio', path: '/inicio', icon: 'icons/home.svg' },
     { label: 'Análisis', path: '/analisis', icon: 'icons/document_search.svg' },
-    
 /*     { label: 'Contratación', path: '/contratacion', icon: 'icons/document_edit.svg' },
     { label: 'Operación', path: '/operacion', icon: 'icons/documet_check.svg' }, */
     { label: 'Mi ejecutivo', path: '/mi-ejecutivo', icon: 'icons/folder.svg' },
